@@ -6,14 +6,7 @@ public class main {
 	}
 	
 	static void doesNothing(){
-		
+		//does nothing
 	}
 	
-	static void somethingImportant(){
-		//does something important
-	}
-	
-	// another thing to update
-	
-	// here is another new thing for brett
 }
