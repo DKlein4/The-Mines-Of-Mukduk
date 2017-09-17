@@ -1,8 +1,9 @@
 package user_interface;
 import java.util.Scanner;
+
 public class UI {
 
-	public static void mainMenu() {
+	public void mainMenu() {
 		Scanner scan = new Scanner(System.in);
 		int playerChoice = 0;
 		

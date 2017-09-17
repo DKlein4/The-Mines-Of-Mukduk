@@ -3,7 +3,7 @@ import entities.Monster;
 import entities.Player;
 
 public class Combat {
-	public static void combatRound() {
+	public void combatRound() {
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("~Battle has started!~");
 		System.out.println("~Rolling Initiative!~");
@@ -11,11 +11,12 @@ public class Combat {
 		
 		//Generates new enemy object
 		Monster monster = new Monster();
-		monster.genHealth();
-		monster.genInitiative();
+		
+		//Player object
+		Player player = new Player();
 		
 		//Generates player stats
-		int playerInitiative = Player.genInitiative();
+		int playerInitiative = player.getPlayerInitiative();
 		
 		boolean notDead = true;
 		while (notDead == true) {
@@ -32,7 +33,7 @@ public class Combat {
 		}
 	}
 	
-	public static boolean checkInitiative(int monsterInit, int playerInit) {
+	public boolean checkInitiative(int monsterInit, int playerInit) {
 		//Rolls initiative out of 20, highest goes first.
 		if (monsterInit > playerInit) {
 			return false;
@@ -46,11 +47,11 @@ public class Combat {
 		}
 	}
 
-	public static void monsterTurn() {
+	public void monsterTurn() {
 		//What the monster does on it's turn
 	}
 	
-	public static void playerTurn() {
+	public void playerTurn() {
 		//What the player can do on his turn
 		//1: Attack
 		//2: Use item

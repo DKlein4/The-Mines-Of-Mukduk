@@ -2,12 +2,13 @@ package entities;
 import java.util.Random;
 
 public class Monster {
-static Random rand = new Random();
-int monsterInitiative;
-int monsterHP;
-
-	public int genInitiative() {
-		return rand.nextInt((20 - 1) + 1) + 1;
+	Random rand = new Random();
+	private int monsterInitiative;
+	private int monsterHP;
+	
+	public Monster(){
+		monsterInitiative = rand.nextInt((20 - 1) + 1) + 1;
+		monsterHP = rand.nextInt((20 - 1) + 1) + 1;
 	}
 	
 	public void setInitiative(int initiative) {
@@ -16,10 +17,6 @@ int monsterHP;
 	
 	public int getInitiative() {
 		return monsterInitiative;
-	}
-	
-	public int genHealth() {
-		return rand.nextInt((20 - 1) + 1) + 1;
 	}
 	
 	public void setHealth(int hp) {

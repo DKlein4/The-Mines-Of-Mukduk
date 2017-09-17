@@ -2,16 +2,29 @@ package entities;
 import java.util.Random;
 
 public class Player {
-static Random rand = new Random();
-int playerInitiative;
-int playerHP;
-
-	public static int genInitiative() {
-		return rand.nextInt((20 - 1) + 1) + 1;
+	Random rand = new Random();
+	private int playerInitiative;
+	private int playerHP;
+	
+	public Player(){
+		playerInitiative = rand.nextInt((20 - 1) + 1) + 1;
+		playerHP = rand.nextInt((20 - 1) + 1) + 1;
 	}
 
-	public int genHealth() {
-		return rand.nextInt((20 - 1) + 1) + 1;
+	public int getPlayerInitiative() {
+		return playerInitiative;
 	}
 
+	public void setPlayerInitiative(int playerInitiative) {
+		this.playerInitiative = playerInitiative;
+	}
+
+	public int getPlayerHP() {
+		return playerHP;
+	}
+
+	public void setPlayerHP(int playerHP) {
+		this.playerHP = playerHP;
+	}
+	
 }
