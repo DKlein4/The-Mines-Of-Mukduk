@@ -6,4 +6,8 @@ public class main {
 		// Adding something more
 		// Dustin is awesome
 	}
+	
+	static void somethingImportant(){
+		//does something important
+	}
 }
