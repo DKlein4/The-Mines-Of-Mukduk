@@ -9,7 +9,4 @@ public class main {
 		//does nothing
 	}
 	
-	static void somethingImportant(){
-		//does something important
-	}
 }
