@@ -6,8 +6,5 @@ public class main {
 		// TODO Auto-generated method stub
 	}
 	
-	static void doesNothing(){
-		//does nothing
-	}
-	
+
 }
