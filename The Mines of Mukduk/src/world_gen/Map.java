@@ -64,6 +64,50 @@ public class Map {
 		else {
 			System.out.println("ERROR! PLEASE PRAISE SATAN!");
 		}
+		
+		//Generates the maze using Recursive Division (I hope?)
+		//It currently does not.
+		//Because I am a failure
+		//Abandon hope all ye who enter
+		//Huge fucking initialization. Cause you know.
+		int width, height, length, orientation, wallx, wally, passagex, passagey, x, y, nx, ny, directionx, directiony;
+		width = height = gridSize;
+		x = y = 0;
+		wallx = wally = 0;
+		while (width < 2 || height < 2) {
+			orientation = orientation(width, height);
+			directionx = directiony = 0;
+			nx = ny = 0;
+			//There the line will be drawn from
+			if (orientation == 0) {
+				wallx = x + rand.nextInt(((width - 2) + 1) + 2);
+				passagex = wallx + rand.nextInt(((width - 2) + 1) + 2);
+				directionx = 1;
+				length = width;
+				for (int a = 0; a < length; a++) {
+					if (wallx != passagex) {
+						grid[0][wallx += directionx].setWall(true);
+					}
+				}
+				nx = x;
+				height = (wally - y + 1);
+				
+			}
+			else if (orientation == 1) {
+				wally = y + rand.nextInt(((height - 2) + 1) + 2);
+				passagey = rand.nextInt(((height - 2) + 1) + 2);
+				directiony = 1;
+				length = height;
+				for (int b = 0; b < length; b++) {
+					if (wally != passagey) {
+						grid[wally += directiony][0].setWall(true);
+					}
+				}
+				ny = y;
+				width = (wallx - x + 1);
+			}
+			
+		}
 
 	}
 
@@ -72,6 +116,7 @@ public class Map {
 		return (0 <= r) && (r <= gridSize - 1) && (0 <= c) && (c <= gridSize - 1);
 	}
 
+	//Gets gridsize
 	public int getGridSize() {
 		return gridSize;
 	}
@@ -119,5 +164,18 @@ public class Map {
 			System.out.println();
 		}
 		System.out.println();
+	}
+	
+	public int orientation(int width, int height) {
+		if (width < height) {
+			return 0;
+		}
+		else if (width > height) {
+			return 1;
+		}
+		else {
+			return rand.nextInt((1-0)+1);
+		}
+		
 	}
 }
