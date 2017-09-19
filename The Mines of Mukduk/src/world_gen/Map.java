@@ -11,6 +11,7 @@ public class Map {
 		gridSize = mapSize;
 		reset();
 	}
+
 	public Map() {
 		grid = new Tile[10][10];
 		gridSize = 10;
@@ -21,49 +22,79 @@ public class Map {
 	private void reset() {
 
 		// Initialize every tile
-		for (int i = 0; i < gridSize; i++) {
-			for (int j = 0; j < gridSize; j++) {
-				grid[i][j] = new Tile();
+		for (int r = 0; r < gridSize; r++) {
+			for (int c = 0; c < gridSize; c++) {
+				grid[r][c] = new Tile();
 			}
 		}
 
 		// Make every tile a floor
-		for (int i = 0; i < gridSize; i++) {
-			for (int j = 0; j < gridSize; j++) {
-				grid[i][j].setFloor(true);
+		for (int r = 0; r < gridSize; r++) {
+			for (int c = 0; c < gridSize; c++) {
+				grid[r][c].setFloor(true);
 			}
 		}
-		
+
 		// Place walls around the outside of the grid
 		for (int i = 0; i < gridSize; i++) {
-			grid[0][i].setWall(true); 			// top row
-			grid[gridSize-1][i].setWall(true); 	// bottom row
-			grid[i][0].setWall(true); 			// left column
-			grid[i][gridSize-1].setWall(true); 	// right column
+			grid[0][i].setWall(true); // top row
+			grid[gridSize - 1][i].setWall(true); // bottom row
+			grid[i][0].setWall(true); // left column
+			grid[i][gridSize - 1].setWall(true); // right column
 		}
-		
+
 		// Place one Door on the edge of the grid
-		
+
+	}
+
+	// Returns true if the coordinates are within the grid
+	public boolean onGrid(int r, int c) {
+		return (0 <= r) && (r <= gridSize - 1) && (0 <= c) && (c <= gridSize - 1);
+	}
+
+	public int getGridSize() {
+		return gridSize;
 	}
 
 	// Prints out the grid
 	public void printGrid() {
-		for (int i = 0; i < gridSize; i++) {
-			for (int j = 0; j < gridSize; j++) {
-				if (grid[i][j].isWall())
-					System.out.print("\tW" + i + "," + j);
-				else if (grid[i][j].isFloor())
-					System.out.print("\tF" + i + "," + j);
-				else if (grid[i][j].isDoor())
-					System.out.print("\tD" + i + "," + j);
-				else if (grid[i][j].isUnexplored())
-					System.out.print("\tU" + i + "," + j);
-				else if (grid[i][j].isTreasure())
-					System.out.print("\tT" + i + "," + j);
-				else if (grid[i][j].isMonster())
-					System.out.print("\tM" + i + "," + j);
-				else 
-					System.out.print("\tX" + i + "," + j);
+		// for (int r = 0; r < gridSize; r++) {
+		// for (int c = 0; c < gridSize; c++) {
+		// if (grid[r][c].isWall())
+		// System.out.print("\tW" + r + "," + c);
+		// else if (grid[r][c].isFloor())
+		// System.out.print("\tF" + r + "," + c);
+		// else if (grid[r][c].isDoor())
+		// System.out.print("\tD" + r + "," + c);
+		// else if (grid[r][c].isUnexplored())
+		// System.out.print("\tU" + r + "," + c);
+		// else if (grid[r][c].isTreasure())
+		// System.out.print("\tT" + r + "," + c);
+		// else if (grid[r][c].isMonster())
+		// System.out.print("\tM" + r + "," + c);
+		// else
+		// System.out.print("\tX" + r + "," + c);
+		// }
+		// System.out.println();
+		// }
+		// System.out.println();
+
+		for (int r = 0; r < gridSize; r++) {
+			for (int c = 0; c < gridSize; c++) {
+				if (grid[r][c].isWall())
+					System.out.print("\tW");
+				else if (grid[r][c].isFloor())
+					System.out.print("\tF");
+				else if (grid[r][c].isDoor())
+					System.out.print("\tD");
+				else if (grid[r][c].isUnexplored())
+					System.out.print("\tU");
+				else if (grid[r][c].isTreasure())
+					System.out.print("\tT");
+				else if (grid[r][c].isMonster())
+					System.out.print("\tM");
+				else
+					System.out.print("\tX");
 			}
 			System.out.println();
 		}

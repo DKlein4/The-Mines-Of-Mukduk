@@ -6,7 +6,9 @@ public class main {
 		// UI userInterface = new UI();
 		// userInterface.mainMenu();
 
-		Map map = new Map();
+		Map map = new Map(20);
 		map.printGrid();
+
+
 	}
 }

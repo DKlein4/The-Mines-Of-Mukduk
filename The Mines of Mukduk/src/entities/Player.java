@@ -1,12 +1,13 @@
 package entities;
+
 import java.util.Random;
 
 public class Player {
 	Random rand = new Random();
 	private int playerInitiative;
 	private int playerHP;
-	
-	public Player(){
+
+	public Player() {
 		playerInitiative = rand.nextInt((20 - 1) + 1) + 1;
 		playerHP = rand.nextInt((20 - 1) + 1) + 1;
 	}
@@ -26,5 +27,5 @@ public class Player {
 	public void setPlayerHP(int playerHP) {
 		this.playerHP = playerHP;
 	}
-	
+
 }

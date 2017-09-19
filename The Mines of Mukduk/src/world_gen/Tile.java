@@ -9,7 +9,7 @@ public class Tile {
 		isWall = isFloor = isDoor = isUnexplored = isTreasure = isMonster = false;
 	}
 	
-	public void clearTile(){
+	private void clearTile(){
 		isWall = isFloor = isDoor = isUnexplored = isTreasure = isMonster = false;
 	}
 
