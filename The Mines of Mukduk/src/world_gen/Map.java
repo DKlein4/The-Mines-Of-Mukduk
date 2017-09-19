@@ -52,14 +52,17 @@ public class Map {
 		if (doorSide == 0) {
 			grid[0][doorPosition].setDoor(true); // top row
 		}
-		if (doorSide == 1) {
+		else if (doorSide == 1) {
 			grid[gridSize - 1][doorPosition].setDoor(true); // bottom row
 		}
-		if (doorSide == 2) {
+		else if (doorSide == 2) {
 			grid[doorPosition][0].setDoor(true); // left column
 		}
-		if (doorSide == 3) {
+		else if (doorSide == 3) {
 			grid[doorPosition][gridSize - 1].setDoor(true); // right column
+		}
+		else {
+			System.out.println("ERROR! PLEASE PRAISE SATAN!");
 		}
 
 	}
