@@ -7,7 +7,7 @@ public class PlayerMovement {
 	private int mapSize;
 	
 	public PlayerMovement(){
-		pos = new int[] {0,0};
+		pos = new int[] {1,1};
 		
 	}
 	

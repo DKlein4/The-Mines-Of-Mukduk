@@ -1,11 +1,14 @@
 package world_gen;
 
+import java.util.Random;
+
 import world_gen.Tile;
 
 public class Map {
 	private Tile[][] grid;
 	private int gridSize;
-
+	private Random rand = new Random();
+	
 	public Map(int mapSize) {
 		grid = new Tile[mapSize][mapSize];
 		gridSize = mapSize;
@@ -44,6 +47,20 @@ public class Map {
 		}
 
 		// Place one Door on the edge of the grid
+		int doorSide = rand.nextInt((3 - 0) - 1) + 0;
+		int doorPosition = rand.nextInt(((gridSize - 2) - 2) + 1) + 2;
+		if (doorSide == 0) {
+			grid[0][doorPosition].setDoor(true); // top row
+		}
+		if (doorSide == 1) {
+			grid[gridSize - 1][doorPosition].setDoor(true); // bottom row
+		}
+		if (doorSide == 2) {
+			grid[doorPosition][0].setDoor(true); // left column
+		}
+		if (doorSide == 3) {
+			grid[doorPosition][gridSize - 1].setDoor(true); // right column
+		}
 
 	}
 
