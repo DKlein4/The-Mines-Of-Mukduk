@@ -64,7 +64,7 @@ public class Map {
 
 	// Generates multiple rooms and connects them with corridors
 	private void genInteriorRooms() {
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 15; i++) {
 			// Generate two random rooms
 			// room array = {width, height, x position of origin, y position of origin, x position of corner opposite of origin, y position of corner opposite of origin}
 			int[] room1 = genRoom();
@@ -98,8 +98,8 @@ public class Map {
 		 */
 		int w, h, xo, yo, xc, yc;
 
-		w = rand.nextInt(7 - 3 + 1) + 3;
-		h = rand.nextInt(7 - 3 + 1) + 3;
+		w = rand.nextInt(3 - 1 + 1) + 1;
+		h = rand.nextInt(3 - 1 + 1) + 1;
 
 		xo = rand.nextInt((gridSize - 1) - w + 1);
 		yo = rand.nextInt((gridSize - 1) - h + 1);
@@ -141,9 +141,9 @@ public class Map {
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
 				if (grid[r][c].isWall())
-					System.out.print("\t ");
+					System.out.print("\t#");
 				else if (grid[r][c].isFloor())
-					System.out.print("\tF");
+					System.out.print("\t.");
 				else if (grid[r][c].isDoor())
 					System.out.print("\tD");
 				else if (grid[r][c].isUnexplored())
