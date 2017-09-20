@@ -1,6 +1,7 @@
 package world_gen;
 
 import java.util.Random;
+import java.lang.Math;
 
 import world_gen.Tile;
 
@@ -8,7 +9,7 @@ public class Map {
 	private Tile[][] grid;
 	private int gridSize;
 	private Random rand = new Random();
-	
+
 	public Map(int mapSize) {
 		grid = new Tile[mapSize][mapSize];
 		gridSize = mapSize;
@@ -19,6 +20,16 @@ public class Map {
 		grid = new Tile[10][10];
 		gridSize = 10;
 		reset();
+	}
+	
+	// Returns true if the coordinates are within the grid
+	public boolean onGrid(int r, int c) {
+		return (0 <= r) && (r <= gridSize - 1) && (0 <= c) && (c <= gridSize - 1);
+	}
+
+	// Gets gridsize
+	public int getGridSize() {
+		return gridSize;
 	}
 
 	// Resets the grid
@@ -31,13 +42,16 @@ public class Map {
 			}
 		}
 
-		// Make every tile a floor
+		// Make every tile a Wall
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
-				grid[r][c].setFloor(true);
+				grid[r][c].setWall(true);
 			}
 		}
 
+		// Generate the interior rooms
+		genInteriorRooms();
+		
 		// Place walls around the outside of the grid
 		for (int i = 0; i < gridSize; i++) {
 			grid[0][i].setWall(true); // top row
@@ -46,108 +60,88 @@ public class Map {
 			grid[i][gridSize - 1].setWall(true); // right column
 		}
 
-		// Place one Door on the edge of the grid
-		int doorSide = rand.nextInt((3 - 0) - 1) + 0;
-		int doorPosition = rand.nextInt(((gridSize - 2) - 2) + 1) + 2;
-		if (doorSide == 0) {
-			grid[0][doorPosition].setDoor(true); // top row
+	}
+
+	// Generates multiple rooms and connects them with corridors
+	private void genInteriorRooms() {
+		for (int i = 0; i < 5; i++) {
+			// Generate two random rooms
+			// room array = {width, height, x position of origin, y position of origin, x position of corner opposite of origin, y position of corner opposite of origin}
+			int[] room1 = genRoom();
+			int[] room2 = genRoom();
+
+			// So it turns out width is up and down and height is left to right...oops
+			System.out.println("Room 1: (" + room1[2] + "," + room1[3] + ") to (" + room1[4] + "," + room1[5] + ") w:"
+					+ room1[0] + " h:" + room1[1]);
+			System.out.println("Room 2: (" + room2[2] + "," + room2[3] + ") to (" + room2[4] + "," + room2[5] + ") w:"
+					+ room2[0] + " h:" + room2[1]);
+
+			// Create the corridors between them
+			int x1Center = (room1[2] + room1[4]) / 2;
+			int x2Center = (room2[2] + room2[4]) / 2;
+			int y1Center = (room1[3] + room1[5]) / 2;
+			int y2Center = (room2[3] + room2[5]) / 2;
+
+			genXCorridor(x1Center, x2Center, y2Center);
+			genYCorridor(y1Center, y2Center, x1Center);
 		}
-		else if (doorSide == 1) {
-			grid[gridSize - 1][doorPosition].setDoor(true); // bottom row
-		}
-		else if (doorSide == 2) {
-			grid[doorPosition][0].setDoor(true); // left column
-		}
-		else if (doorSide == 3) {
-			grid[doorPosition][gridSize - 1].setDoor(true); // right column
-		}
-		else {
-			System.out.println("ERROR! PLEASE PRAISE SATAN!");
-		}
-		
-		//Generates the maze using Recursive Division (I hope?)
-		//It currently does not.
-		//Because I am a failure
-		//Abandon hope all ye who enter
-		//Huge fucking initialization. Cause you know.
-		int width, height, length, orientation, wallx, wally, passagex, passagey, x, y, nx, ny, directionx, directiony;
-		width = height = gridSize;
-		x = y = 0;
-		wallx = wally = 0;
-		while (width < 2 || height < 2) {
-			orientation = orientation(width, height);
-			directionx = directiony = 0;
-			nx = ny = 0;
-			//There the line will be drawn from
-			if (orientation == 0) {
-				wallx = x + rand.nextInt(((width - 2) + 1) + 2);
-				passagex = wallx + rand.nextInt(((width - 2) + 1) + 2);
-				directionx = 1;
-				length = width;
-				for (int a = 0; a < length; a++) {
-					if (wallx != passagex) {
-						grid[0][wallx += directionx].setWall(true);
-					}
-				}
-				nx = x;
-				height = (wally - y + 1);
-				
+	}
+
+	private int[] genRoom() {
+		/*
+		 * w - width of the rect 
+		 * h - height of the rect 
+		 * xo - x coordinate of the origin of the rect 
+		 * yo - y coordinate of the origin of the rect 
+		 * xc - x coordinate of the corner opposite of the origin 
+		 * yc - y coordinate of the corner opposite of the origin
+		 */
+		int w, h, xo, yo, xc, yc;
+
+		w = rand.nextInt(7 - 3 + 1) + 3;
+		h = rand.nextInt(7 - 3 + 1) + 3;
+
+		xo = rand.nextInt((gridSize - 1) - w + 1);
+		yo = rand.nextInt((gridSize - 1) - h + 1);
+
+		xc = xo + w;
+		yc = yo + h;
+
+		for (int i = xo; i < xo + w; i++) {
+			for (int j = yo; j < yo + h; j++) {
+				grid[i][j].setFloor(true);
 			}
-			else if (orientation == 1) {
-				wally = y + rand.nextInt(((height - 2) + 1) + 2);
-				passagey = rand.nextInt(((height - 2) + 1) + 2);
-				directiony = 1;
-				length = height;
-				for (int b = 0; b < length; b++) {
-					if (wally != passagey) {
-						grid[wally += directiony][0].setWall(true);
-					}
-				}
-				ny = y;
-				width = (wallx - x + 1);
-			}
-			
 		}
 
+		// Array to return values
+		return new int[] { w, h, xo, yo, xc, yc };
 	}
 
-	// Returns true if the coordinates are within the grid
-	public boolean onGrid(int r, int c) {
-		return (0 <= r) && (r <= gridSize - 1) && (0 <= c) && (c <= gridSize - 1);
-	}
+	// Generates a line of floor tiles from the given two x coordinates at the given y coordinate
+	private void genXCorridor(int x1, int x2, int y) {
+		int lower = Math.min(x1, x2);
+		int higher = Math.max(x1, x2);
 
-	//Gets gridsize
-	public int getGridSize() {
-		return gridSize;
+		for (int i = lower; i <= higher; i++) {
+			grid[i][y].setFloor(true);
+		}
 	}
+	// Generates a line of floor tiles from the given two y coordinates at the given x coordinate
+	private void genYCorridor(int y1, int y2, int x) {
+		int lower = Math.min(y1, y2);
+		int higher = Math.max(y1, y2);
 
-	// Prints out the grid
+		for (int i = lower; i <= higher; i++) {
+			grid[x][i].setFloor(true);
+		}
+	}
+	
+	// Prints out the grid. Purely for testing
 	public void printGrid() {
-		// for (int r = 0; r < gridSize; r++) {
-		// for (int c = 0; c < gridSize; c++) {
-		// if (grid[r][c].isWall())
-		// System.out.print("\tW" + r + "," + c);
-		// else if (grid[r][c].isFloor())
-		// System.out.print("\tF" + r + "," + c);
-		// else if (grid[r][c].isDoor())
-		// System.out.print("\tD" + r + "," + c);
-		// else if (grid[r][c].isUnexplored())
-		// System.out.print("\tU" + r + "," + c);
-		// else if (grid[r][c].isTreasure())
-		// System.out.print("\tT" + r + "," + c);
-		// else if (grid[r][c].isMonster())
-		// System.out.print("\tM" + r + "," + c);
-		// else
-		// System.out.print("\tX" + r + "," + c);
-		// }
-		// System.out.println();
-		// }
-		// System.out.println();
-
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
 				if (grid[r][c].isWall())
-					System.out.print("\tW");
+					System.out.print("\t ");
 				else if (grid[r][c].isFloor())
 					System.out.print("\tF");
 				else if (grid[r][c].isDoor())
@@ -164,18 +158,5 @@ public class Map {
 			System.out.println();
 		}
 		System.out.println();
-	}
-	
-	public int orientation(int width, int height) {
-		if (width < height) {
-			return 0;
-		}
-		else if (width > height) {
-			return 1;
-		}
-		else {
-			return rand.nextInt((1-0)+1);
-		}
-		
 	}
 }
