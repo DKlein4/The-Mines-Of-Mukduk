@@ -6,19 +6,22 @@ import java.lang.Math;
 import world_gen.Tile;
 
 public class Map {
+	private Random rand = new Random();
 	private Tile[][] grid;
 	private int gridSize;
-	private Random rand = new Random();
+	private int numRooms;
 
 	public Map(int mapSize) {
 		grid = new Tile[mapSize][mapSize];
 		gridSize = mapSize;
+		numRooms = 30;
 		reset();
 	}
 
 	public Map() {
 		grid = new Tile[10][10];
 		gridSize = 10;
+		numRooms = 15;
 		reset();
 	}
 	
@@ -27,7 +30,7 @@ public class Map {
 		return (0 <= r) && (r <= gridSize - 1) && (0 <= c) && (c <= gridSize - 1);
 	}
 
-	// Gets gridsize
+	// returns gridSize
 	public int getGridSize() {
 		return gridSize;
 	}
@@ -64,17 +67,20 @@ public class Map {
 
 	// Generates multiple rooms and connects them with corridors
 	private void genInteriorRooms() {
-		for (int i = 0; i < 15; i++) {
+		// Creates numRooms amount of rooms 
+		// Since this loop creates 2 rooms we only need to go to numRooms/2
+		for (int i = 0; i < numRooms/2; i++) {
+			
 			// Generate two random rooms
 			// room array = {width, height, x position of origin, y position of origin, x position of corner opposite of origin, y position of corner opposite of origin}
 			int[] room1 = genRoom();
 			int[] room2 = genRoom();
 
-			// So it turns out width is up and down and height is left to right...oops
+			// Print out the room info. Purely for testing
 			System.out.println("Room " + (2*i) + ": \t(" + room1[2] + "," + room1[3] + ")\tto \t(" + room1[4] + "," + room1[5] + ")   \tw:" + room1[0] + " h:" + room1[1]);
 			System.out.println("Room " + (2*i + 1) + ": \t(" + room2[2] + "," + room2[3] + ")\tto \t(" + room2[4] + "," + room2[5] + ")   \tw:" + room2[0] + " h:" + room2[1]);
 
-			// Create the corridors between them
+			// Find the centers of each room
 			int x1Center = (room1[2] + room1[4]) / 2;	// First room's center x
 			int x2Center = (room2[2] + room2[4]) / 2;	// Second room's center x
 			int y1Center = (room1[3] + room1[5]) / 2;	// First room's center y
@@ -86,6 +92,7 @@ public class Map {
 		}
 	}
 
+	// Generates one room and returns the room attributes in an array
 	private int[] genRoom() {
 		// w - width of the rect
 		// h - height of the rect
@@ -94,23 +101,29 @@ public class Map {
 		// xc - x coordinate of the corner opposite of the origin
 		// yc - y coordinate of the corner opposite of the origin
 		int w, h, xo, yo, xc, yc;
+		
+		int maxRoomSize = 3;
+		int minRoomSize = 1;
+		
+		// Generate random width and height between the restrictions
+		w = rand.nextInt(maxRoomSize - minRoomSize + 1) + minRoomSize; 
+		h = rand.nextInt(maxRoomSize - minRoomSize + 1) + minRoomSize; 
 
-		w = rand.nextInt(3 - 1 + 1) + 1; 
-		h = rand.nextInt(3 - 1 + 1) + 1; 
-
+		// Generate the coordinates were the map will be placed on the grid
 		xo = rand.nextInt((gridSize - 1) - w + 1);
 		yo = rand.nextInt((gridSize - 1) - h + 1);
-
+		
 		xc = xo + w;
 		yc = yo + h;
 
+		// Go to every tile within the room coordinates and set it to floor
 		for (int i = yo; i < yo + h; i++) {
 			for (int j = xo; j < xo + w; j++) {
 				grid[i][j].setFloor(true);
 			}
 		}
 
-		// Array to return values
+		// return the values as an array
 		return new int[] { w, h, xo, yo, xc, yc };
 	}
 
