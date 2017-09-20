@@ -5,7 +5,7 @@ public class main {
 	public static void main(String[] args) {
 		// UI userInterface = new UI();
 		// userInterface.mainMenu();
-
+		
 		Map map = new Map(30);
 		map.printGrid();
 
