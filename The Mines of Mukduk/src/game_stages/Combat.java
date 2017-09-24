@@ -2,13 +2,13 @@ package game_stages;
 
 import entities.Monster;
 import entities.Player;
+import user_interface.UI;
 
 public class Combat {
+	UI userInterface = new UI();
+	
 	public void combatRound() {
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println("~Battle has started!~");
-		System.out.println("~Rolling Initiative!~");
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~");
+		userInterface.battleStart();
 
 		// Generates new enemy object
 		Monster monster = new Monster();

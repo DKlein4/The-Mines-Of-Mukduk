@@ -30,4 +30,8 @@ public class UI {
 	public static void helpScreen() {
 		System.out.println("This is how to play the game!");
 	}
+	
+	public void battleStart() {
+		
+	}
 }
