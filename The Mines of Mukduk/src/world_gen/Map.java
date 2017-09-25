@@ -62,6 +62,18 @@ public class Map {
 			grid[i][0].setWall(true); // left column
 			grid[i][gridSize - 1].setWall(true); // right column
 		}
+		
+		// Place player starting position
+			for (int c = 0; c < gridSize; c++) {
+				for (int r = 0; r < gridSize; r++) {
+					if (grid[r][c].isFloor() == true){
+						
+						//PLACEHOLDER change door to player
+						grid[r][c].setDoor(true);
+						r = c = gridSize;
+					}
+				}
+			}
 
 	}
 
