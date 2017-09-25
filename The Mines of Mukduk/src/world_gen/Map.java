@@ -127,9 +127,9 @@ public class Map {
 		}
 		
 		//Generate Treasure Tile in room
-		xt = rand.nextInt((xc - xo) + 1) + xo;
-		yt = rand.nextInt((yc - yo) + 1) + yo;
-		grid[xt][yt].setTreasure(true);
+		xt = rand.nextInt(w) + xo;
+		yt = rand.nextInt(h) + yo;
+		grid[yt][xt].setTreasure(true);
 
 		// return the values as an array
 		return new int[] { w, h, xo, yo, xc, yc };
