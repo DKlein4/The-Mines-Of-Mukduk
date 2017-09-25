@@ -100,16 +100,19 @@ public class Map {
 		// yo - y coordinate of the origin of the rect
 		// xc - x coordinate of the corner opposite of the origin
 		// yc - y coordinate of the corner opposite of the origin
-		int w, h, xo, yo, xc, yc;
 		
-		int maxRoomSize = 3;
+		// xt - x coordinate of treasure
+		// yt - y coordinate of treasure
+		int w, h, xo, yo, xc, yc, xt, yt;
+		
+		int maxRoomSize = 4;
 		int minRoomSize = 1;
 		
 		// Generate random width and height between the restrictions
 		w = rand.nextInt(maxRoomSize - minRoomSize + 1) + minRoomSize; 
 		h = rand.nextInt(maxRoomSize - minRoomSize + 1) + minRoomSize; 
 
-		// Generate the coordinates were the map will be placed on the grid
+		// Generate the coordinates where the map will be placed on the grid
 		xo = rand.nextInt((gridSize - 1) - w + 1);
 		yo = rand.nextInt((gridSize - 1) - h + 1);
 		
@@ -122,6 +125,11 @@ public class Map {
 				grid[i][j].setFloor(true);
 			}
 		}
+		
+		//Generate Treasure Tile in room
+		xt = rand.nextInt((xc - xo) + 1) + xo;
+		yt = rand.nextInt((yc - yo) + 1) + yo;
+		grid[xt][yt].setTreasure(true);
 
 		// return the values as an array
 		return new int[] { w, h, xo, yo, xc, yc };
