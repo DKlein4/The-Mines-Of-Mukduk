@@ -11,17 +11,17 @@ public class Map {
 	private int gridSize;
 	private int numRooms;
 
-	public Map(int mapSize) {
-		grid = new Tile[mapSize][mapSize];
-		gridSize = mapSize;
-		numRooms = 30;
+	public Map(int gridSize) {
+		this.grid = new Tile[gridSize][gridSize];
+		this.gridSize = gridSize;
+		this.numRooms = 30;
 		reset();
 	}
 
 	public Map() {
-		grid = new Tile[10][10];
-		gridSize = 10;
-		numRooms = 15;
+		this.grid = new Tile[10][10];
+		this.gridSize = 10;
+		this.numRooms = 15;
 		reset();
 	}
 	
@@ -33,6 +33,10 @@ public class Map {
 	// returns gridSize
 	public int getGridSize() {
 		return gridSize;
+	}
+	
+	public Tile getGrid(int r, int c){
+		return grid[r][c];
 	}
 
 	// Resets the grid
