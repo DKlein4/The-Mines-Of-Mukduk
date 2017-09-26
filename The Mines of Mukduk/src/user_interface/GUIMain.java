@@ -98,8 +98,8 @@ public class GUIMain extends Canvas implements Runnable {
 					g.drawString("#", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
 				else if (map.getGrid(r, c).isFloor())
 					g.drawString(".", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
-				else if (map.getGrid(r, c).isDoor())
-					g.drawString("D", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
+				else if (map.getGrid(r, c).isLadder())
+					g.drawString("L", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
 				else if (map.getGrid(r, c).isUnexplored())
 					g.drawString("U", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
 				else if (map.getGrid(r, c).isTreasure())

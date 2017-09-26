@@ -9,7 +9,6 @@ public class main {
 	
 	public static void main(String[] args) {
 		Map map = new Map(gridSize);
-		map.printGrid();
 
 		new GUIMain(map);
 	}

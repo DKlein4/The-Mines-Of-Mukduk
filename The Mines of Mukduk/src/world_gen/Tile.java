@@ -3,14 +3,14 @@ package world_gen;
 public class Tile {
 
 	// Different states a tile can be
-	private boolean isWall, isFloor, isDoor, isUnexplored, isTreasure, isMonster;
+	private boolean isWall, isFloor, isLadder, isUnexplored, isTreasure, isMonster;
 
 	public Tile() {
-		isWall = isFloor = isDoor = isUnexplored = isTreasure = isMonster = false;
+		isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = false;
 	}
 	
 	private void clearTile(){
-		isWall = isFloor = isDoor = isUnexplored = isTreasure = isMonster = false;
+		isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = false;
 	}
 
 	public boolean isWall() {
@@ -31,13 +31,13 @@ public class Tile {
 		this.isFloor = isFloor;
 	}
 
-	public boolean isDoor() {
-		return isDoor;
+	public boolean isLadder() {
+		return isLadder;
 	}
 
-	public void setDoor(boolean isDoor) {
+	public void setLadder(boolean isLadder) {
 		clearTile();
-		this.isDoor = isDoor;
+		this.isLadder = isLadder;
 	}
 
 	public boolean isUnexplored() {

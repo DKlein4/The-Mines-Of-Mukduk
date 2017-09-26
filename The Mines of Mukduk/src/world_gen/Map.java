@@ -68,17 +68,26 @@ public class Map {
 		}
 		
 		// Place player starting position
-			for (int c = 0; c < gridSize; c++) {
-				for (int r = 0; r < gridSize; r++) {
-					if (grid[r][c].isFloor() == true){
-						
-						//PLACEHOLDER change door to player
-						grid[r][c].setDoor(true);
-						r = c = gridSize;
-					}
+		for (int c = 0; c < gridSize; c++) {
+			for (int r = 0; r < gridSize; r++) {
+				if (grid[r][c].isFloor() == true){
+					//PLACEHOLDER change monster to player
+					grid[r][c].setMonster(true);
+					r = c = gridSize; // Break out of the loop
 				}
 			}
-
+		}
+		
+		//Place the exit ladder
+		for (int c = gridSize-1; c >= 0; c--) {
+			for (int r = gridSize-1; r >= 0; r--) {
+				if (grid[r][c].isFloor() == true){
+					//PLACEHOLDER change monster to player
+					grid[r][c].setLadder(true);
+					r = c = 0; // Break out of the loop
+				}
+			}
+		}
 	}
 
 	// Generates multiple rooms and connects them with corridors
@@ -93,8 +102,8 @@ public class Map {
 			int[] room2 = genRoom();
 
 			// Print out the room info. Purely for testing
-			System.out.println("Room " + (2*i) + ": \t(" + room1[2] + "," + room1[3] + ")\tto \t(" + room1[4] + "," + room1[5] + ")   \tw:" + room1[0] + " h:" + room1[1]);
-			System.out.println("Room " + (2*i + 1) + ": \t(" + room2[2] + "," + room2[3] + ")\tto \t(" + room2[4] + "," + room2[5] + ")   \tw:" + room2[0] + " h:" + room2[1]);
+//			System.out.println("Room " + (2*i) + ": \t(" + room1[2] + "," + room1[3] + ")\tto \t(" + room1[4] + "," + room1[5] + ")   \tw:" + room1[0] + " h:" + room1[1]);
+//			System.out.println("Room " + (2*i + 1) + ": \t(" + room2[2] + "," + room2[3] + ")\tto \t(" + room2[4] + "," + room2[5] + ")   \tw:" + room2[0] + " h:" + room2[1]);
 
 			// Find the centers of each room
 			int x1Center = (room1[2] + room1[4]) / 2;	// First room's center x
@@ -178,7 +187,7 @@ public class Map {
 					System.out.print("\t#");
 				else if (grid[r][c].isFloor())
 					System.out.print("\t.");
-				else if (grid[r][c].isDoor())
+				else if (grid[r][c].isLadder())
 					System.out.print("\tD");
 				else if (grid[r][c].isUnexplored())
 					System.out.print("\tU");
