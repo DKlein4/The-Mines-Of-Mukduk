@@ -87,27 +87,27 @@ public class GUIMain extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		// Add in the lines to make a grid
-		tileSizeX = WIDTH / gridSize;
-		tileSizeY = HEIGHT / gridSize;
+		tileSizeX = (WIDTH / gridSize) - 1;
+		tileSizeY = (HEIGHT / gridSize) - 1;
 		
 		g.setColor(Color.white);
 		// Add the elements of the map to the gui
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (map.getGrid(r, c).isWall())
-					g.drawString("#", c*tileSizeX + (tileSizeX/2), r*tileSizeY + (tileSizeY/2));
+					g.drawString("#", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
 				else if (map.getGrid(r, c).isFloor())
-					g.drawString(".", c*tileSizeX + (tileSizeX/2), r*tileSizeY + (tileSizeY/2));
+					g.drawString(".", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
 				else if (map.getGrid(r, c).isDoor())
-					g.drawString("D", c*tileSizeX + (tileSizeX/2), r*tileSizeY + (tileSizeY/2));
+					g.drawString("D", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
 				else if (map.getGrid(r, c).isUnexplored())
-					g.drawString("U", c*tileSizeX + (tileSizeX/2), r*tileSizeY + (tileSizeY/2));
+					g.drawString("U", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
 				else if (map.getGrid(r, c).isTreasure())
-					g.drawString("T", c*tileSizeX + (tileSizeX/2), r*tileSizeY + (tileSizeY/2));
+					g.drawString("T", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
 				else if (map.getGrid(r, c).isMonster())
-					g.drawString("M", c*tileSizeX + (tileSizeX/2), r*tileSizeY + (tileSizeY/2));
+					g.drawString("M", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
 				else
-					g.drawString("X", c*tileSizeX + (tileSizeX/2), r*tileSizeY + (tileSizeY/2));
+					g.drawString("X", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
 			}
 		}
 
