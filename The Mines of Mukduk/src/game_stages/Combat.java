@@ -14,23 +14,23 @@ public class Combat {
 		Monster monster = new Monster();
 
 		// Player object
-		Player player = new Player();
+//		Player player = new Player();
 
 		// Generates player stats
-		int playerInitiative = player.getPlayerInitiative();
+//		int playerInitiative = player.getPlayerInitiative();
 
 		boolean notDead = true;
 		while (notDead == true) {
 			// Player goes first
-			if (checkInitiative(monster.getInitiative(), playerInitiative) == true) {
-				playerTurn();
-				monsterTurn();
-			}
+//			if (checkInitiative(monster.getInitiative(), playerInitiative) == true) {
+//				playerTurn();
+//				monsterTurn();
+//			}
 			// Monster goes first
-			else if (checkInitiative(monster.getInitiative(), playerInitiative) == false) {
-				monsterTurn();
-				playerTurn();
-			}
+//			else if (checkInitiative(monster.getInitiative(), playerInitiative) == false) {
+//				monsterTurn();
+//				playerTurn();
+//			}
 		}
 	}
 

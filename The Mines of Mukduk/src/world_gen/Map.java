@@ -24,7 +24,7 @@ public class Map {
 		this.numRooms = 15;
 		reset();
 	}
-	
+
 	// Returns true if the coordinates are within the grid
 	public boolean onGrid(int r, int c) {
 		return (0 <= r) && (r <= gridSize - 1) && (0 <= c) && (c <= gridSize - 1);
@@ -34,8 +34,8 @@ public class Map {
 	public int getGridSize() {
 		return gridSize;
 	}
-	
-	public Tile getGrid(int r, int c){
+
+	public Tile getGrid(int r, int c) {
 		return grid[r][c];
 	}
 
@@ -58,7 +58,7 @@ public class Map {
 
 		// Generate the interior rooms
 		genInteriorRooms();
-		
+
 		// Place walls around the outside of the grid
 		for (int i = 0; i < gridSize; i++) {
 			grid[0][i].setWall(true); // top row
@@ -66,24 +66,24 @@ public class Map {
 			grid[i][0].setWall(true); // left column
 			grid[i][gridSize - 1].setWall(true); // right column
 		}
-		
+
 		// Place player starting position
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
-				if (grid[r][c].isFloor() == true){
-					//PLACEHOLDER change monster to player
-					grid[r][c].setMonster(true);
+				if (grid[r][c].isFloor() == true) {
+					grid[r][c].setMonster(true);// PLACEHOLDER change monster to
+												// player
 					r = c = gridSize; // Break out of the loop
 				}
 			}
 		}
-		
-		//Place the exit ladder
-		for (int c = gridSize-1; c >= 0; c--) {
-			for (int r = gridSize-1; r >= 0; r--) {
-				if (grid[r][c].isFloor() == true){
-					//PLACEHOLDER change monster to player
-					grid[r][c].setLadder(true);
+
+		// Place the exit ladder
+		for (int c = gridSize - 1; c >= 0; c--) {
+			for (int r = gridSize - 1; r >= 0; r--) {
+				if (grid[r][c].isFloor() == true) {
+					grid[r][c].setLadder(true);// PLACEHOLDER change monster to
+												// player
 					r = c = 0; // Break out of the loop
 				}
 			}
@@ -92,26 +92,33 @@ public class Map {
 
 	// Generates multiple rooms and connects them with corridors
 	private void genInteriorRooms() {
-		// Creates numRooms amount of rooms 
+		// Creates numRooms amount of rooms
 		// Since this loop creates 2 rooms we only need to go to numRooms/2
-		for (int i = 0; i < numRooms/2; i++) {
-			
+		for (int i = 0; i < numRooms / 2; i++) {
+
 			// Generate two random rooms
-			// room array = {width, height, x position of origin, y position of origin, x position of corner opposite of origin, y position of corner opposite of origin}
+			// room array = {width, height, x position of origin, y position of
+			// origin, x position of corner opposite of origin, y position of
+			// corner opposite of origin}
 			int[] room1 = genRoom();
 			int[] room2 = genRoom();
 
 			// Print out the room info. Purely for testing
-//			System.out.println("Room " + (2*i) + ": \t(" + room1[2] + "," + room1[3] + ")\tto \t(" + room1[4] + "," + room1[5] + ")   \tw:" + room1[0] + " h:" + room1[1]);
-//			System.out.println("Room " + (2*i + 1) + ": \t(" + room2[2] + "," + room2[3] + ")\tto \t(" + room2[4] + "," + room2[5] + ")   \tw:" + room2[0] + " h:" + room2[1]);
+			// System.out.println("Room " + (2*i) + ": \t(" + room1[2] + "," +
+			// room1[3] + ")\tto \t(" + room1[4] + "," + room1[5] + ") \tw:" +
+			// room1[0] + " h:" + room1[1]);
+			// System.out.println("Room " + (2*i + 1) + ": \t(" + room2[2] + ","
+			// + room2[3] + ")\tto \t(" + room2[4] + "," + room2[5] + ") \tw:" +
+			// room2[0] + " h:" + room2[1]);
 
 			// Find the centers of each room
-			int x1Center = (room1[2] + room1[4]) / 2;	// First room's center x
-			int x2Center = (room2[2] + room2[4]) / 2;	// Second room's center x
-			int y1Center = (room1[3] + room1[5]) / 2;	// First room's center y
-			int y2Center = (room2[3] + room2[5]) / 2;	// Second room's center x
-			
-			// Use those values as the coordinates for the corridors to make them match up to the center of the rooms.
+			int x1Center = (room1[2] + room1[4]) / 2; // First room's center x
+			int x2Center = (room2[2] + room2[4]) / 2; // Second room's center x
+			int y1Center = (room1[3] + room1[5]) / 2; // First room's center y
+			int y2Center = (room2[3] + room2[5]) / 2; // Second room's center x
+
+			// Use those values as the coordinates for the corridors to make
+			// them match up to the center of the rooms.
 			genXCorridor(x1Center, x2Center, y2Center);
 			genYCorridor(y1Center, y2Center, x1Center);
 		}
@@ -125,22 +132,22 @@ public class Map {
 		// yo - y coordinate of the origin of the rect
 		// xc - x coordinate of the corner opposite of the origin
 		// yc - y coordinate of the corner opposite of the origin
-		
+
 		// xt - x coordinate of treasure
 		// yt - y coordinate of treasure
 		int w, h, xo, yo, xc, yc, xt, yt;
-		
+
 		int maxRoomSize = 4;
 		int minRoomSize = 1;
-		
+
 		// Generate random width and height between the restrictions
-		w = rand.nextInt(maxRoomSize - minRoomSize + 1) + minRoomSize; 
-		h = rand.nextInt(maxRoomSize - minRoomSize + 1) + minRoomSize; 
+		w = rand.nextInt(maxRoomSize - minRoomSize + 1) + minRoomSize;
+		h = rand.nextInt(maxRoomSize - minRoomSize + 1) + minRoomSize;
 
 		// Generate the coordinates where the map will be placed on the grid
 		xo = rand.nextInt((gridSize - 1) - w + 1);
 		yo = rand.nextInt((gridSize - 1) - h + 1);
-		
+
 		xc = xo + w;
 		yc = yo + h;
 
@@ -150,8 +157,8 @@ public class Map {
 				grid[i][j].setFloor(true);
 			}
 		}
-		
-		//Generate Treasure Tile in room
+
+		// Generate Treasure Tile in room
 		xt = rand.nextInt(w) + xo;
 		yt = rand.nextInt(h) + yo;
 		grid[yt][xt].setTreasure(true);
@@ -160,7 +167,8 @@ public class Map {
 		return new int[] { w, h, xo, yo, xc, yc };
 	}
 
-	// Generates a line of floor tiles from the given two x coordinates at the given y coordinate
+	// Generates a line of floor tiles from the given two x coordinates at the
+	// given y coordinate
 	private void genXCorridor(int x1, int x2, int y) {
 		int lower = Math.min(x1, x2);
 		int higher = Math.max(x1, x2);
@@ -169,7 +177,9 @@ public class Map {
 			grid[y][i].setFloor(true);
 		}
 	}
-	// Generates a line of floor tiles from the given two y coordinates at the given x coordinate
+
+	// Generates a line of floor tiles from the given two y coordinates at the
+	// given x coordinate
 	private void genYCorridor(int y1, int y2, int x) {
 		int lower = Math.min(y1, y2);
 		int higher = Math.max(y1, y2);
@@ -178,7 +188,7 @@ public class Map {
 			grid[i][x].setFloor(true);
 		}
 	}
-	
+
 	// Prints out the grid. Purely for testing
 	public void printGrid() {
 		for (int r = 0; r < gridSize; r++) {

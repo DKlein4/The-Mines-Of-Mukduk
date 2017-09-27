@@ -8,24 +8,50 @@ import java.util.Random;
 
 import world_gen.Map;
 import Main.main;
+import entities.ID;
+import entities.Player;
 
+/**
+ * @author Dustin; This is the main class that creates the GUI and manages the
+ *         actions on the GUI
+ */
 public class GUIMain extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 501298079830563846L;
 
-	public static final int WIDTH = 900, HEIGHT = WIDTH / 12 * 9;
+	public static final int WIDTH = 900; // Width of the screen
+	public static final int HEIGHT = WIDTH / 12 * 9; // Height of the screen
 	private Thread thread;
 	private boolean running = false;
 
-	private int gridSize = main.gridSize;
-	private int tileSizeX;
-	private int tileSizeY;
-	
+	private int gridSize = main.gridSize; // Number of tiles on the map
+	private int tileSizeX; // The size of the tile in the x direction
+	private int tileSizeY; // The size of the tile in the y direction
+	private int gridOffsetX; // The offset of the grid in the x direction for formating
+	private int gridOffsetY; // The offset of the grid in the y direction for formating
+
+	private Random r;
+	private Handler handler;
+
 	private Map map;
 
 	public GUIMain(Map map) {
-		new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
+		
+		tileSizeX = (GUIMain.WIDTH / main.gridSize) - 1;
+		tileSizeY = (GUIMain.HEIGHT / main.gridSize) - 1;
+		
+		gridOffsetX = tileSizeX * 3 / 4;
+		gridOffsetY = tileSizeY;
+
 		this.map = map;
+
+		this.r = new Random();
+		this.handler = new Handler();
+
+		this.addKeyListener(new KeyInput(handler));
+		new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
+
+		handler.addEntity(new Player(0, 0, ID.Player, handler));
 	}
 
 	public synchronized void start() {
@@ -64,7 +90,7 @@ public class GUIMain extends Canvas implements Runnable {
 			frames++;
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println("FPS: " + frames);
+				// System.out.println("FPS: " + frames);
 				frames = 0;
 			}
 		}
@@ -72,6 +98,7 @@ public class GUIMain extends Canvas implements Runnable {
 	}
 
 	private void tick() {
+		handler.tick();
 	}
 
 	private void render() {
@@ -86,36 +113,35 @@ public class GUIMain extends Canvas implements Runnable {
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
-		// Add in the lines to make a grid
-		tileSizeX = (WIDTH / gridSize) - 1;
-		tileSizeY = (HEIGHT / gridSize) - 1;
-		
-		g.setColor(Color.white);
 		// Add the elements of the map to the gui
-		for (int c = 0; c < gridSize; c++) {
-			for (int r = 0; r < gridSize; r++) {
+		g.setColor(Color.white);
+		for (int r = 0; r < gridSize; r++) {
+			for (int c = 0; c < gridSize; c++) {
 				if (map.getGrid(r, c).isWall())
-					g.drawString("#", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
+					g.drawString("#", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				else if (map.getGrid(r, c).isFloor())
-					g.drawString(".", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
+					g.drawString(".", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				else if (map.getGrid(r, c).isLadder())
-					g.drawString("L", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
+					g.drawString("L", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				else if (map.getGrid(r, c).isUnexplored())
-					g.drawString("U", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
+					g.drawString("U", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				else if (map.getGrid(r, c).isTreasure())
-					g.drawString("T", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
+					g.drawString("T", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				else if (map.getGrid(r, c).isMonster())
-					g.drawString("M", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
+					g.drawString("M", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				else
-					g.drawString("X", c*tileSizeX + (tileSizeX*3/4), r*tileSizeY + (tileSizeY));
+					g.drawString("X", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 			}
 		}
+
+		// Render the handler, which in turn renders the entities
+		handler.render(g);
 
 		g.dispose();
 		bs.show();
 	}
 
-	public static float clamp(float var, float min, float max) {
+	public static int clamp(int var, int min, int max) {
 		if (var >= max)
 			return var = max;
 		else if (var < min)
@@ -123,5 +149,4 @@ public class GUIMain extends Canvas implements Runnable {
 		else
 			return var;
 	}
-
 }
