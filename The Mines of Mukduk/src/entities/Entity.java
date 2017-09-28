@@ -7,11 +7,12 @@ import Main.main;
 import user_interface.GUIMain;
 
 public abstract class Entity {
-	protected int row, col;
-	protected int tileSizeX, tileSizeY;
-	protected int gridOffsetX, gridOffsetY;
-	protected int xPos, yPos;
-	protected ID id;
+	protected int row, col; // Positions on the grid
+	protected int tileSizeX, tileSizeY; // The sizes of an individual tile
+	protected int gridOffsetX, gridOffsetY; // Offsets for formatting. Make the
+											// entity line up with the grid
+	protected int xPos, yPos; // Positions on the grid
+	protected ID id; // Type of entity
 
 	public Entity(int r, int c, ID id) {
 		this.row = r;
@@ -21,6 +22,7 @@ public abstract class Entity {
 		tileSizeX = (GUIMain.WIDTH / main.gridSize) - 1;
 		tileSizeY = (GUIMain.HEIGHT / main.gridSize) - 1;
 
+		// These numbers are the way that they are and IDK why
 		gridOffsetX = (tileSizeX * 3 / 4) * 3 / 4;
 		gridOffsetY = tileSizeY / 4;
 

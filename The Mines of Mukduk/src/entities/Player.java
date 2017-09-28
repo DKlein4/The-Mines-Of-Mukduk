@@ -19,14 +19,15 @@ public class Player extends Entity {
 	}
 
 	public void tick() {
+		// Update the position of the player
 		xPos = (col * tileSizeX) + gridOffsetX;
 		yPos = (row * tileSizeY) + gridOffsetY;
 	}
 
 	public void render(Graphics g) {
+		// Draws the player on the GUI. Right now its just a white square
 		g.setColor(Color.white);
 		g.fillRect(xPos, yPos, tileSizeY, tileSizeY);
-		System.out.println("(" + row + "," + col + ")");
 	}
 
 	public Rectangle getBounds() {

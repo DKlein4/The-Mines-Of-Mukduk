@@ -27,39 +27,44 @@ public class GUIMain extends Canvas implements Runnable {
 	private int gridSize = main.gridSize; // Number of tiles on the map
 	private int tileSizeX; // The size of the tile in the x direction
 	private int tileSizeY; // The size of the tile in the y direction
-	private int gridOffsetX; // The offset of the grid in the x direction for formating
-	private int gridOffsetY; // The offset of the grid in the y direction for formating
+	private int gridOffsetX; // The offset of the grid in the x direction for
+								// formating
+	private int gridOffsetY; // The offset of the grid in the y direction for
+								// formating
 
-	private Random r;
 	private Handler handler;
 
 	private Map map;
 
 	public GUIMain(Map map) {
-		
+
 		tileSizeX = (GUIMain.WIDTH / main.gridSize) - 1;
 		tileSizeY = (GUIMain.HEIGHT / main.gridSize) - 1;
-		
+
 		gridOffsetX = tileSizeX * 3 / 4;
 		gridOffsetY = tileSizeY;
 
 		this.map = map;
 
-		this.r = new Random();
 		this.handler = new Handler();
 
 		this.addKeyListener(new KeyInput(handler));
+
+		// Creates the game screen
 		new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
 
+		// Adds a player to the entity list
 		handler.addEntity(new Player(0, 0, ID.Player, handler));
 	}
 
+	// Ran whenever started
 	public synchronized void start() {
 		thread = new Thread(this);
 		thread.start();
 		running = true;
 	}
 
+	// Ran whenever ended
 	public synchronized void stop() {
 		try {
 			thread.join();
@@ -101,6 +106,7 @@ public class GUIMain extends Canvas implements Runnable {
 		handler.tick();
 	}
 
+	// Puts things on the screen
 	private void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
@@ -113,7 +119,7 @@ public class GUIMain extends Canvas implements Runnable {
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
-		// Add the elements of the map to the gui
+		// Add the elements of the map to the GUI
 		g.setColor(Color.white);
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {

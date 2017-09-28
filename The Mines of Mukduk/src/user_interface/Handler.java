@@ -6,12 +6,14 @@ import java.util.LinkedList;
 import entities.Entity;
 
 /**
- * @author Dustin
- *	This class handles all entities.  It basically updates every single entity every tick.
+ * @author Dustin; This class handles all entities. It basically updates every
+ *         single entity every tick.
  */
 public class Handler {
+	// This list holds every entity
 	LinkedList<Entity> entity = new LinkedList<Entity>();
 
+	// Tick each entity
 	public void tick() {
 		for (int i = 0; i < entity.size(); i++) {
 			Entity tempEntity = entity.get(i);
@@ -19,6 +21,7 @@ public class Handler {
 		}
 	}
 
+	// Render each entity
 	public void render(Graphics g) {
 		for (int i = 0; i < entity.size(); i++) {
 			Entity tempEntity = entity.get(i);
