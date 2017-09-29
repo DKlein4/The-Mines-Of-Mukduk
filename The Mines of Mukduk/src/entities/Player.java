@@ -37,7 +37,7 @@ public class Player extends Entity {
 	}
 
 	public void render(Graphics g) {
-		// Draws the player on the GUI. Right now its just a white square
+		// Draws the player on the GUI. Right now its just a sexy Dorf
 		g.drawImage(playerSprite, xPos, yPos, tileSizeY, tileSizeY, null);
 	}
 
