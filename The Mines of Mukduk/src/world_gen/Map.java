@@ -5,6 +5,10 @@ import java.lang.Math;
 
 import world_gen.Tile;
 
+/**
+ * @author Dustin; This is the grid that houses all of the tiles. Basically a
+ *         level with random generation
+ */
 public class Map {
 	private Random rand = new Random();
 	private Tile[][] grid;
@@ -65,17 +69,6 @@ public class Map {
 			grid[gridSize - 1][i].setWall(true); // bottom row
 			grid[i][0].setWall(true); // left column
 			grid[i][gridSize - 1].setWall(true); // right column
-		}
-
-		// Place player starting position
-		for (int c = 0; c < gridSize; c++) {
-			for (int r = 0; r < gridSize; r++) {
-				if (grid[r][c].isFloor() == true) {
-					grid[r][c].setMonster(true);// PLACEHOLDER change monster to
-												// player
-					r = c = gridSize; // Break out of the loop
-				}
-			}
 		}
 
 		// Place the exit ladder

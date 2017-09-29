@@ -54,7 +54,15 @@ public class GUIMain extends Canvas implements Runnable {
 		new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
 
 		// Adds a player to the entity list
-		handler.addEntity(new Player(0, 0, ID.Player, handler));
+		for (int c = 0; c < gridSize; c++) {
+			for (int r = 0; r < gridSize; r++) {
+				if (map.getGrid(r, c).isFloor() == true) {
+					handler.addEntity(new Player(r, c, ID.Player, handler));
+
+					r = c = gridSize; // Break out of the loop
+				}
+			}
+		}
 	}
 
 	// Ran whenever started
