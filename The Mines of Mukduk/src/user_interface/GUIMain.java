@@ -128,19 +128,26 @@ public class GUIMain extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		// Add the elements of the map to the GUI
-		g.setColor(Color.white);
+		
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
-				if (map.getGrid(r, c).isWall())
-					g.drawString("#", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+				g.setColor(Color.white);
+				if (map.getGrid(r, c).isWall()) {
+					g.setColor(Color.black);
+					g.drawString("▓", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+				}
 				else if (map.getGrid(r, c).isFloor())
-					g.drawString(".", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				else if (map.getGrid(r, c).isLadder())
-					g.drawString("L", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+					g.drawString("┼", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+				else if (map.getGrid(r, c).isLadder()) {
+					g.setColor(Color.green);
+					g.drawString("φ", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+				}
 				else if (map.getGrid(r, c).isUnexplored())
 					g.drawString("U", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				else if (map.getGrid(r, c).isTreasure())
-					g.drawString("T", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+				else if (map.getGrid(r, c).isTreasure()) {
+					g.setColor(Color.yellow);
+					g.drawString("₧", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+				}
 				else if (map.getGrid(r, c).isMonster())
 					g.drawString("M", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				else
