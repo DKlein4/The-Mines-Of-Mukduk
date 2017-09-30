@@ -11,7 +11,7 @@ public class Combat {
 		userInterface.battleStart();
 
 		// Generates new enemy object
-		Monster monster = new Monster();
+//		Monster monster = new Monster();
 
 		// Player object
 //		Player player = new Player();
