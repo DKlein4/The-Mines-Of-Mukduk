@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import Main.main;
+import game_stages.Combat;
 import user_interface.GUIMain;
 import world_gen.Map;
 
@@ -16,6 +17,7 @@ public abstract class Entity {
 	protected ID id; // Type of entity
 
 	protected Map map;
+	protected Combat combat;
 
 	public Entity(int r, int c, ID id, Map map) {
 		this.row = r;
@@ -46,23 +48,22 @@ public abstract class Entity {
 
 	public void isTreasure(int r, int c) {
 		if (map.getGrid(r, c).isTreasure()) {
-
+			// rollLootTable();
 		}
-		}
+	}
 
-		public void isLadder(int r, int c) {
+	public void isLadder(int r, int c) {
 		if (map.getGrid(r, c).isLadder()) {
-		map.reset();
+			map.reset();
 		}
-		}
+	}
 
-		public void isMonster(int r, int c) {
+	public void isMonster(int r, int c) {
 		if (map.getGrid(r, c).isMonster()) {
-
+			combat.combatRound();
 		}
-		}
+	}
 
-	
 	public int getRow() {
 		return row;
 	}
@@ -95,13 +96,4 @@ public abstract class Entity {
 		return yPos;
 	}
 
-	public void add(Entity entity) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void remove(Entity entity) {
-		// TODO Auto-generated method stub
-		
-	}
 }
