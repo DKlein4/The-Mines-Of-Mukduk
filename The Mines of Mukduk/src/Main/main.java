@@ -10,6 +10,7 @@ public class main {
 	public static final int gridSize = 30;
 
 	public static void main(String[] args) {
-		new World();
+		World world = new World();
+		new GUIMain(world);
 	}
 }

@@ -10,18 +10,21 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import user_interface.Handler;
+import world_gen.Map;
 
 public class Player extends Entity {
-	Random rand = new Random();
-	Handler handler;
-	File pathToSprite;
-    Image playerSprite;
+	private Random rand = new Random();
+	private Handler handler;
+	
+	private File pathToSprite;
+	private Image playerSprite;
 
-
-	public Player(int row, int col, ID id, Handler handler) {
-		super(row, col, ID.Player);
+	public Player(int row, int col, ID id, Handler handler, Map map) {
+		super(row, col, ID.Player, map);
 		this.handler = handler;
-		
+
+		this.map = map;
+
 		try {
 			pathToSprite = new File("src/Resources/Dwarf.png");
 			playerSprite = ImageIO.read(pathToSprite);

@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import Main.main;
 import user_interface.GUIMain;
+import world_gen.Map;
 
 public abstract class Entity {
 	protected int row, col; // Positions on the grid
@@ -14,7 +15,9 @@ public abstract class Entity {
 	protected int xPos, yPos; // Positions on the grid
 	protected ID id; // Type of entity
 
-	public Entity(int r, int c, ID id) {
+	protected Map map;
+
+	public Entity(int r, int c, ID id, Map map) {
 		this.row = r;
 		this.col = c;
 		this.id = id;
@@ -35,6 +38,11 @@ public abstract class Entity {
 	public abstract void render(Graphics g);
 
 	public abstract Rectangle getBounds();
+
+	// Returns true if the coordinate is a valid tile to move to
+	public boolean isValidMove(int r, int c) {
+		return !map.getGrid(r, c).isWall();
+	}
 
 	public int getRow() {
 		return row;

@@ -7,10 +7,9 @@ import user_interface.GUIMain;
  */
 public class World {
 	
-	private Map level1;
+	public Map level1;
 	
 	public World(){
 		level1 = new Map(30);
-		new GUIMain(level1);
 	}
 }

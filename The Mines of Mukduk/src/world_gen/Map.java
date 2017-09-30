@@ -18,7 +18,7 @@ public class Map {
 	public Map(int gridSize) {
 		this.grid = new Tile[gridSize][gridSize];
 		this.gridSize = gridSize;
-		this.numRooms = 30;
+		this.numRooms = 35;
 		reset();
 	}
 
@@ -95,14 +95,6 @@ public class Map {
 			// corner opposite of origin}
 			int[] room1 = genRoom();
 			int[] room2 = genRoom();
-
-			// Print out the room info. Purely for testing
-			// System.out.println("Room " + (2*i) + ": \t(" + room1[2] + "," +
-			// room1[3] + ")\tto \t(" + room1[4] + "," + room1[5] + ") \tw:" +
-			// room1[0] + " h:" + room1[1]);
-			// System.out.println("Room " + (2*i + 1) + ": \t(" + room2[2] + ","
-			// + room2[3] + ")\tto \t(" + room2[4] + "," + room2[5] + ") \tw:" +
-			// room2[0] + " h:" + room2[1]);
 
 			// Find the centers of each room
 			int x1Center = (room1[2] + room1[4]) / 2; // First room's center x

@@ -35,23 +35,31 @@ public class KeyInput extends KeyAdapter {
 			if (tempObject.getId() == ID.Player) {
 				// When W is pressed move the player one row up
 				if (key == KeyEvent.VK_W) {
-					tempObject.setRow(tempObject.getRow() - 1);
-					keyDown[0] = true;
+					if (tempObject.isValidMove(tempObject.getRow() - 1, tempObject.getCol())) {
+						tempObject.setRow(tempObject.getRow() - 1);
+						keyDown[0] = true;
+					}
 				}
 				// When S is pressed move the player one row down
 				if (key == KeyEvent.VK_S) {
-					tempObject.setRow(tempObject.getRow() + 1);
-					keyDown[1] = true;
+					if (tempObject.isValidMove(tempObject.getRow() + 1, tempObject.getCol())) {
+						tempObject.setRow(tempObject.getRow() + 1);
+						keyDown[1] = true;
+					}
 				}
 				// When D is pressed move the player one col right
 				if (key == KeyEvent.VK_D) {
-					tempObject.setCol(tempObject.getCol() + 1);
-					keyDown[2] = true;
+					if (tempObject.isValidMove(tempObject.getRow(), tempObject.getCol() + 1)) {
+						tempObject.setCol(tempObject.getCol() + 1);
+						keyDown[2] = true;
+					}
 				}
 				// When A is pressed move the player one col left
 				if (key == KeyEvent.VK_A) {
-					tempObject.setCol(tempObject.getCol() - 1);
-					keyDown[3] = true;
+					if (tempObject.isValidMove(tempObject.getRow(), tempObject.getCol() - 1)) {
+						tempObject.setCol(tempObject.getCol() - 1);
+						keyDown[3] = true;
+					}
 				}
 			}
 		}

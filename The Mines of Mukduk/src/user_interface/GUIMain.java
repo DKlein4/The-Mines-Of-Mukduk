@@ -7,6 +7,7 @@ import java.awt.image.BufferStrategy;
 import java.util.Random;
 
 import world_gen.Map;
+import world_gen.World;
 import Main.main;
 import entities.ID;
 import entities.Player;
@@ -36,7 +37,7 @@ public class GUIMain extends Canvas implements Runnable {
 
 	private Map map;
 
-	public GUIMain(Map map) {
+	public GUIMain(World world) {
 
 		tileSizeX = (GUIMain.WIDTH / main.gridSize) - 1;
 		tileSizeY = (GUIMain.HEIGHT / main.gridSize) - 1;
@@ -44,7 +45,7 @@ public class GUIMain extends Canvas implements Runnable {
 		gridOffsetX = tileSizeX * 3 / 4;
 		gridOffsetY = tileSizeY;
 
-		this.map = map;
+		this.map = world.level1;
 
 		this.handler = new Handler();
 
@@ -57,7 +58,7 @@ public class GUIMain extends Canvas implements Runnable {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (map.getGrid(r, c).isFloor() == true) {
-					handler.addEntity(new Player(r, c, ID.Player, handler));
+					handler.addEntity(new Player(r, c, ID.Player, handler, map));
 
 					r = c = gridSize; // Break out of the loop
 				}
@@ -137,7 +138,7 @@ public class GUIMain extends Canvas implements Runnable {
 					g.drawString("▓", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				}
 				else if (map.getGrid(r, c).isFloor())
-					g.drawString("┼", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+					g.drawString(".", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				else if (map.getGrid(r, c).isLadder()) {
 					g.setColor(Color.green);
 					g.drawString("φ", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
