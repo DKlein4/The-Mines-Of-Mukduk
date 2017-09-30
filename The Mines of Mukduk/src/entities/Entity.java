@@ -48,8 +48,9 @@ public abstract class Entity {
 
 	// Checks if tile is treasure, rolls on the table, then sets it back to floor
 	public void isTreasure(int r, int c) {
+		Tables table = new Tables();
 		if (map.getGrid(r, c).isTreasure()) {
-			// rollLootTable();
+			table.lootRoll();
 			map.getGrid(r,c).setFloor(true);
 		}
 	}
