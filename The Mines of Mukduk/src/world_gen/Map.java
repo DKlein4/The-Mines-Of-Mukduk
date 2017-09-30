@@ -76,16 +76,20 @@ public class Map {
 			grid[i][gridSize - 1].setWall(true); // right column
 		}
 
-		int spawnX;
-		int spawnY;
-		spawnX = spawnY = 0;
 		// Place the spawn point
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (grid[r][c].isFloor() == true) {
+					// Creates a room starting at the spawn point
+					for (int xs = r; xs < r + 5; xs++) {
+						for (int ys = c; ys < c + 5; ys++) {
+							if (xs < (gridSize - 1)) {
+							grid[xs][ys].setFloor(true);
+							}
+						}
+					}
 					grid[r][c].setSpawn(true);
-					r = spawnX;
-					c = spawnY;
+
 					r = c = gridSize; // Break out of the loop
 				}
 			}
@@ -95,8 +99,18 @@ public class Map {
 		for (int c = gridSize - 1; c >= 0; c--) {
 			for (int r = gridSize - 1; r >= 0; r--) {
 				if (grid[r][c].isFloor() == true) {
-					grid[r][c].setLadder(true);// PLACEHOLDER change monster to
-												// player
+					grid[r][c].setLadder(true);
+					for (int cl = 1; cl < 5; cl++) {
+						if (c - cl > 0) {
+							grid[r][c - cl].setFloor(true);
+						}
+					}
+					for (int rl = 1; rl < 5; rl++) {
+						if (r - rl > 0) {
+							grid[r - rl][c].setFloor(true);
+						}
+					}
+
 					r = c = 0; // Break out of the loop
 				}
 			}
