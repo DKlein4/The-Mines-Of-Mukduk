@@ -137,17 +137,19 @@ public class GUIMain extends Canvas implements Runnable {
 				} else if (map.getGrid(r, c).isFloor())
 					g.drawString(".", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				else if (map.getGrid(r, c).isSpawn()) {
-					g.drawString("X", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+					g.drawString(".", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				} else if (map.getGrid(r, c).isLadder()) {
 					g.setColor(Color.green);
-					g.drawString("φ", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+					g.drawString("▼", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				} else if (map.getGrid(r, c).isUnexplored())
 					g.drawString("U", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				else if (map.getGrid(r, c).isTreasure()) {
 					g.setColor(Color.yellow);
 					g.drawString("₧", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				} else if (map.getGrid(r, c).isMonster())
-					g.drawString("M", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+				} else if (map.getGrid(r, c).isMonster()) {
+					g.setColor(Color.red);
+					g.drawString("§", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+				}
 				else
 					g.drawString("X", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 			}
