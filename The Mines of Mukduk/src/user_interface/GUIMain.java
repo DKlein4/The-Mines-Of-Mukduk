@@ -54,11 +54,10 @@ public class GUIMain extends Canvas implements Runnable {
 		// Creates the game screen
 		new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
 
-		// Adds a player to the entity list
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
-				if (map.getGrid(r, c).isFloor() == true) {
-					handler.addEntity(new Player(r, c, ID.Player, handler, map));
+				if (map.getGrid(r, c).isSpawn() == true) {
+					Handler.addEntity(new Player(r, c, ID.Player, handler, map));
 
 					r = c = gridSize; // Break out of the loop
 				}
@@ -129,35 +128,35 @@ public class GUIMain extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		// Add the elements of the map to the GUI
-		
+
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
 				g.setColor(Color.white);
 				if (map.getGrid(r, c).isWall()) {
 					g.setColor(Color.black);
 					g.drawString("▓", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				}
-				else if (map.getGrid(r, c).isFloor())
+				} else if (map.getGrid(r, c).isFloor())
 					g.drawString(".", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				else if (map.getGrid(r, c).isLadder()) {
+				else if (map.getGrid(r, c).isSpawn()) {
+					g.drawString("X", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+				} else if (map.getGrid(r, c).isLadder()) {
 					g.setColor(Color.green);
 					g.drawString("φ", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				}
-				else if (map.getGrid(r, c).isUnexplored())
+				} else if (map.getGrid(r, c).isUnexplored())
 					g.drawString("U", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				else if (map.getGrid(r, c).isTreasure()) {
 					g.setColor(Color.yellow);
 					g.drawString("₧", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				}
-				else if (map.getGrid(r, c).isMonster())
+				} else if (map.getGrid(r, c).isMonster())
 					g.drawString("M", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				else
 					g.drawString("X", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 			}
+
 		}
 
 		// Render the handler, which in turn renders the entities
-		handler.render(g);
+		Handler.render(g);
 
 		g.dispose();
 		bs.show();

@@ -76,9 +76,8 @@ public class KeyInput extends KeyAdapter {
 		tempObject.isTreasure(tempObject.getRow(), tempObject.getCol());
 		tempObject.isLadder(tempObject.getRow(), tempObject.getCol());
 		tempObject.isMonster(tempObject.getRow(), tempObject.getCol());
-		}
+	}
 
-	
 	// When a key is released loop through all of the entities and check if any
 	// actions should be performed
 	public void keyReleased(KeyEvent e) {

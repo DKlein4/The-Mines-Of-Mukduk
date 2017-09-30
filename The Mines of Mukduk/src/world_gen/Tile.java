@@ -3,18 +3,27 @@ package world_gen;
 public class Tile {
 
 	// Different states a tile can be
-	private boolean isWall, isFloor, isLadder, isUnexplored, isTreasure, isMonster;
+	private boolean isWall, isFloor, isLadder, isUnexplored, isTreasure, isMonster, isSpawn;
 
 	public Tile() {
-		isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = false;
+		isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = isSpawn = false;
 	}
 	
 	private void clearTile(){
-		isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = false;
+		isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = isSpawn = false;
 	}
 
 	public boolean isWall() {
 		return isWall;
+	}
+
+	public boolean isSpawn() {
+		return isSpawn;
+	}
+
+	public void setSpawn(boolean isSpawn) {
+		clearTile();
+		this.isSpawn = isSpawn;
 	}
 
 	public void setWall(boolean isWall) {

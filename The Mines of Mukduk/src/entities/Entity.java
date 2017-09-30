@@ -94,4 +94,14 @@ public abstract class Entity {
 	public int getYPos() {
 		return yPos;
 	}
+
+	public void add(Entity entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void remove(Entity entity) {
+		// TODO Auto-generated method stub
+		
+	}
 }

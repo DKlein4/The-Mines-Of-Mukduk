@@ -1,6 +1,12 @@
 package world_gen;
 
 import java.util.Random;
+
+import entities.Entity;
+import entities.ID;
+import entities.Player;
+import user_interface.Handler;
+
 import java.lang.Math;
 
 import world_gen.Tile;
@@ -14,6 +20,7 @@ public class Map {
 	private Tile[][] grid;
 	private int gridSize;
 	private int numRooms;
+	private Handler handler;
 
 	public Map(int gridSize) {
 		this.grid = new Tile[gridSize][gridSize];
@@ -71,6 +78,21 @@ public class Map {
 			grid[i][gridSize - 1].setWall(true); // right column
 		}
 
+		int spawnX;
+		int spawnY;
+		spawnX = spawnY = 0;
+		// Place the spawn point
+		for (int c = 0; c < gridSize; c++) {
+			for (int r = 0; r < gridSize; r++) {
+				if (grid[r][c].isFloor() == true) {
+					grid[r][c].setSpawn(true);
+					r = spawnX;
+					c = spawnY;
+					r = c = gridSize; // Break out of the loop
+				}
+			}
+		}
+
 		// Place the exit ladder
 		for (int c = gridSize - 1; c >= 0; c--) {
 			for (int r = gridSize - 1; r >= 0; r--) {
@@ -78,6 +100,21 @@ public class Map {
 					grid[r][c].setLadder(true);// PLACEHOLDER change monster to
 												// player
 					r = c = 0; // Break out of the loop
+				}
+			}
+		}
+
+		// Places the player sprite
+		for (int c = 0; c < gridSize; c++) {
+			for (int r = 0; r < gridSize; r++) {
+				if (grid[r][c].isSpawn() == true) {
+					for (int i = 0; i < Handler.entity.size(); i++) {
+						Entity tempObject = Handler.entity.get(i);
+						if (tempObject.getId() == ID.Player) {
+							tempObject.setRow(r);
+							tempObject.setCol(c);
+						}
+					}
 				}
 			}
 		}
@@ -172,29 +209,5 @@ public class Map {
 		for (int i = lower; i <= higher; i++) {
 			grid[i][x].setFloor(true);
 		}
-	}
-
-	// Prints out the grid. Purely for testing
-	public void printGrid() {
-		for (int r = 0; r < gridSize; r++) {
-			for (int c = 0; c < gridSize; c++) {
-				if (grid[r][c].isWall())
-					System.out.print("\t#");
-				else if (grid[r][c].isFloor())
-					System.out.print("\t.");
-				else if (grid[r][c].isLadder())
-					System.out.print("\tD");
-				else if (grid[r][c].isUnexplored())
-					System.out.print("\tU");
-				else if (grid[r][c].isTreasure())
-					System.out.print("\tT");
-				else if (grid[r][c].isMonster())
-					System.out.print("\tM");
-				else
-					System.out.print("\tX");
-			}
-			System.out.println();
-		}
-		System.out.println();
 	}
 }
