@@ -5,7 +5,6 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -13,16 +12,11 @@ import user_interface.Handler;
 import world_gen.Map;
 
 public class Player extends Entity {
-	private Random rand = new Random();
-	private Handler handler;
-	
 	private File pathToSprite;
 	private Image playerSprite;
 
 	public Player(int row, int col, ID id, Handler handler, Map map) {
 		super(row, col, ID.Player, map);
-		this.handler = handler;
-
 		this.map = map;
 
 		try {

@@ -11,11 +11,9 @@ import entities.ID;
  */
 public class KeyInput extends KeyAdapter {
 
-	private Handler handler;
 	private boolean[] keyDown = new boolean[4];
 
 	public KeyInput(Handler handler) {
-		this.handler = handler;
 		keyDown[0] = false; // W
 		keyDown[1] = false; // S
 		keyDown[2] = false; // D
@@ -27,8 +25,8 @@ public class KeyInput extends KeyAdapter {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		for (int i = 0; i < handler.entity.size(); i++) {
-			Entity tempObject = handler.entity.get(i);
+		for (int i = 0; i < Handler.entity.size(); i++) {
+			Entity tempObject = Handler.entity.get(i);
 
 			// If there is a player entity and one of these keys are pressed
 			// move the player
@@ -83,8 +81,8 @@ public class KeyInput extends KeyAdapter {
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		for (int i = 0; i < handler.entity.size(); i++) {
-			Entity tempObject = handler.entity.get(i);
+		for (int i = 0; i < Handler.entity.size(); i++) {
+			Entity tempObject = Handler.entity.get(i);
 
 			// If there is a player entity and one of these keys are released
 			// update the keyDown array

@@ -1,6 +1,5 @@
 package world_gen;
 
-import user_interface.GUIMain;
 
 /**
  * @author Dustin; Holds and manages multiple levels or maps.

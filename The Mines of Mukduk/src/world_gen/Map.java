@@ -4,7 +4,6 @@ import java.util.Random;
 
 import entities.Entity;
 import entities.ID;
-import entities.Player;
 import user_interface.Handler;
 
 import java.lang.Math;
@@ -20,7 +19,6 @@ public class Map {
 	private Tile[][] grid;
 	private int gridSize;
 	private int numRooms;
-	private Handler handler;
 
 	public Map(int gridSize) {
 		this.grid = new Tile[gridSize][gridSize];
