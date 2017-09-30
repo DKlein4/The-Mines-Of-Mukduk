@@ -37,6 +37,7 @@ public class KeyInput extends KeyAdapter {
 				if (key == KeyEvent.VK_W) {
 					if (tempObject.isValidMove(tempObject.getRow() - 1, tempObject.getCol())) {
 						tempObject.setRow(tempObject.getRow() - 1);
+						entityCollision(tempObject);
 						keyDown[0] = true;
 					}
 				}
@@ -44,6 +45,7 @@ public class KeyInput extends KeyAdapter {
 				if (key == KeyEvent.VK_S) {
 					if (tempObject.isValidMove(tempObject.getRow() + 1, tempObject.getCol())) {
 						tempObject.setRow(tempObject.getRow() + 1);
+						entityCollision(tempObject);
 						keyDown[1] = true;
 					}
 				}
@@ -51,6 +53,7 @@ public class KeyInput extends KeyAdapter {
 				if (key == KeyEvent.VK_D) {
 					if (tempObject.isValidMove(tempObject.getRow(), tempObject.getCol() + 1)) {
 						tempObject.setCol(tempObject.getCol() + 1);
+						entityCollision(tempObject);
 						keyDown[2] = true;
 					}
 				}
@@ -58,6 +61,7 @@ public class KeyInput extends KeyAdapter {
 				if (key == KeyEvent.VK_A) {
 					if (tempObject.isValidMove(tempObject.getRow(), tempObject.getCol() - 1)) {
 						tempObject.setCol(tempObject.getCol() - 1);
+						entityCollision(tempObject);
 						keyDown[3] = true;
 					}
 				}
@@ -68,6 +72,13 @@ public class KeyInput extends KeyAdapter {
 			System.exit(1);
 	}
 
+	public void entityCollision(Entity tempObject) {
+		tempObject.isTreasure(tempObject.getRow(), tempObject.getCol());
+		tempObject.isLadder(tempObject.getRow(), tempObject.getCol());
+		tempObject.isMonster(tempObject.getRow(), tempObject.getCol());
+		}
+
+	
 	// When a key is released loop through all of the entities and check if any
 	// actions should be performed
 	public void keyReleased(KeyEvent e) {

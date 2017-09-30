@@ -44,6 +44,25 @@ public abstract class Entity {
 		return !map.getGrid(r, c).isWall();
 	}
 
+	public void isTreasure(int r, int c) {
+		if (map.getGrid(r, c).isTreasure()) {
+
+		}
+		}
+
+		public void isLadder(int r, int c) {
+		if (map.getGrid(r, c).isLadder()) {
+		map.reset();
+		}
+		}
+
+		public void isMonster(int r, int c) {
+		if (map.getGrid(r, c).isMonster()) {
+
+		}
+		}
+
+	
 	public int getRow() {
 		return row;
 	}

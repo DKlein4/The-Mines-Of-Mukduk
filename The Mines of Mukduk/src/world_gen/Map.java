@@ -44,7 +44,7 @@ public class Map {
 	}
 
 	// Resets the grid
-	private void reset() {
+	public void reset() {
 
 		// Initialize every tile
 		for (int r = 0; r < gridSize; r++) {
