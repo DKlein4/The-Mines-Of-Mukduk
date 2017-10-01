@@ -33,33 +33,33 @@ public class KeyInput extends KeyAdapter {
 			if (tempObject.getId() == ID.Player) {
 				// When W is pressed move the player one row up
 				if (key == KeyEvent.VK_W) {
-					if (tempObject.isValidMove(tempObject.getRow() - 1, tempObject.getCol())) {
+					if (tempObject.getMap().isValidMove(tempObject.getRow() - 1, tempObject.getCol())) {
 						tempObject.setRow(tempObject.getRow() - 1);
-						entityCollision(tempObject);
+						tempObject.collision();
 						keyDown[0] = true;
 					}
 				}
 				// When S is pressed move the player one row down
 				if (key == KeyEvent.VK_S) {
-					if (tempObject.isValidMove(tempObject.getRow() + 1, tempObject.getCol())) {
+					if (tempObject.getMap().isValidMove(tempObject.getRow() + 1, tempObject.getCol())) {
 						tempObject.setRow(tempObject.getRow() + 1);
-						entityCollision(tempObject);
+						tempObject.collision();
 						keyDown[1] = true;
-					}
+					} 
 				}
 				// When D is pressed move the player one col right
 				if (key == KeyEvent.VK_D) {
-					if (tempObject.isValidMove(tempObject.getRow(), tempObject.getCol() + 1)) {
+					if (tempObject.getMap().isValidMove(tempObject.getRow(), tempObject.getCol() + 1)) {
 						tempObject.setCol(tempObject.getCol() + 1);
-						entityCollision(tempObject);
+						tempObject.collision();
 						keyDown[2] = true;
 					}
 				}
 				// When A is pressed move the player one col left
 				if (key == KeyEvent.VK_A) {
-					if (tempObject.isValidMove(tempObject.getRow(), tempObject.getCol() - 1)) {
+					if (tempObject.getMap().isValidMove(tempObject.getRow(), tempObject.getCol() - 1)) {
 						tempObject.setCol(tempObject.getCol() - 1);
-						entityCollision(tempObject);
+						tempObject.collision();
 						keyDown[3] = true;
 					}
 				}
@@ -68,12 +68,6 @@ public class KeyInput extends KeyAdapter {
 		// Exit if escape is pressed
 		if (key == KeyEvent.VK_ESCAPE)
 			System.exit(1);
-	}
-
-	public void entityCollision(Entity tempObject) {
-		tempObject.isTreasure(tempObject.getRow(), tempObject.getCol());
-		tempObject.isLadder(tempObject.getRow(), tempObject.getCol());
-		tempObject.isMonster(tempObject.getRow(), tempObject.getCol());
 	}
 
 	// When a key is released loop through all of the entities and check if any

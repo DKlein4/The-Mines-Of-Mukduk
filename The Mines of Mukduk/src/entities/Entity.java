@@ -7,6 +7,7 @@ import Main.main;
 import game_stages.Combat;
 import user_interface.GUIMain;
 import world_gen.Map;
+import world_gen.Tables;
 
 public abstract class Entity {
 	protected int row, col; // Positions on the grid
@@ -34,38 +35,18 @@ public abstract class Entity {
 		xPos = (col * tileSizeX) + gridOffsetX;
 		yPos = (row * tileSizeY) + gridOffsetY;
 	}
+	
+	public void collision(){
+		map.isTreasure(row, col);
+		map.isLadder(row, col);
+		map.isMonster(row, col);
+	}
 
 	public abstract void tick();
 
 	public abstract void render(Graphics g);
 
 	public abstract Rectangle getBounds();
-
-	// Returns true if the coordinate is a valid tile to move to
-	public boolean isValidMove(int r, int c) {
-		return !map.getGrid(r, c).isWall();
-	}
-
-	// Checks if tile is treasure, rolls on the table, then sets it back to floor
-	public void isTreasure(int r, int c) {
-		Tables table = new Tables();
-		if (map.getGrid(r, c).isTreasure()) {
-			table.lootRoll();
-			map.getGrid(r,c).setFloor(true);
-		}
-	}
-
-	public void isLadder(int r, int c) {
-		if (map.getGrid(r, c).isLadder()) {
-			map.reset();
-		}
-	}
-
-	public void isMonster(int r, int c) {
-		if (map.getGrid(r, c).isMonster()) {
-			combat.combatRound();
-		}
-	}
 
 	public int getRow() {
 		return row;
@@ -98,5 +79,8 @@ public abstract class Entity {
 	public int getYPos() {
 		return yPos;
 	}
-
+	
+	public Map getMap(){
+		return map;
+	}
 }

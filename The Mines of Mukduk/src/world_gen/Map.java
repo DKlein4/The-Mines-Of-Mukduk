@@ -48,6 +48,36 @@ public class Map {
 		return grid[r][c];
 	}
 
+	// Returns true if the coordinate is a valid tile to move to
+	public boolean isValidMove(int r, int c) {
+		return !grid[r][c].isWall();
+	}
+
+	// Checks if tile is treasure, rolls on the table, then sets it back to
+	// floor
+	public void isTreasure(int r, int c) {
+		Tables table = new Tables();
+		if (grid[r][c].isTreasure()) {
+			table.lootRoll();
+			grid[r][c].setFloor(true);
+		}
+	}
+	
+	// Checks if tile is ladder, resets the map if it is
+	public void isLadder(int r, int c) {
+		if (grid[r][c].isLadder()) {
+			reset();
+		}
+	}
+	
+	// Checks if tile is monster, starts combat if it is
+	public void isMonster(int r, int c) {
+		if (grid[r][c].isMonster()) {
+			// Start combat
+			// combat.combatRound();
+		}
+	}
+
 	// Resets the grid
 	public void reset() {
 
@@ -84,7 +114,7 @@ public class Map {
 					for (int xs = r; xs < r + 5; xs++) {
 						for (int ys = c; ys < c + 5; ys++) {
 							if (xs < (gridSize - 1)) {
-							grid[xs][ys].setFloor(true);
+								grid[xs][ys].setFloor(true);
 							}
 						}
 					}
@@ -99,22 +129,32 @@ public class Map {
 		for (int c = gridSize - 1; c >= 0; c--) {
 			for (int r = gridSize - 1; r >= 0; r--) {
 				if (grid[r][c].isFloor() == true) {
+					// Creates a room starting at the ladder
+					for (int xs = r; xs < r - 5; xs--) {
+						for (int ys = c; ys < c - 5; ys--) {
+							if (xs < (gridSize - 1)) {
+								grid[xs][ys].setFloor(true);
+							}
+						}
+					}
 					grid[r][c].setLadder(true);
-					for (int cl = 1; cl < 5; cl++) {
-						if (c - cl > 0) {
-							grid[r][c - cl].setFloor(true);
-						}
-					}
-					for (int rl = 1; rl < 5; rl++) {
-						if (r - rl > 0) {
-							grid[r - rl][c].setFloor(true);
-						}
-					}
 
 					r = c = 0; // Break out of the loop
 				}
 			}
 		}
+
+		// grid[r][c].setLadder(true);
+		// for (int cl = 1; cl < 5; cl++) {
+		// if (c - cl > 0) {
+		// grid[r][c - cl].setFloor(true);
+		// }
+		// }
+		// for (int rl = 1; rl < 5; rl++) {
+		// if (r - rl > 0) {
+		// grid[r - rl][c].setFloor(true);
+		// }
+		// }
 
 		// Places the player sprite
 		for (int c = 0; c < gridSize; c++) {
