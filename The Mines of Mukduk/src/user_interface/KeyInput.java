@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 import entities.Entity;
 import entities.ID;
+import game_stages.PlayerMovement;
 
 /**
  * @author Dustin; This class handles the keyboard input
@@ -12,12 +13,16 @@ import entities.ID;
 public class KeyInput extends KeyAdapter {
 
 	private boolean[] keyDown = new boolean[4];
+	
+	private PlayerMovement playerMovement;
 
 	public KeyInput(Handler handler) {
 		keyDown[0] = false; // W
 		keyDown[1] = false; // S
 		keyDown[2] = false; // D
 		keyDown[3] = false; // A
+		
+		playerMovement = new PlayerMovement();
 	}
 
 	// When a key is pressed loop through all of the entities and check if any
@@ -33,35 +38,23 @@ public class KeyInput extends KeyAdapter {
 			if (tempObject.getId() == ID.Player) {
 				// When W is pressed move the player one row up
 				if (key == KeyEvent.VK_W) {
-					if (tempObject.getMap().isValidMove(tempObject.getRow() - 1, tempObject.getCol())) {
-						tempObject.setRow(tempObject.getRow() - 1);
-						tempObject.collision();
-						keyDown[0] = true;
-					}
+					playerMovement.moveUp(tempObject);
+					keyDown[0] = true;
 				}
 				// When S is pressed move the player one row down
 				if (key == KeyEvent.VK_S) {
-					if (tempObject.getMap().isValidMove(tempObject.getRow() + 1, tempObject.getCol())) {
-						tempObject.setRow(tempObject.getRow() + 1);
-						tempObject.collision();
-						keyDown[1] = true;
-					} 
+					playerMovement.moveDown(tempObject);
+					keyDown[1] = true;
 				}
 				// When D is pressed move the player one col right
 				if (key == KeyEvent.VK_D) {
-					if (tempObject.getMap().isValidMove(tempObject.getRow(), tempObject.getCol() + 1)) {
-						tempObject.setCol(tempObject.getCol() + 1);
-						tempObject.collision();
-						keyDown[2] = true;
-					}
+					playerMovement.moveRight(tempObject);
+					keyDown[2] = true;
 				}
 				// When A is pressed move the player one col left
 				if (key == KeyEvent.VK_A) {
-					if (tempObject.getMap().isValidMove(tempObject.getRow(), tempObject.getCol() - 1)) {
-						tempObject.setCol(tempObject.getCol() - 1);
-						tempObject.collision();
-						keyDown[3] = true;
-					}
+					playerMovement.moveLeft(tempObject);
+					keyDown[3] = true;
 				}
 			}
 		}

@@ -1,22 +1,34 @@
 package game_stages;
-import world_gen.Map;
+
+import entities.Entity;
 
 public class PlayerMovement {
-	
-	private int[] pos;
-	private int mapSize;
-	
-	public PlayerMovement(){
-		pos = new int[] {1,1};
-		
+
+	public void moveUp(Entity entity) {
+		if (entity.getMap().isValidMove(entity.getRow() - 1, entity.getCol())) {
+			entity.setRow(entity.getRow() - 1);
+			entity.collision();
+		}
+	}
+
+	public void moveDown(Entity entity) {
+		if (entity.getMap().isValidMove(entity.getRow() + 1, entity.getCol())) {
+			entity.setRow(entity.getRow() + 1);
+			entity.collision();
+		}
+	}
+
+	public void moveRight(Entity entity) {
+		if (entity.getMap().isValidMove(entity.getRow(), entity.getCol() + 1)) {
+			entity.setCol(entity.getCol() + 1);
+			entity.collision();
+		}
 	}
 	
-	// Moves the player's position one tile up if it is a valid tile
-	public boolean stepUp(Map m){
-		if(m.onGrid(pos[0]+1, pos[1])){
-			pos[0]++;
-			return true;
-		}else
-			return false;
+	public void moveLeft(Entity entity){
+		if (entity.getMap().isValidMove(entity.getRow(), entity.getCol() - 1)) {
+			entity.setCol(entity.getCol() - 1);
+			entity.collision();
+		}
 	}
 }
