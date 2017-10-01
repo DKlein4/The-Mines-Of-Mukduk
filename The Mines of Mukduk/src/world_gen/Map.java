@@ -126,14 +126,15 @@ public class Map {
 		}
 
 		// Place the exit ladder
+		int oX, oY;
 		for (int c = gridSize - 1; c >= 0; c--) {
 			for (int r = gridSize - 1; r >= 0; r--) {
 				if (grid[r][c].isFloor() == true) {
 					// Creates a room starting at the ladder
-					for (int xs = r; xs < r - 5; xs--) {
-						for (int ys = c; ys < c - 5; ys--) {
-							if (xs < (gridSize - 1)) {
-								grid[xs][ys].setFloor(true);
+					for (int xl = r - 5; xl < r; xl++) {
+						for (int yl = c - 5; yl < c; yl++) {
+							if (xl >= 0) {
+								grid[xl + 1][yl + 1].setFloor(true);
 							}
 						}
 					}
