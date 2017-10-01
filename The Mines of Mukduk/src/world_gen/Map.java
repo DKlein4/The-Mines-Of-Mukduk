@@ -126,7 +126,6 @@ public class Map {
 		}
 
 		// Place the exit ladder
-		int oX, oY;
 		for (int c = gridSize - 1; c >= 0; c--) {
 			for (int r = gridSize - 1; r >= 0; r--) {
 				if (grid[r][c].isFloor() == true) {
