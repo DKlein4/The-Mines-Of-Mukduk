@@ -8,14 +8,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import user_interface.Handler;
 import world_gen.Map;
 
 public class Player extends Entity {
 	private File pathToSprite;
 	private Image playerSprite;
 
-	public Player(int row, int col, ID id, Handler handler, Map map) {
+	public Player(int row, int col, ID id, EntityHandler handler, Map map) {
 		super(row, col, ID.Player, map);
 		this.map = map;
 

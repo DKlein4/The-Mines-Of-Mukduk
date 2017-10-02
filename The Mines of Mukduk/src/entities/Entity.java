@@ -18,7 +18,6 @@ public abstract class Entity {
 	protected ID id; // Type of entity
 
 	protected Map map;
-	protected Combat combat;
 
 	public Entity(int r, int c, ID id, Map map) {
 		this.row = r;

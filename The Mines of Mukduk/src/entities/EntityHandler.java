@@ -1,15 +1,13 @@
-package user_interface;
+package entities;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
-
-import entities.Entity;
 
 /**
  * @author Dustin; This class handles all entities. It basically updates every
  *         single entity every tick.
  */
-public class Handler {
+public class EntityHandler {
 	// This list holds every entity
 	public static LinkedList<Entity> entity = new LinkedList<Entity>();
 
@@ -30,10 +28,10 @@ public class Handler {
 	}
 
 	public static void addEntity(Entity entity) {
-		Handler.entity.add(entity);
+		EntityHandler.entity.add(entity);
 	}
 
 	public void removeEntity(Entity entity) {
-		Handler.entity.remove(entity);
+		EntityHandler.entity.remove(entity);
 	}
 }

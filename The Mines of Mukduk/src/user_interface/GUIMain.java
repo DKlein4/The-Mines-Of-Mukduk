@@ -8,8 +8,10 @@ import java.awt.image.BufferStrategy;
 import world_gen.Map;
 import world_gen.World;
 import Main.main;
+import entities.EntityHandler;
 import entities.ID;
 import entities.Player;
+import items.Inventory;
 
 /**
  * @author Dustin; This is the main class that creates the GUI and manages the
@@ -32,7 +34,9 @@ public class GUIMain extends Canvas implements Runnable {
 	private int gridOffsetY; // The offset of the grid in the y direction for
 								// formating
 
-	private Handler handler;
+	private EntityHandler handler;
+	
+	private Inventory inventory;
 
 	private Map map;
 
@@ -46,7 +50,9 @@ public class GUIMain extends Canvas implements Runnable {
 
 		this.map = world.level1;
 
-		this.handler = new Handler();
+		this.handler = new EntityHandler();
+		
+		this.inventory = new Inventory();
 
 		this.addKeyListener(new KeyInput(handler));
 
@@ -56,7 +62,7 @@ public class GUIMain extends Canvas implements Runnable {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (map.getGrid(r, c).isSpawn() == true) {
-					Handler.addEntity(new Player(r, c, ID.Player, handler, map));
+					EntityHandler.addEntity(new Player(r, c, ID.Player, handler, map));
 
 					r = c = gridSize; // Break out of the loop
 				}
@@ -111,6 +117,7 @@ public class GUIMain extends Canvas implements Runnable {
 
 	private void tick() {
 		handler.tick();
+		inventory.tick();
 	}
 
 	// Puts things on the screen
@@ -157,7 +164,7 @@ public class GUIMain extends Canvas implements Runnable {
 		}
 
 		// Render the handler, which in turn renders the entities
-		Handler.render(g);
+		EntityHandler.render(g);
 
 		g.dispose();
 		bs.show();

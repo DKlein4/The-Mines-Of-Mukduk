@@ -2,44 +2,47 @@ package world_gen;
 
 import java.util.Random;
 
+import items.Inventory;
+import items.Item;
+
 /**
  * @author Brett; This is the class that holds all the switch-case tables for
  *         random rolls
  */
 public class Tables {
 	Random rand = new Random();
+	
+	Inventory inventory;
+	
+	public Tables(){
+		inventory = new Inventory();
+	}
 
 	public void lootRoll() {
 		int randRoll = rand.nextInt((100-1) + 1) + 1;		
 		if (randRoll <= 30) {
 			armorRoll();
-			System.out.print(randRoll);
-			System.out.println(": Armor");
+			inventory.addItem(new Item("Armor", 0));
 		}
 		else if (randRoll > 30 && randRoll <= 45) {
 			weaponRoll();
-			System.out.print(randRoll);
-			System.out.println(": Weapon");
+			inventory.addItem(new Item("Weapon", 1));
 		}
 		else if (randRoll > 45 && randRoll <= 55) {
 			potionRoll();
-			System.out.print(randRoll);
-			System.out.println(": Potion");
+			inventory.addItem(new Item("Potion", 2));
 		}
 		else if (randRoll > 55 && randRoll <= 60) {
 			scrollRoll();
-			System.out.print(randRoll);
-			System.out.println(": Scroll");
+			inventory.addItem(new Item("Scroll", 3));
 		}
 		else if (randRoll > 60 && randRoll <= 80) {
 			foodRoll();
-			System.out.print(randRoll);
-			System.out.println(": Food");
+			inventory.addItem(new Item("Food", 4));
 		}
 		else if (randRoll > 80 && randRoll < 100) {
 			goldRoll();
-			System.out.print(randRoll);
-			System.out.println(": Gold");
+			inventory.addItem(new Item("Gold", 5));
 		}
 		else if (randRoll == 100) {
 			System.out.print(randRoll);

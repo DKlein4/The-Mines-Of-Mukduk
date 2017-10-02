@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
-import user_interface.Handler;
 import world_gen.Map;
 
 public class Monster extends Entity {
@@ -12,7 +11,7 @@ public class Monster extends Entity {
 	private int monsterInitiative;
 	private int monsterHP;
 
-	public Monster(int row, int col, ID id, Handler handler, Map map) {
+	public Monster(int row, int col, ID id, EntityHandler handler, Map map) {
 		super(0, 0, ID.Monster, map);
 		monsterInitiative = rand.nextInt((20 - 1) + 1) + 1;
 		monsterHP = rand.nextInt((20 - 1) + 1) + 1;

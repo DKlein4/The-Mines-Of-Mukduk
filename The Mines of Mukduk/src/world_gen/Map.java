@@ -3,8 +3,8 @@ package world_gen;
 import java.util.Random;
 
 import entities.Entity;
+import entities.EntityHandler;
 import entities.ID;
-import user_interface.Handler;
 
 import java.lang.Math;
 
@@ -15,22 +15,31 @@ import world_gen.Tile;
  *         level with random generation
  */
 public class Map {
+	
 	private Random rand = new Random();
 	private Tile[][] grid;
 	private int gridSize;
 	private int numRooms;
+	
+	private Tables table;
 
 	public Map(int gridSize) {
 		this.grid = new Tile[gridSize][gridSize];
 		this.gridSize = gridSize;
-		this.numRooms = 35;
+		numRooms = 35;
+		
+		table = new Tables();
+		
 		reset();
 	}
 
 	public Map() {
 		this.grid = new Tile[10][10];
 		this.gridSize = 10;
-		this.numRooms = 15;
+		numRooms = 15;
+		
+		table = new Tables();
+		
 		reset();
 	}
 
@@ -56,20 +65,19 @@ public class Map {
 	// Checks if tile is treasure, rolls on the table, then sets it back to
 	// floor
 	public void isTreasure(int r, int c) {
-		Tables table = new Tables();
 		if (grid[r][c].isTreasure()) {
 			table.lootRoll();
 			grid[r][c].setFloor(true);
 		}
 	}
-	
+
 	// Checks if tile is ladder, resets the map if it is
 	public void isLadder(int r, int c) {
 		if (grid[r][c].isLadder()) {
 			reset();
 		}
 	}
-	
+
 	// Checks if tile is monster, starts combat if it is
 	public void isMonster(int r, int c) {
 		if (grid[r][c].isMonster()) {
@@ -144,24 +152,12 @@ public class Map {
 			}
 		}
 
-		// grid[r][c].setLadder(true);
-		// for (int cl = 1; cl < 5; cl++) {
-		// if (c - cl > 0) {
-		// grid[r][c - cl].setFloor(true);
-		// }
-		// }
-		// for (int rl = 1; rl < 5; rl++) {
-		// if (r - rl > 0) {
-		// grid[r - rl][c].setFloor(true);
-		// }
-		// }
-
 		// Places the player sprite
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (grid[r][c].isSpawn() == true) {
-					for (int i = 0; i < Handler.entity.size(); i++) {
-						Entity tempObject = Handler.entity.get(i);
+					for (int i = 0; i < EntityHandler.entity.size(); i++) {
+						Entity tempObject = EntityHandler.entity.get(i);
 						if (tempObject.getId() == ID.Player) {
 							tempObject.setRow(r);
 							tempObject.setCol(c);
