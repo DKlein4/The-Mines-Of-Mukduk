@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Inventory {
 	
-	private static ArrayList<Item> inventoryItems;
+	public static ArrayList<Item> inventoryItems;
 	private boolean active;
 	
 	public Inventory(){
@@ -14,10 +14,7 @@ public class Inventory {
 	}
 	
 	public void tick(){
-		System.out.println("Inventory:");
-		for(Item i : inventoryItems){
-			System.out.println(i.getName() + " " + i.getCount());
-		}
+
 	}
 	
 	public void render(Graphics g){

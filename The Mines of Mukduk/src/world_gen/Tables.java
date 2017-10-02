@@ -6,7 +6,7 @@ import items.Inventory;
 import items.Item;
 
 /**
- * @author Brett; This is the class that holds all the switch-case tables for
+ * @author Brett; This is the class that holds all the random tables for
  *         random rolls
  */
 public class Tables {
@@ -45,11 +45,7 @@ public class Tables {
 			inventory.addItem(new Item("Gold", 5));
 		}
 		else if (randRoll == 100) {
-			System.out.print(randRoll);
-			System.out.println(": Two Items!");
-			System.out.print("Item One: ");
 			lootRoll();
-			System.out.print("Item Two: ");
 			lootRoll();
 		}
 	}
