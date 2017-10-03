@@ -34,7 +34,7 @@ public class GUIMain extends Canvas implements Runnable {
 	private int gridOffsetY; // The offset of the grid in the y direction for
 								// formating
 
-	private EntityHandler handler;
+	private EntityHandler entityHandler;
 	
 	private Inventory inventory;
 
@@ -50,11 +50,11 @@ public class GUIMain extends Canvas implements Runnable {
 
 		this.map = world.level1;
 
-		this.handler = new EntityHandler();
+		this.entityHandler = new EntityHandler();
 		
 		this.inventory = new Inventory();
 
-		this.addKeyListener(new KeyInput(handler));
+		this.addKeyListener(new KeyInput(entityHandler));
 
 		// Creates the game screen
 		new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
@@ -62,7 +62,7 @@ public class GUIMain extends Canvas implements Runnable {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (map.getGrid(r, c).isSpawn() == true) {
-					EntityHandler.addEntity(new Player(r, c, ID.Player, handler, map));
+					EntityHandler.addEntity(new Player(r, c, ID.Player, entityHandler, map));
 
 					r = c = gridSize; // Break out of the loop
 				}
@@ -116,7 +116,7 @@ public class GUIMain extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-		handler.tick();
+		entityHandler.tick();
 		inventory.tick();
 	}
 
@@ -165,6 +165,8 @@ public class GUIMain extends Canvas implements Runnable {
 
 		// Render the handler, which in turn renders the entities
 		EntityHandler.render(g);
+		
+		inventory.render(g);
 
 		g.dispose();
 		bs.show();

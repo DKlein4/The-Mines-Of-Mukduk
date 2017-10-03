@@ -20,6 +20,7 @@ public class KeyInput extends KeyAdapter {
 	private PlayerMovement playerMovement;
 
 	Inventory inv = new Inventory();
+	
 	public KeyInput(EntityHandler handler) {
 		keyDown[0] = false; // W
 		keyDown[1] = false; // S
@@ -35,10 +36,7 @@ public class KeyInput extends KeyAdapter {
 		int key = e.getKeyCode();
 
 		if (key == KeyEvent.VK_E) {
-			System.out.println("Inventory:");
-			for(Item i : inv.inventoryItems){
-				System.out.println(i.getName() + " " + i.getCount());
-			}
+			inv.toggleActive();
 		}
 		
 		for (int i = 0; i < EntityHandler.entity.size(); i++) {
