@@ -18,7 +18,7 @@ public class Inventory {
 	}
 
 	public void tick() {
-
+		
 	}
 
 	public void render(Graphics g) {

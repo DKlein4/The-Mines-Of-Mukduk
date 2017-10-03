@@ -16,6 +16,8 @@ import world_gen.Tile;
  */
 public class Map {
 	
+	private int levelNum;
+	
 	private Random rand = new Random();
 	private Tile[][] grid;
 	private int gridSize;
@@ -30,6 +32,8 @@ public class Map {
 		
 		table = new Tables();
 		
+		levelNum = 0;
+		
 		reset();
 	}
 
@@ -39,6 +43,8 @@ public class Map {
 		numRooms = 15;
 		
 		table = new Tables();
+		
+		levelNum = 0;
 		
 		reset();
 	}
@@ -60,6 +66,10 @@ public class Map {
 	// Returns true if the coordinate is a valid tile to move to
 	public boolean isValidMove(int r, int c) {
 		return !grid[r][c].isWall();
+	}
+	
+	public int getLevelNum(){
+		return levelNum;
 	}
 
 	// Checks if tile is treasure, rolls on the table, then sets it back to
@@ -166,6 +176,8 @@ public class Map {
 				}
 			}
 		}
+		
+		levelNum++;
 	}
 
 	// Generates multiple rooms and connects them with corridors

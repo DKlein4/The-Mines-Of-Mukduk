@@ -33,6 +33,8 @@ public class GUIMain extends Canvas implements Runnable {
 								// formating
 	private int gridOffsetY; // The offset of the grid in the y direction for
 								// formating
+	
+	private Window window;
 
 	private EntityHandler entityHandler;
 	
@@ -57,7 +59,7 @@ public class GUIMain extends Canvas implements Runnable {
 		this.addKeyListener(new KeyInput(entityHandler));
 
 		// Creates the game screen
-		new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
+		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk - Level 1", this);
 
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
@@ -118,6 +120,8 @@ public class GUIMain extends Canvas implements Runnable {
 	private void tick() {
 		entityHandler.tick();
 		inventory.tick();
+		
+		window.setTitle("The Mines of Mukduk - Level " + map.getLevelNum());
 	}
 
 	// Puts things on the screen
