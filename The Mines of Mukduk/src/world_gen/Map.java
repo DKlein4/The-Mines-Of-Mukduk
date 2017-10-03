@@ -88,11 +88,12 @@ public class Map {
 		}
 	}
 
-	// Checks if tile is monster, starts combat if it is
+	// Checks if tile is spooky monster, starts combat if it is
 	public void isMonster(int r, int c) {
 		if (grid[r][c].isMonster()) {
 			// Start combat
 			// combat.combatRound();
+			grid[r][c].setFloor(true);
 		}
 	}
 
@@ -111,8 +112,8 @@ public class Map {
 			for (int c = 0; c < gridSize; c++) {
 				grid[r][c].setWall(true);
 			}
-		}
-
+		}		
+		
 		// Generate the interior rooms
 		genInteriorRooms();
 
@@ -123,14 +124,26 @@ public class Map {
 			grid[i][0].setWall(true); // left column
 			grid[i][gridSize - 1].setWall(true); // right column
 		}
+		
+		// Checks for one Wall Tile blockages and clears them
+		for (int c = 1; c < gridSize - 1; c++) {
+			for (int r = 1; r < gridSize - 1; r++) {
+				if (grid[r][c].isWall() && grid[r + 1][c].isWall() && grid[r - 1][c].isWall() && grid[r][c + 1].isFloor() && grid[r][c - 1].isFloor()) {
+					grid[r][c].setFloor(true);
+				}
+				if (grid[r][c].isWall() && grid[r][c + 1].isWall() && grid[r][c - 1].isWall() && grid[r + 1][c].isFloor() && grid[r - 1][c].isFloor()){
+					grid[r][c].setFloor(true);
+				}
+			}
+		}
 
 		// Place the spawn point
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (grid[r][c].isFloor() == true) {
 					// Creates a room starting at the spawn point
-					for (int xs = r; xs < r + 5; xs++) {
-						for (int ys = c; ys < c + 5; ys++) {
+					for (int xs = r; xs < r + 4; xs++) {
+						for (int ys = c; ys < c + 4; ys++) {
 							if (xs < (gridSize - 1)) {
 								grid[xs][ys].setFloor(true);
 							}
@@ -148,8 +161,8 @@ public class Map {
 			for (int r = gridSize - 1; r >= 0; r--) {
 				if (grid[r][c].isFloor() == true) {
 					// Creates a room starting at the ladder
-					for (int xl = r - 5; xl < r; xl++) {
-						for (int yl = c - 5; yl < c; yl++) {
+					for (int xl = r - 4; xl < r; xl++) {
+						for (int yl = c - 4; yl < c; yl++) {
 							if (xl >= 0) {
 								grid[xl + 1][yl + 1].setFloor(true);
 							}
@@ -220,7 +233,7 @@ public class Map {
 		int w, h, xo, yo, xc, yc, xt, yt;
 
 		int maxRoomSize = 4;
-		int minRoomSize = 1;
+		int minRoomSize = 2;
 
 		// Generate random width and height between the restrictions
 		w = rand.nextInt(maxRoomSize - minRoomSize + 1) + minRoomSize;
@@ -240,11 +253,23 @@ public class Map {
 			}
 		}
 
+		// Random Walls for Randomness
+		for (int a = 0; a < 10; a++) {
+		xt = rand.nextInt(w) + xo;
+		yt = rand.nextInt(h) + yo;
+		grid[yt][xt].setWall(true);
+		}
+		
 		// Generate Treasure Tile in room
 		xt = rand.nextInt(w) + xo;
 		yt = rand.nextInt(h) + yo;
 		grid[yt][xt].setTreasure(true);
-
+		
+		// Generate Monster in room
+		xt = rand.nextInt(w) + xo;
+		yt = rand.nextInt(h) + yo;
+		grid[yt][xt].setMonster(true);
+		
 		// return the values as an array
 		return new int[] { w, h, xo, yo, xc, yc };
 	}

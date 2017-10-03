@@ -159,7 +159,7 @@ public class GUIMain extends Canvas implements Runnable {
 					g.drawString("₧", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				} else if (map.getGrid(r, c).isMonster()) {
 					g.setColor(Color.red);
-					g.drawString("§", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+					g.drawString("M", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				}
 				else
 					g.drawString("X", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
