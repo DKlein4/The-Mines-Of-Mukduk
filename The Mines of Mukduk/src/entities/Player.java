@@ -10,7 +10,11 @@ import javax.imageio.ImageIO;
 
 import world_gen.Map;
 
+/**
+ * @author Dustin; The entity that the user plays as.
+ */
 public class Player extends Entity {
+
 	private File pathToSprite;
 	private Image playerSprite;
 
@@ -18,6 +22,7 @@ public class Player extends Entity {
 		super(row, col, ID.Player, map);
 		this.map = map;
 
+		// Load in the sprite for the player
 		try {
 			pathToSprite = new File("src/Resources/Dwarf.png");
 			playerSprite = ImageIO.read(pathToSprite);

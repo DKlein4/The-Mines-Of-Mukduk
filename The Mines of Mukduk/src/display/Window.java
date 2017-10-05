@@ -1,4 +1,4 @@
-package user_interface;
+package display;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -6,10 +6,10 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 /**
- * @author Dustin; Creates a new JFrame with the correct parameters
+ * @author Dustin; Creates a new JFrame with the correct parameters.
  */
 public class Window extends Canvas {
-	
+
 	JFrame frame;
 
 	private static final long serialVersionUID = 501298079830563846L;
@@ -26,8 +26,12 @@ public class Window extends Canvas {
 		frame.setVisible(true);
 		guiMain.start();
 	}
+
 	
-	public void setTitle(String title){
+	// GETTERS AND SETTERS
+
+	
+	public void setTitle(String title) {
 		frame.setTitle(title);
 	}
 }

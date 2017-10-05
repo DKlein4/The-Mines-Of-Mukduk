@@ -2,6 +2,10 @@ package game_stages;
 
 import entities.Entity;
 
+/**
+ * @author Dustin; Performs the correct actions depending on which way the
+ *         player wants to move
+ */
 public class PlayerMovement {
 
 	public void moveUp(Entity entity) {
@@ -24,8 +28,8 @@ public class PlayerMovement {
 			entity.collision();
 		}
 	}
-	
-	public void moveLeft(Entity entity){
+
+	public void moveLeft(Entity entity) {
 		if (entity.getMap().isValidMove(entity.getRow(), entity.getCol() - 1)) {
 			entity.setCol(entity.getCol() - 1);
 			entity.collision();

@@ -1,4 +1,4 @@
-package user_interface;
+package input;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -11,22 +11,20 @@ import items.Inventory;
 import items.Item;
 
 /**
- * @author Dustin; This class handles the keyboard input
+ * @author Dustin; This class handles the keyboard input.
  */
 public class KeyInput extends KeyAdapter {
 
 	private boolean[] keyDown = new boolean[4];
-	
 	private PlayerMovement playerMovement;
-
 	Inventory inv = new Inventory();
-	
+
 	public KeyInput(EntityHandler handler) {
 		keyDown[0] = false; // W
 		keyDown[1] = false; // S
 		keyDown[2] = false; // D
 		keyDown[3] = false; // A
-		
+
 		playerMovement = new PlayerMovement();
 	}
 
@@ -35,13 +33,12 @@ public class KeyInput extends KeyAdapter {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if (key == KeyEvent.VK_E) {
+		// Toggle inventory screen if E is pressed
+		if (key == KeyEvent.VK_E)
 			inv.toggleActive();
-		}
-		
+
 		for (int i = 0; i < EntityHandler.entity.size(); i++) {
 			Entity tempObject = EntityHandler.entity.get(i);
-
 			// If there is a player entity and one of these keys are pressed
 			// move the player
 			if (tempObject.getId() == ID.Player) {
@@ -76,10 +73,8 @@ public class KeyInput extends KeyAdapter {
 	// actions should be performed
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
-
 		for (int i = 0; i < EntityHandler.entity.size(); i++) {
 			Entity tempObject = EntityHandler.entity.get(i);
-
 			// If there is a player entity and one of these keys are released
 			// update the keyDown array
 			if (tempObject.getId() == ID.Player) {

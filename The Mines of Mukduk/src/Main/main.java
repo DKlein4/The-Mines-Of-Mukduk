@@ -1,7 +1,6 @@
 package Main;
 
-import user_interface.GUIMain;
-import user_interface.UI;
+import display.GUIMain;
 import world_gen.Map;
 import world_gen.World;
 

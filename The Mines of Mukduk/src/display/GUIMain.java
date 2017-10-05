@@ -1,4 +1,4 @@
-package user_interface;
+package display;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -11,6 +11,7 @@ import Main.main;
 import entities.EntityHandler;
 import entities.ID;
 import entities.Player;
+import input.KeyInput;
 import items.Inventory;
 
 /**
@@ -33,17 +34,13 @@ public class GUIMain extends Canvas implements Runnable {
 								// formating
 	private int gridOffsetY; // The offset of the grid in the y direction for
 								// formating
-	
+
 	private Window window;
-
 	private EntityHandler entityHandler;
-	
 	private Inventory inventory;
-
 	private Map map;
 
 	public GUIMain(World world) {
-
 		tileSizeX = (GUIMain.WIDTH / main.gridSize) - 1;
 		tileSizeY = (GUIMain.HEIGHT / main.gridSize) - 1;
 
@@ -51,42 +48,41 @@ public class GUIMain extends Canvas implements Runnable {
 		gridOffsetY = tileSizeY;
 
 		this.map = world.level1;
-
 		this.entityHandler = new EntityHandler();
-		
 		this.inventory = new Inventory();
-
 		this.addKeyListener(new KeyInput(entityHandler));
 
 		// Creates the game screen
 		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk - Level 1", this);
 
-		for (int c = 0; c < gridSize; c++) {
-			for (int r = 0; r < gridSize; r++) {
-				if (map.getGrid(r, c).isSpawn() == true) {
-					EntityHandler.addEntity(new Player(r, c, ID.Player, entityHandler, map));
-
-					r = c = gridSize; // Break out of the loop
-				}
-			}
-		}
+		genPlayer();
 	}
 
-	// Ran whenever started
-	public synchronized void start() {
-		thread = new Thread(this);
-		thread.start();
-		running = true;
+	private void tick() {
+		entityHandler.tick();
+		inventory.tick();
+
+		window.setTitle("The Mines of Mukduk - Level " + map.getLevelNum());
 	}
 
-	// Ran whenever ended
-	public synchronized void stop() {
-		try {
-			thread.join();
-			running = false;
-		} catch (Exception e) {
-			e.printStackTrace();
+	private void render() {
+		BufferStrategy bs = this.getBufferStrategy();
+		if (bs == null) {
+			this.createBufferStrategy(3);
+			return;
 		}
+		Graphics g = bs.getDrawGraphics();
+
+		// Draw the background
+		g.setColor(Color.gray);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+
+		renderGrid(g);
+		EntityHandler.render(g);
+		inventory.render(g);
+
+		g.dispose();
+		bs.show();
 	}
 
 	public void run() {
@@ -110,35 +106,47 @@ public class GUIMain extends Canvas implements Runnable {
 			frames++;
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				 //System.out.println("FPS: " + frames);
+				// System.out.println("FPS: " + frames);
 				frames = 0;
 			}
 		}
 		stop();
 	}
 
-	private void tick() {
-		entityHandler.tick();
-		inventory.tick();
-		
-		window.setTitle("The Mines of Mukduk - Level " + map.getLevelNum());
+	public synchronized void start() {
+		thread = new Thread(this);
+		thread.start();
+		running = true;
 	}
 
-	// Puts things on the screen
-	private void render() {
-		BufferStrategy bs = this.getBufferStrategy();
-		if (bs == null) {
-			this.createBufferStrategy(3);
-			return;
+	public synchronized void stop() {
+		try {
+			thread.join();
+			running = false;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		Graphics g = bs.getDrawGraphics();
+	}
 
-		// Draw the background
-		g.setColor(Color.gray);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+	
+	// HELPER FUNCTIONS
 
-		// Add the elements of the map to the GUI
+	
+	// Creates a player entity and places it on the map
+	private void genPlayer() {
+		for (int c = 0; c < gridSize; c++) {
+			for (int r = 0; r < gridSize; r++) {
+				if (map.getGrid(r, c).isSpawn() == true) {
+					EntityHandler.addEntity(new Player(r, c, ID.Player, entityHandler, map));
 
+					r = c = gridSize; // Break out of the loop
+				}
+			}
+		}
+	}
+
+	// Renders the elements of the map onto the screen
+	private void renderGrid(Graphics g) {
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
 				g.setColor(Color.white);
@@ -160,28 +168,9 @@ public class GUIMain extends Canvas implements Runnable {
 				} else if (map.getGrid(r, c).isMonster()) {
 					g.setColor(Color.red);
 					g.drawString("§", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				}
-				else
+				} else
 					g.drawString("X", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 			}
-
 		}
-
-		// Render the handler, which in turn renders the entities
-		EntityHandler.render(g);
-		
-		inventory.render(g);
-
-		g.dispose();
-		bs.show();
-	}
-
-	public static int clamp(int var, int min, int max) {
-		if (var >= max)
-			return var = max;
-		else if (var < min)
-			return var = min;
-		else
-			return var;
 	}
 }

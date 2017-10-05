@@ -1,18 +1,26 @@
 package items;
 
+/**
+ * @author Dustin; An item is something that a player can obtain with different
+ *         attributes. Is stored in the inventory.
+ */
 public class Item {
-	
+
 	protected int ID;
-	protected String name;	
+	protected String name;
 	protected int count;
-	
-	public Item(String name	, int ID){
+
+	public Item(String name, int ID) {
 		this.name = name;
 		this.ID = ID;
 		count = 1;
 	}
 
-	public int getID() { 
+	
+	// GETTERS AND SETTERS
+
+	
+	public int getID() {
 		return ID;
 	}
 
@@ -35,6 +43,5 @@ public class Item {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	
-	
+
 }

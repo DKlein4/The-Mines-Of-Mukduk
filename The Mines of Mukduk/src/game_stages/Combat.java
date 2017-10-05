@@ -2,13 +2,12 @@ package game_stages;
 
 import entities.Monster;
 import entities.Player;
-import user_interface.UI;
 
 public class Combat {
-	UI userInterface = new UI();
+//	UI userInterface = new UI();
 	
 	public void combatRound() {
-		userInterface.battleStart();
+//		userInterface.battleStart();
 
 		// Generates new enemy object
 //		Monster monster = new Monster();

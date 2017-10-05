@@ -4,12 +4,17 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import Main.main;
+import display.GUIMain;
 import game_stages.Combat;
-import user_interface.GUIMain;
 import world_gen.Map;
 import world_gen.Tables;
 
+/**
+ * @author Dustin; This is the father class for any entities. Contains the
+ *         position, type, and other describing info of the entity.
+ */
 public abstract class Entity {
+	
 	protected int row, col; // Positions on the grid
 	protected int tileSizeX, tileSizeY; // The sizes of an individual tile
 	protected int gridOffsetX, gridOffsetY; // Offsets for formatting. Make the
@@ -34,18 +39,21 @@ public abstract class Entity {
 		xPos = (col * tileSizeX) + gridOffsetX;
 		yPos = (row * tileSizeY) + gridOffsetY;
 	}
-	
-	public void collision(){
-		map.isTreasure(row, col);
-		map.isLadder(row, col);
-		map.isMonster(row, col);
-	}
 
 	public abstract void tick();
 
 	public abstract void render(Graphics g);
 
 	public abstract Rectangle getBounds();
+
+	// Checks the entity's position to see if any actions need to be performed
+	public void collision() {
+		map.isTreasure(row, col);
+		map.isLadder(row, col);
+		map.isMonster(row, col);
+	}
+
+	// GETTERS AND SETTERS
 
 	public int getRow() {
 		return row;
@@ -78,8 +86,8 @@ public abstract class Entity {
 	public int getYPos() {
 		return yPos;
 	}
-	
-	public Map getMap(){
+
+	public Map getMap() {
 		return map;
 	}
 }

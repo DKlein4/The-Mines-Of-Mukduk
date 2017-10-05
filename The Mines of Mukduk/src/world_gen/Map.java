@@ -15,25 +15,24 @@ import world_gen.Tile;
  *         level with random generation
  */
 public class Map {
-	
-	private int levelNum;
-	
+
 	private Random rand = new Random();
+
 	private Tile[][] grid;
 	private int gridSize;
 	private int numRooms;
-	
+	private int levelNum;
+
 	private Tables table;
 
 	public Map(int gridSize) {
 		this.grid = new Tile[gridSize][gridSize];
 		this.gridSize = gridSize;
 		numRooms = 35;
-		
-		table = new Tables();
-		
 		levelNum = 0;
-		
+
+		table = new Tables();
+
 		reset();
 	}
 
@@ -41,20 +40,17 @@ public class Map {
 		this.grid = new Tile[10][10];
 		this.gridSize = 10;
 		numRooms = 15;
-		
-		table = new Tables();
-		
 		levelNum = 0;
-		
+
+		table = new Tables();
+
 		reset();
 	}
 
-	// Returns true if the coordinates are within the grid
-	public boolean onGrid(int r, int c) {
-		return (0 <= r) && (r <= gridSize - 1) && (0 <= c) && (c <= gridSize - 1);
-	}
+	
+	// GETTERS AND SETTERS
 
-	// returns gridSize
+	
 	public int getGridSize() {
 		return gridSize;
 	}
@@ -63,13 +59,22 @@ public class Map {
 		return grid[r][c];
 	}
 
+	public int getLevelNum() {
+		return levelNum;
+	}
+
+	
+	// STATE CHECKERS
+
+	
+	// Returns true if the coordinates are within the grid
+	public boolean onGrid(int r, int c) {
+		return (0 <= r) && (r <= gridSize - 1) && (0 <= c) && (c <= gridSize - 1);
+	}
+
 	// Returns true if the coordinate is a valid tile to move to
 	public boolean isValidMove(int r, int c) {
 		return !grid[r][c].isWall();
-	}
-	
-	public int getLevelNum(){
-		return levelNum;
 	}
 
 	// Checks if tile is treasure, rolls on the table, then sets it back to
@@ -97,47 +102,48 @@ public class Map {
 		}
 	}
 
-	// Resets the grid
+	
+	// RESEST AND HELPER FUNCTIONS
+
+	
 	public void reset() {
 
-		// Initialize every tile
+		// Initialize every tile and set it to a wall
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
 				grid[r][c] = new Tile();
-			}
-		}
-
-		// Make every tile a Wall
-		for (int r = 0; r < gridSize; r++) {
-			for (int c = 0; c < gridSize; c++) {
 				grid[r][c].setWall(true);
 			}
-		}		
-		
-		// Generate the interior rooms
-		genInteriorRooms();
-
-		// Place walls around the outside of the grid
-		for (int i = 0; i < gridSize; i++) {
-			grid[0][i].setWall(true); // top row
-			grid[gridSize - 1][i].setWall(true); // bottom row
-			grid[i][0].setWall(true); // left column
-			grid[i][gridSize - 1].setWall(true); // right column
 		}
-		
-		// Checks for one Wall Tile blockages and clears them
+
+		genInteriorRooms();
+		boundGen();
+		clearBlockages();
+		placeSpawnPoint();
+		placeLadder();
+		placePlayer();
+
+		levelNum++;
+	}
+
+	// Checks for one Wall Tile blockages and clears them
+	private void clearBlockages() {
 		for (int c = 1; c < gridSize - 1; c++) {
 			for (int r = 1; r < gridSize - 1; r++) {
-				if (grid[r][c].isWall() && grid[r + 1][c].isWall() && grid[r - 1][c].isWall() && grid[r][c + 1].isFloor() && grid[r][c - 1].isFloor()) {
+				if (grid[r][c].isWall() && grid[r + 1][c].isWall() && grid[r - 1][c].isWall()
+						&& grid[r][c + 1].isFloor() && grid[r][c - 1].isFloor()) {
 					grid[r][c].setFloor(true);
 				}
-				if (grid[r][c].isWall() && grid[r][c + 1].isWall() && grid[r][c - 1].isWall() && grid[r + 1][c].isFloor() && grid[r - 1][c].isFloor()){
+				if (grid[r][c].isWall() && grid[r][c + 1].isWall() && grid[r][c - 1].isWall()
+						&& grid[r + 1][c].isFloor() && grid[r - 1][c].isFloor()) {
 					grid[r][c].setFloor(true);
 				}
 			}
 		}
+	}
 
-		// Place the spawn point
+	// Finds the appropriate place for the player to spawn
+	private void placeSpawnPoint() {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (grid[r][c].isFloor() == true) {
@@ -155,8 +161,10 @@ public class Map {
 				}
 			}
 		}
+	}
 
-		// Place the exit ladder
+	// Place the exit ladder on the map
+	private void placeLadder() {
 		for (int c = gridSize - 1; c >= 0; c--) {
 			for (int r = gridSize - 1; r >= 0; r--) {
 				if (grid[r][c].isFloor() == true) {
@@ -174,8 +182,10 @@ public class Map {
 				}
 			}
 		}
+	}
 
-		// Places the player sprite
+	// Places the player sprite on the map
+	private void placePlayer() {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (grid[r][c].isSpawn() == true) {
@@ -189,8 +199,16 @@ public class Map {
 				}
 			}
 		}
-		
-		levelNum++;
+	}
+
+	// Place walls around the outside of the grid
+	private void boundGen() {
+		for (int i = 0; i < gridSize; i++) {
+			grid[0][i].setWall(true); // top row
+			grid[gridSize - 1][i].setWall(true); // bottom row
+			grid[i][0].setWall(true); // left column
+			grid[i][gridSize - 1].setWall(true); // right column
+		}
 	}
 
 	// Generates multiple rooms and connects them with corridors
@@ -255,21 +273,21 @@ public class Map {
 
 		// Random Walls for Randomness
 		for (int a = 0; a < 10; a++) {
-		xt = rand.nextInt(w) + xo;
-		yt = rand.nextInt(h) + yo;
-		grid[yt][xt].setWall(true);
+			xt = rand.nextInt(w) + xo;
+			yt = rand.nextInt(h) + yo;
+			grid[yt][xt].setWall(true);
 		}
-		
+
 		// Generate Treasure Tile in room
 		xt = rand.nextInt(w) + xo;
 		yt = rand.nextInt(h) + yo;
 		grid[yt][xt].setTreasure(true);
-		
+
 		// Generate Monster in room
 		xt = rand.nextInt(w) + xo;
 		yt = rand.nextInt(h) + yo;
 		grid[yt][xt].setMonster(true);
-		
+
 		// return the values as an array
 		return new int[] { w, h, xo, yo, xc, yc };
 	}

@@ -1,5 +1,8 @@
 package world_gen;
 
+/**
+ * @author Dustin; One space on the map that has different attributes.
+ */
 public class Tile {
 
 	// Different states a tile can be
@@ -8,10 +11,14 @@ public class Tile {
 	public Tile() {
 		isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = isSpawn = false;
 	}
-	
-	private void clearTile(){
+
+	private void clearTile() {
 		isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = isSpawn = false;
 	}
+	
+	
+	// GETTERS AND SETTERS
+	
 
 	public boolean isWall() {
 		return isWall;
