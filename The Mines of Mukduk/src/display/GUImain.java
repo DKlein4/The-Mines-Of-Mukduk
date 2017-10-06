@@ -29,7 +29,7 @@ public class GUImain extends Canvas implements Runnable {
 		menu = new Menu(this);
 		game = new Game();
 
-		this.addKeyListener(new KeyInput());
+		this.addKeyListener(new KeyInput(this));
 		this.addMouseListener(menu);
 
 		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk - Level 1", this);
