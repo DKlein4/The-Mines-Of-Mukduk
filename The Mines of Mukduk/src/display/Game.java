@@ -1,31 +1,21 @@
 package display;
 
-import java.awt.Canvas;
+
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
 
 import world_gen.Map;
-import world_gen.World;
 import Main.main;
 import entities.EntityHandler;
 import entities.ID;
 import entities.Player;
-import input.KeyInput;
 import items.Inventory;
 
 /**
  * @author Dustin; This is the main class that creates the GUI and manages the
  *         actions on the GUI
  */
-public class GUIMain extends Canvas implements Runnable {
-
-	private static final long serialVersionUID = 501298079830563846L;
-
-	public static final int WIDTH = 900; // Width of the screen
-	public static final int HEIGHT = WIDTH / 12 * 9; // Height of the screen
-	private Thread thread;
-	private boolean running = false;
+public class Game {
 
 	private int gridSize = main.gridSize; // Number of tiles on the map
 	private int tileSizeX; // The size of the tile in the x direction
@@ -35,97 +25,41 @@ public class GUIMain extends Canvas implements Runnable {
 	private int gridOffsetY; // The offset of the grid in the y direction for
 								// formating
 
-	private Window window;
 	private EntityHandler entityHandler;
 	private Inventory inventory;
 	private Map map;
 
-	public GUIMain(World world) {
-		tileSizeX = (GUIMain.WIDTH / main.gridSize) - 1;
-		tileSizeY = (GUIMain.HEIGHT / main.gridSize) - 1;
+	public Game() {
+		tileSizeX = (GUImain.WIDTH / main.gridSize) - 1;
+		tileSizeY = (GUImain.HEIGHT / main.gridSize) - 1;
 
 		gridOffsetX = tileSizeX * 3 / 4;
 		gridOffsetY = tileSizeY;
 
-		this.map = world.level1;
+		this.map = new Map(gridSize);
 		this.entityHandler = new EntityHandler();
 		this.inventory = new Inventory();
-		this.addKeyListener(new KeyInput(entityHandler));
-
-		// Creates the game screen
-		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk - Level 1", this);
 
 		genPlayer();
 	}
 
-	private void tick() {
+	public void tick() {
 		entityHandler.tick();
 		inventory.tick();
-
-		window.setTitle("The Mines of Mukduk - Level " + map.getLevelNum());
 	}
 
-	private void render() {
-		BufferStrategy bs = this.getBufferStrategy();
-		if (bs == null) {
-			this.createBufferStrategy(3);
-			return;
-		}
-		Graphics g = bs.getDrawGraphics();
-
-		// Draw the background
-		g.setColor(Color.gray);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
-
+	public void render(Graphics g) {
 		renderGrid(g);
 		EntityHandler.render(g);
 		inventory.render(g);
-
-		g.dispose();
-		bs.show();
 	}
-
-	public void run() {
-		this.requestFocus();
-		long lastTime = System.nanoTime();
-		double amountOfTicks = 60.0;
-		double ns = 1000000000 / amountOfTicks;
-		double delta = 0;
-		long timer = System.currentTimeMillis();
-		int frames = 0;
-		while (running) {
-			long now = System.nanoTime();
-			delta += (now - lastTime) / ns;
-			lastTime = now;
-			while (delta >= 1) {
-				tick();
-				delta--;
-			}
-			if (running)
-				render();
-			frames++;
-			if (System.currentTimeMillis() - timer > 1000) {
-				timer += 1000;
-				// System.out.println("FPS: " + frames);
-				frames = 0;
-			}
-		}
-		stop();
-	}
-
-	public synchronized void start() {
-		thread = new Thread(this);
-		thread.start();
-		running = true;
-	}
-
-	public synchronized void stop() {
-		try {
-			thread.join();
-			running = false;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	
+	
+	// GETTERS AND SETTERS
+	
+	
+	public Map getMap(){
+		return map;
 	}
 
 	

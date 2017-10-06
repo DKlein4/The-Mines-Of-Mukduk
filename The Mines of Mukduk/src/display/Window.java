@@ -14,7 +14,7 @@ public class Window extends Canvas {
 
 	private static final long serialVersionUID = 501298079830563846L;
 
-	public Window(int width, int height, String title, GUIMain guiMain) {
+	public Window(int width, int height, String title, GUImain guiMain) {
 		frame = new JFrame(title);
 		frame.setPreferredSize(new Dimension(width, height));
 		frame.setMaximumSize(new Dimension(width, height));

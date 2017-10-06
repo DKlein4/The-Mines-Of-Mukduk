@@ -4,10 +4,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import Main.main;
-import display.GUIMain;
-import game_stages.Combat;
+import display.GUImain;
 import world_gen.Map;
-import world_gen.Tables;
 
 /**
  * @author Dustin; This is the father class for any entities. Contains the
@@ -29,8 +27,8 @@ public abstract class Entity {
 		this.col = c;
 		this.id = id;
 
-		tileSizeX = (GUIMain.WIDTH / main.gridSize) - 1;
-		tileSizeY = (GUIMain.HEIGHT / main.gridSize) - 1;
+		tileSizeX = (GUImain.WIDTH / main.gridSize) - 1;
+		tileSizeY = (GUImain.HEIGHT / main.gridSize) - 1;
 
 		// These numbers are the way that they are and IDK why
 		gridOffsetX = (tileSizeX * 3 / 4) * 3 / 4;

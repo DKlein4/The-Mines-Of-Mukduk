@@ -19,7 +19,7 @@ public class KeyInput extends KeyAdapter {
 	private PlayerMovement playerMovement;
 	Inventory inv = new Inventory();
 
-	public KeyInput(EntityHandler handler) {
+	public KeyInput() {
 		keyDown[0] = false; // W
 		keyDown[1] = false; // S
 		keyDown[2] = false; // D

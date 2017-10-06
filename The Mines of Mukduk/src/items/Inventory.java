@@ -5,7 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import display.GUIMain;
+import display.GUImain;
+import display.Game;
 
 /**
  * @author Dustin; This holds an arraylist of items that acts as the inventory
@@ -31,7 +32,7 @@ public class Inventory {
 		if (active) {
 			// Create the background of the inventory screen
 			g.setColor(Color.BLACK);
-			g.fillRect(50, 50, GUIMain.WIDTH - 100, GUIMain.HEIGHT - 130);
+			g.fillRect(50, 50, GUImain.WIDTH - 100, GUImain.HEIGHT - 130);
 
 			// Add the titles of the columns
 			g.setColor(Color.WHITE);
