@@ -5,36 +5,47 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import entities.EntityHandler;
 import input.KeyInput;
+import main.Handler;
 
 public class GUImain extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 501298079830563846L;
 
+	private Window window;
 	public static final int WIDTH = 900;
 	public static final int HEIGHT = WIDTH / 12 * 9;
+	
 	private Thread thread;
 	private boolean running = false;
 
-	private Window window;
 	private Game game;
 	private Menu menu;
-
 	public GUIstate guiState;
+	
+	private KeyInput keyInput;
+	
+	private Handler handler;
 
 	public GUImain() {
+		handler = new Handler(this);
 
 		guiState = GUIstate.Menu;
+		
+		menu = new Menu(handler);
+		game = new Game(handler);
+				
+		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
 
-		menu = new Menu(this);
-		game = new Game();
 
-		this.addKeyListener(new KeyInput(this));
+		keyInput = new KeyInput(handler);
+
+		this.addKeyListener(keyInput);
 		this.addMouseListener(menu);
 
-		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk - Level 1", this);
 	}
-
+	
 	private void tick() {
 		// Tick the right screen depending on the state
 		if (guiState == GUIstate.Menu)
@@ -43,7 +54,7 @@ public class GUImain extends Canvas implements Runnable {
 			game.tick();
 
 		// Update the title of the window
-		window.setTitle("The Mines of Mukduk - Level " + game.getMap().getLevelNum());
+		//window.setTitle("The Mines of Mukduk - Level " + handler.getWorld().getMap().getLevelNum());
 	}
 
 	private void render() {
@@ -110,5 +121,13 @@ public class GUImain extends Canvas implements Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	// GETTERS AND SETTERS
+	
+	
+	public KeyInput getKeyInput(){
+		return keyInput;
 	}
 }

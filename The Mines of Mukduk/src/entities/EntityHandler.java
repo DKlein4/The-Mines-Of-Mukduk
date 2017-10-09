@@ -1,7 +1,10 @@
 package entities;
 
 import java.awt.Graphics;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import main.Handler;
 
 /**
  * @author Dustin; This class handles all entities. It basically updates every
@@ -9,29 +12,54 @@ import java.util.LinkedList;
  */
 public class EntityHandler {
 	// This list holds every entity
-	public static LinkedList<Entity> entity = new LinkedList<Entity>();
+	private static ArrayList<Entity> entities = new ArrayList<Entity>();
+	
+	private Handler handler;
+	private Player player;
+	
+	public EntityHandler(Handler handler){
+		this.handler = handler;
+	}
 
 	// Tick each entity
 	public void tick() {
-		for (int i = 0; i < entity.size(); i++) {
-			Entity tempEntity = entity.get(i);
-			tempEntity.tick();
+		Iterator<Entity> it = entities.iterator();
+		while(it.hasNext()){
+			Entity e = it.next();
+			e.tick();
 		}
 	}
 
 	// Render each entity
-	public static void render(Graphics g) {
-		for (int i = 0; i < entity.size(); i++) {
-			Entity tempEntity = entity.get(i);
-			tempEntity.render(g);
+	public void render(Graphics g) {
+		Iterator<Entity> it = entities.iterator();
+		while(it.hasNext()){
+			Entity e = it.next();
+			e.render(g);
 		}
 	}
 
-	public static void addEntity(Entity entity) {
-		EntityHandler.entity.add(entity);
+	public void addEntity(Entity entity) {
+		entities.add(entity);
 	}
 
 	public void removeEntity(Entity entity) {
-		EntityHandler.entity.remove(entity);
+		entities.remove(entity);
+	}
+	
+	
+	// GETTERS AND SETTERS
+	
+	
+	public Player getPlayer(){
+		return player;
+	}
+	
+	public void setPlayer(Player player){
+		this.player = player;
+	}
+	
+	public ArrayList<Entity> getEntities() {
+		return entities;
 	}
 }

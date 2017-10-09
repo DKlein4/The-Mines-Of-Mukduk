@@ -5,6 +5,7 @@ import java.util.Random;
 import entities.Entity;
 import entities.EntityHandler;
 import entities.ID;
+import main.Handler;
 
 import java.lang.Math;
 
@@ -16,34 +17,27 @@ import world_gen.Tile;
  */
 public class Map {
 
-	private Random rand = new Random();
+	private final int gridSize = 30;
 
 	private Tile[][] grid;
-	private int gridSize;
 	private int numRooms;
 	private int levelNum;
 
+	private Random rand;
 	private Tables table;
+	private Handler handler;
+	private EntityHandler entityHandler;
 
-	public Map(int gridSize) {
-		this.grid = new Tile[gridSize][gridSize];
-		this.gridSize = gridSize;
+	public Map(Handler handler, EntityHandler entityHandler) {
+		grid = new Tile[gridSize][gridSize];
 		numRooms = 35;
 		levelNum = 0;
 
+		rand = new Random();
 		table = new Tables();
-
-		reset();
-	}
-
-	public Map() {
-		this.grid = new Tile[10][10];
-		this.gridSize = 10;
-		numRooms = 15;
-		levelNum = 0;
-
-		table = new Tables();
-
+		this.handler = handler;
+		this.entityHandler = entityHandler;
+		
 		reset();
 	}
 
@@ -189,8 +183,8 @@ public class Map {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (grid[r][c].isSpawn() == true) {
-					for (int i = 0; i < EntityHandler.entity.size(); i++) {
-						Entity tempObject = EntityHandler.entity.get(i);
+					for (int i = 0; i < entityHandler.getEntities().size(); i++) {
+						Entity tempObject = entityHandler.getEntities().get(i);
 						if (tempObject.getId() == ID.Player) {
 							tempObject.setRow(r);
 							tempObject.setCol(c);

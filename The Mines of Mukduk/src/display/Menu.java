@@ -6,12 +6,14 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import main.Handler;
+
 public class Menu extends MouseAdapter{
 	
 	private GUImain guiMain;
 
-	public Menu(GUImain guiMain){
-		this.guiMain = guiMain;
+	public Menu(Handler handler){
+		this.guiMain = handler.getGuiMain();
 	}
 	
 	public void mousePressed(MouseEvent e){
