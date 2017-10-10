@@ -5,6 +5,7 @@ import java.util.Random;
 import entities.Entity;
 import entities.EntityHandler;
 import entities.ID;
+import utils.Utils;
 
 import java.lang.Math;
 
@@ -34,14 +35,12 @@ public class Map {
 		this.entityHandler = entityHandler;
 		rand = new Random();
 		table = new Tables();
-		
+
 		reset();
 	}
 
-	
 	// GETTERS AND SETTERS
 
-	
 	public int getGridSize() {
 		return gridSize;
 	}
@@ -54,10 +53,8 @@ public class Map {
 		return levelNum;
 	}
 
-	
 	// STATE CHECKERS
 
-	
 	// Returns true if the coordinates are within the grid
 	public boolean onGrid(int r, int c) {
 		return (0 <= r) && (r <= gridSize - 1) && (0 <= c) && (c <= gridSize - 1);
@@ -93,10 +90,8 @@ public class Map {
 		}
 	}
 
-	
 	// RESEST AND HELPER FUNCTIONS
 
-	
 	public void reset() {
 
 		// Initialize every tile and set it to a wall
@@ -109,12 +104,48 @@ public class Map {
 
 		genInteriorRooms();
 		boundGen();
-		clearBlockages();
-		placeSpawnPoint();
-		placeLadder();
-		placePlayer();
+		parcelMap();
+		// placeSpawnPoint();
+		// placeLadder();
+		// placePlayer();
 
 		levelNum++;
+	}
+
+	private void parcelMap() {
+		String file = Utils.loadFileAsString("src/Resources/Test Map.txt");
+		String[] tokens = file.split("\\s+");
+		for (int r = 0; r < gridSize; r++) {
+			for (int c = 0; c < gridSize; c++) {
+				if (tokens[(r + c * gridSize)].equals("O")) {
+					parcelGen(r, c);
+				}
+			}
+		}
+	}
+
+	private void parcelGen(int r, int c) {
+		String file = null;
+		int parcelRoll = rand.nextInt((2 - 1) + 1) + 1;
+		if (parcelRoll == 1) {
+			file = Utils.loadFileAsString("src/Resources/Parcel1.txt");
+		}
+		
+		else if (parcelRoll == 2) {
+			file = Utils.loadFileAsString("src/Resources/Parcel2.txt");
+		}
+
+		String[] tokens = file.split("\\s+");
+		for (int x = 0; x < 9; x++) {
+			for (int y = 0; y < 9; y++) {
+				if (tokens[(x + y * 9)].equals("X")) {
+					grid[y + c][x + r].setWall(true);
+				}
+				if (tokens[(x + y * 9)].equals(".")) {
+					grid[y + c][x + r].setFloor(true);
+				}
+			}
+		}
 	}
 
 	// Checks for one Wall Tile blockages and clears them
