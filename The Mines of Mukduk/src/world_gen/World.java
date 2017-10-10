@@ -16,10 +16,13 @@ public class World {
 
 	private Map map;
 
+	private Handler handler;
 	private EntityHandler entityHandler;
 	private Inventory inventory;
 
 	public World(Handler handler) {		
+		this.handler = handler;
+		
 		entityHandler = new EntityHandler();
 		map = new Map(entityHandler);
 		inventory = new Inventory();
@@ -44,7 +47,7 @@ public class World {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (map.getTile(r, c).isSpawn() == true) {
-					entityHandler.addEntity(new Player(r, c, ID.Player, map));
+					entityHandler.addEntity(new Player(r, c, ID.Player, handler, map));
 
 					r = c = gridSize; // Break out of the loop
 				}

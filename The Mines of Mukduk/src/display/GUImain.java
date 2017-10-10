@@ -40,7 +40,7 @@ public class GUImain extends Canvas implements Runnable {
 		game = new Game(handler);
 		
 		mouseInput = new MouseInput();
-		keyInput = new KeyInput(handler);
+		keyInput = new KeyInput();
 		this.addKeyListener(keyInput);
 		this.addMouseListener(mouseInput);
 

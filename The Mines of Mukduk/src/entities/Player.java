@@ -8,6 +8,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import game_stages.PlayerInput;
+import items.Inventory;
+import main.Handler;
 import world_gen.Map;
 
 /**
@@ -17,10 +20,16 @@ public class Player extends Entity {
 
 	private File pathToSprite;
 	private Image playerSprite;
+	
+	private Inventory inventory;
+	private PlayerInput playerInput;
 
-	public Player(int row, int col, ID id, Map map) {
+	public Player(int row, int col, ID id, Handler handler, Map map) {
 		super(row, col, ID.Player, map);
 		this.map = map;
+		
+		inventory = new Inventory();
+		playerInput = new PlayerInput(handler, this);
 
 		// Load in the sprite for the player
 		try {
@@ -35,11 +44,16 @@ public class Player extends Entity {
 		// Update the position of the player
 		xPos = (col * tileSizeX) + gridOffsetX;
 		yPos = (row * tileSizeY) + gridOffsetY;
+		
+		inventory.tick();
+		playerInput.tick();
 	}
 
 	public void render(Graphics g) {
 		// Draws the player on the GUI. Right now its just a sexy Dorf
 		g.drawImage(playerSprite, xPos, yPos, tileSizeY, tileSizeY, null);
+		
+		inventory.render(g);
 	}
 
 	public Rectangle getBounds() {
