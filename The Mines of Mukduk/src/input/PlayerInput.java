@@ -19,17 +19,22 @@ public class PlayerInput {
 	private Inventory inventory;
 	
 	private boolean[] keyDown;
+	private boolean init;
 	
 	public PlayerInput(Handler handler, Player player){
 		this.handler = handler;
 		this.player = player;
+		init = false;
 	}
 	
 	public void tick(){
-		keyInput = handler.getKeyInput();
-		keyDown = keyInput.getKeyDown();
-		
-		inventory = handler.getWorld().getInventory();
+		if(!init){
+			keyInput = handler.getKeyInput();
+			keyDown = keyInput.getKeyDown();
+			inventory = handler.getWorld().getInventory();
+			
+			init = true;
+		}
 		
 		if(keyDown[4]){
 			inventory.toggleActive();
