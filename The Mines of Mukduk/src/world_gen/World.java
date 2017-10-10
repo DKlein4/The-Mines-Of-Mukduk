@@ -14,17 +14,14 @@ public class World {
 
 	private int gridSize;
 
-	private Handler handler;
 	private Map map;
 
 	private EntityHandler entityHandler;
 	private Inventory inventory;
 
-	public World(Handler handler) {
-		this.handler = handler;
-		
-		entityHandler = new EntityHandler(handler);
-		map = new Map(handler, entityHandler);
+	public World(Handler handler) {		
+		entityHandler = new EntityHandler();
+		map = new Map(entityHandler);
 		inventory = new Inventory();
 		
 		gridSize = map.getGridSize();
@@ -46,8 +43,8 @@ public class World {
 	private void genPlayer() {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
-				if (map.getGrid(r, c).isSpawn() == true) {
-					entityHandler.addEntity(new Player(r, c, ID.Player, entityHandler, map));
+				if (map.getTile(r, c).isSpawn() == true) {
+					entityHandler.addEntity(new Player(r, c, ID.Player, map));
 
 					r = c = gridSize; // Break out of the loop
 				}
@@ -73,22 +70,22 @@ public class World {
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
 				g.setColor(Color.white);
-				if (map.getGrid(r, c).isWall()) {
+				if (map.getTile(r, c).isWall()) {
 					g.setColor(Color.black);
 					g.drawString("▓", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				} else if (map.getGrid(r, c).isFloor())
+				} else if (map.getTile(r, c).isFloor())
 					g.drawString(".", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				else if (map.getGrid(r, c).isSpawn()) {
+				else if (map.getTile(r, c).isSpawn()) {
 					g.drawString(".", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				} else if (map.getGrid(r, c).isLadder()) {
+				} else if (map.getTile(r, c).isLadder()) {
 					g.setColor(Color.green);
 					g.drawString("▼", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				} else if (map.getGrid(r, c).isUnexplored())
+				} else if (map.getTile(r, c).isUnexplored())
 					g.drawString("U", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				else if (map.getGrid(r, c).isTreasure()) {
+				else if (map.getTile(r, c).isTreasure()) {
 					g.setColor(Color.yellow);
 					g.drawString("₧", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
-				} else if (map.getGrid(r, c).isMonster()) {
+				} else if (map.getTile(r, c).isMonster()) {
 					g.setColor(Color.red);
 					g.drawString("§", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				} else

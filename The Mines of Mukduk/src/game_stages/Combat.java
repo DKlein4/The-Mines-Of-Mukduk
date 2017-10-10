@@ -1,7 +1,5 @@
 package game_stages;
 
-import entities.Monster;
-import entities.Player;
 
 public class Combat {
 //	UI userInterface = new UI();

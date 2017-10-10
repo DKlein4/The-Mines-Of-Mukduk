@@ -5,10 +5,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-import entities.EntityHandler;
 import input.KeyInput;
+import input.MouseInput;
 import main.Handler;
 
+/**
+ * @author Dustin; This is the main class that creates the GUI and manages the
+ *         actions on the GUI
+ */
 public class GUImain extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 501298079830563846L;
@@ -25,24 +29,24 @@ public class GUImain extends Canvas implements Runnable {
 	public GUIstate guiState;
 	
 	private KeyInput keyInput;
+	private MouseInput mouseInput;
 	
 	private Handler handler;
 
 	public GUImain() {
 		handler = new Handler(this);
-
-		guiState = GUIstate.Menu;
 		
-		menu = new Menu(handler);
+		guiState = GUIstate.Menu;
 		game = new Game(handler);
-				
-		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
-
-
+		
+		mouseInput = new MouseInput();
 		keyInput = new KeyInput(handler);
-
 		this.addKeyListener(keyInput);
-		this.addMouseListener(menu);
+		this.addMouseListener(mouseInput);
+
+		menu = new Menu(handler, mouseInput);
+
+		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
 
 	}
 	
@@ -129,5 +133,9 @@ public class GUImain extends Canvas implements Runnable {
 	
 	public KeyInput getKeyInput(){
 		return keyInput;
+	}
+	
+	public MouseInput getMouseInput(){
+		return mouseInput;
 	}
 }

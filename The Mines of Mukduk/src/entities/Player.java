@@ -18,7 +18,7 @@ public class Player extends Entity {
 	private File pathToSprite;
 	private Image playerSprite;
 
-	public Player(int row, int col, ID id, EntityHandler handler, Map map) {
+	public Player(int row, int col, ID id, Map map) {
 		super(row, col, ID.Player, map);
 		this.map = map;
 

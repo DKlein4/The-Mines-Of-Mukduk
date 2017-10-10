@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import display.GUImain;
-import main.main;
 import world_gen.Map;
 
 /**

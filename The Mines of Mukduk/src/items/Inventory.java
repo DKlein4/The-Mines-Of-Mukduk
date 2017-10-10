@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import display.GUImain;
-import display.Game;
 
 /**
  * @author Dustin; This holds an arraylist of items that acts as the inventory
@@ -14,7 +13,7 @@ import display.Game;
  */
 public class Inventory {
 
-	public static ArrayList<Item> inventoryItems; // Stores all the items in the
+	private static ArrayList<Item> inventoryItems; // Stores all the items in the
 													// inventory
 	private static boolean active; // Used to determine whether or not the
 									// inventory should be rendered

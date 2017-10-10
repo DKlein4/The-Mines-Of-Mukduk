@@ -4,8 +4,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import main.Handler;
-
 /**
  * @author Dustin; This class handles all entities. It basically updates every
  *         single entity every tick.
@@ -14,11 +12,9 @@ public class EntityHandler {
 	// This list holds every entity
 	private static ArrayList<Entity> entities = new ArrayList<Entity>();
 	
-	private Handler handler;
 	private Player player;
 	
-	public EntityHandler(Handler handler){
-		this.handler = handler;
+	public EntityHandler(){
 	}
 
 	// Tick each entity

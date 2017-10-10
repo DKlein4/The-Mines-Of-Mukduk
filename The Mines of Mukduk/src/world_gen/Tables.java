@@ -4,6 +4,7 @@ import java.util.Random;
 
 import items.Inventory;
 import items.Item;
+import main.Handler;
 
 /**
  * @author Brett; This is the class that holds all the random tables for random

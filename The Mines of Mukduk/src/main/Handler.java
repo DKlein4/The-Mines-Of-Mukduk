@@ -1,7 +1,6 @@
 package main;
 
 import display.GUImain;
-import display.Game;
 import input.KeyInput;
 import world_gen.World;
 

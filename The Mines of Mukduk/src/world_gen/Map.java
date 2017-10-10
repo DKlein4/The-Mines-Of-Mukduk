@@ -5,7 +5,6 @@ import java.util.Random;
 import entities.Entity;
 import entities.EntityHandler;
 import entities.ID;
-import main.Handler;
 
 import java.lang.Math;
 
@@ -25,18 +24,16 @@ public class Map {
 
 	private Random rand;
 	private Tables table;
-	private Handler handler;
 	private EntityHandler entityHandler;
 
-	public Map(Handler handler, EntityHandler entityHandler) {
+	public Map(EntityHandler entityHandler) {
 		grid = new Tile[gridSize][gridSize];
 		numRooms = 35;
 		levelNum = 0;
 
+		this.entityHandler = entityHandler;
 		rand = new Random();
 		table = new Tables();
-		this.handler = handler;
-		this.entityHandler = entityHandler;
 		
 		reset();
 	}
@@ -49,7 +46,7 @@ public class Map {
 		return gridSize;
 	}
 
-	public Tile getGrid(int r, int c) {
+	public Tile getTile(int r, int c) {
 		return grid[r][c];
 	}
 

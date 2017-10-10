@@ -3,44 +3,27 @@ package display;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
+import input.MouseInput;
 import main.Handler;
 
-public class Menu extends MouseAdapter{
+public class Menu{
 	
 	private GUImain guiMain;
+	private MouseInput mouseInput;
 
-	public Menu(Handler handler){
+	public Menu(Handler handler, MouseInput mouseInput){
 		this.guiMain = handler.getGuiMain();
-	}
-	
-	public void mousePressed(MouseEvent e){
-		int mx = e.getX();
-		int my = e.getY();
-		
-		if(mouseOver(mx, my, 325, 225, 250, 70)){
-			guiMain.guiState = GUIstate.Game;
-		}		
-	}
-	
-	public void mouseReleased(MouseEvent e){
-		
-	}
-	
-	private boolean mouseOver(int mx, int my, int x, int y, int width, int height){
-		if(mx > x && mx < x + width)
-			if(my > y && my < y + height)
-				return true;
-			else
-				return false;
-		else 
-			return false;
+		this.mouseInput = mouseInput;
 	}
 	
 	public void tick(){
-		
+		if(mouseInput.isLeftPressed()){
+			// Play button
+			if(mouseInput.mouseOver(325, 225, 250, 70)){
+				guiMain.guiState = GUIstate.Game;
+			}
+		}
 	}
 	
 	public void render(Graphics g){
