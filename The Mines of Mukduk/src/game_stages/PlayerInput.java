@@ -39,12 +39,16 @@ public class PlayerInput {
 
 		if(keyDown[0])
 			moveUp(player);
+			keyDown[0] = false;
 		if(keyDown[1])
 			moveDown(player);
+			keyDown[1] = false;
 		if(keyDown[2])
 			moveRight(player);
+			keyDown[2] = false;
 		if(keyDown[3])
 			moveLeft(player);
+			keyDown[3] = false;
 	}
 
 	public void moveUp(Entity entity) {
