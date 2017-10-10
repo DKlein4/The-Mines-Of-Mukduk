@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import game_stages.PlayerInput;
+import input.PlayerInput;
 import items.Inventory;
 import main.Handler;
 import world_gen.Map;

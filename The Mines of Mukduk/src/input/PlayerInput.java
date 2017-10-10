@@ -1,9 +1,8 @@
-package game_stages;
+package input;
 
 
 import entities.Entity;
 import entities.Player;
-import input.KeyInput;
 import items.Inventory;
 import main.Handler;
 
