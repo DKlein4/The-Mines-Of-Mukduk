@@ -15,10 +15,8 @@ public abstract class GUIstate {
 	public static GUIstate getState() {
 		return currentState;
 	}
-
 	
 	// CLASS
-
 
 	protected Handler handler;
 

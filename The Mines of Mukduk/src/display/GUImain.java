@@ -8,6 +8,7 @@ import java.awt.image.BufferStrategy;
 import display.gui_states.GUIstate;
 import display.gui_states.GameState;
 import display.gui_states.MenuState;
+import display.gui_states.TutorialState;
 import input.KeyInput;
 import input.MouseInput;
 import main.Handler;
@@ -30,6 +31,7 @@ public class GUImain extends Canvas implements Runnable {
 	// GUI states
 	public GUIstate gameState;
 	public GUIstate menuState;
+	public GUIstate tutorialState;
 
 	private KeyInput keyInput;
 	private MouseInput mouseInput;
@@ -46,6 +48,7 @@ public class GUImain extends Canvas implements Runnable {
 
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler, mouseInput);
+		tutorialState = new TutorialState(handler, mouseInput);
 		GUIstate.setState(menuState);
 
 		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
