@@ -34,6 +34,7 @@ public class World {
 	public void tick() {
 		entityHandler.tick();
 		inventory.tick();
+		handler.getGuiMain().getWindow().setTitle("The Mines of Mukduk - Level " + map.getLevelNum());
 	}
 
 	public void render(Graphics g) {

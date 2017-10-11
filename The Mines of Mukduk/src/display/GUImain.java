@@ -52,7 +52,7 @@ public class GUImain extends Canvas implements Runnable {
 		GUIstate.setState(menuState);
 
 		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
-
+		
 	}
 
 	private void tick() {
@@ -135,5 +135,9 @@ public class GUImain extends Canvas implements Runnable {
 
 	public MouseInput getMouseInput() {
 		return mouseInput;
+	}
+	
+	public Window getWindow() {
+		return window;
 	}
 }
