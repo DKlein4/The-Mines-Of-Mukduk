@@ -105,9 +105,9 @@ public class Map {
 		genInteriorRooms();
 		boundGen();
 		parcelMap();
-		// placeSpawnPoint();
-		// placeLadder();
-		// placePlayer();
+		placeSpawnPoint();
+		placeLadder();
+		placePlayer();
 
 		levelNum++;
 	}

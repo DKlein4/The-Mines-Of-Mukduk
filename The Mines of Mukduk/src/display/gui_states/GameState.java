@@ -1,4 +1,4 @@
-package display;
+package display.gui_states;
 
 
 import java.awt.Graphics;
@@ -9,11 +9,12 @@ import main.Handler;
 /**
  * @author Dustin; This is the state of the GUI when the game is active
  */
-public class Game {
+public class GameState extends GUIstate{
 
 	private World world;
 	
-	public Game(Handler handler) {
+	public GameState(Handler handler) {
+		super(handler);
 		world = new World(handler);
 		handler.setWorld(world);
 	}

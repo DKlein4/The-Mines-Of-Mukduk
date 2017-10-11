@@ -1,7 +1,7 @@
 package main;
 
 import display.GUImain;
-import display.Game;
+import display.gui_states.GameState;
 import world_gen.Map;
 
 public class main {

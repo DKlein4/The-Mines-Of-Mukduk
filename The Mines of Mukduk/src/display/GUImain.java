@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import display.gui_states.GUIstate;
+import display.gui_states.GameState;
+import display.gui_states.MenuState;
 import input.KeyInput;
 import input.MouseInput;
 import main.Handler;
@@ -20,45 +23,39 @@ public class GUImain extends Canvas implements Runnable {
 	private Window window;
 	public static final int WIDTH = 900;
 	public static final int HEIGHT = WIDTH / 12 * 9;
-	
+
 	private Thread thread;
 	private boolean running = false;
 
-	private Game game;
-	private Menu menu;
-	public GUIstate guiState;
-	
+	// GUI states
+	public GUIstate gameState;
+	public GUIstate menuState;
+
 	private KeyInput keyInput;
 	private MouseInput mouseInput;
-	
+
 	private Handler handler;
 
 	public GUImain() {
 		handler = new Handler(this);
-		
-		guiState = GUIstate.Menu;
-		game = new Game(handler);
-		
+
 		mouseInput = new MouseInput();
 		keyInput = new KeyInput();
 		this.addKeyListener(keyInput);
 		this.addMouseListener(mouseInput);
 
-		menu = new Menu(handler, mouseInput);
+		gameState = new GameState(handler);
+		menuState = new MenuState(handler, mouseInput);
+		GUIstate.setState(menuState);
 
 		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
 
 	}
-	
+
 	private void tick() {
 		// Tick the right screen depending on the state
-		if (guiState == GUIstate.Menu)
-			menu.tick();
-		else if (guiState == GUIstate.Game)
-			game.tick();
-
-		// Update the title of the window
-		//window.setTitle("The Mines of Mukduk - Level " + handler.getWorld().getMap().getLevelNum());
+		if (GUIstate.getState() != null)
+			GUIstate.getState().tick();
 	}
 
 	private void render() {
@@ -75,10 +72,8 @@ public class GUImain extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		// Render the right screen depending on the state
-		if (guiState == GUIstate.Menu)
-			menu.render(g);
-		else if (guiState == GUIstate.Game)
-			game.render(g);
+		if (GUIstate.getState() != null)
+			GUIstate.getState().render(g);
 
 		g.dispose();
 		bs.show();
@@ -126,16 +121,16 @@ public class GUImain extends Canvas implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	
 	// GETTERS AND SETTERS
+
 	
-	
-	public KeyInput getKeyInput(){
+	public KeyInput getKeyInput() {
 		return keyInput;
 	}
-	
-	public MouseInput getMouseInput(){
+
+	public MouseInput getMouseInput() {
 		return mouseInput;
 	}
 }
