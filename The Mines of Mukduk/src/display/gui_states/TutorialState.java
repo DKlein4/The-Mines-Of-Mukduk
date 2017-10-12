@@ -28,7 +28,7 @@ public class TutorialState extends GUIstate {
 	public void render(Graphics g) {
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-		g.drawString("Use WASD to move around and crap.", 280, 125);
+		g.drawString("Use WASD to move around and crap.", 240, 125);
 
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
 		

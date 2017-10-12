@@ -1,7 +1,6 @@
 package input;
 
 
-import entities.Entity;
 import entities.Player;
 import items.Inventory;
 import main.Handler;
@@ -27,6 +26,7 @@ public class PlayerInput {
 	}
 	
 	public void tick(){
+		// Get these things only once
 		if(!init){
 			keyInput = handler.getKeyInput();
 			keyDown = keyInput.getKeyDown();
@@ -35,6 +35,7 @@ public class PlayerInput {
 			init = true;
 		}
 		
+		// E pressed
 		if(keyDown[4]){
 			inventory.toggleActive();
 			keyDown[4] = false;
@@ -44,49 +45,53 @@ public class PlayerInput {
 		if(inventory.isActive())
 			return;
 
+		// W pressed
 		if(keyDown[0]){
-			moveUp(player);
+			moveUp();
 			keyDown[0] = false;
 		}
+		// S pressed
 		if(keyDown[1]){
-			moveDown(player);
+			moveDown();
 			keyDown[1] = false;
 		}
+		// D pressed
 		if(keyDown[2]){
-			moveRight(player);
+			moveRight();
 			keyDown[2] = false;
 		}
+		// A pressed
 		if(keyDown[3]){
-			moveLeft(player);
+			moveLeft();
 			keyDown[3] = false;
 		}
 	}
 
-	public void moveUp(Entity entity) {
-		if (entity.getMap().isValidMove(entity.getRow() - 1, entity.getCol())) {
-			entity.setRow(entity.getRow() - 1);
-			entity.collision();
+	public void moveUp() {
+		if (player.getMap().isValidMove(player.getRow() - 1, player.getCol())) {
+			player.setRow(player.getRow() - 1);
+			player.collision();
 		}
 	}
 
-	public void moveDown(Entity entity) {
-		if (entity.getMap().isValidMove(entity.getRow() + 1, entity.getCol())) {
-			entity.setRow(entity.getRow() + 1);
-			entity.collision();
+	public void moveDown() {
+		if (player.getMap().isValidMove(player.getRow() + 1, player.getCol())) {
+			player.setRow(player.getRow() + 1);
+			player.collision();
 		}
 	}
 
-	public void moveRight(Entity entity) {
-		if (entity.getMap().isValidMove(entity.getRow(), entity.getCol() + 1)) {
-			entity.setCol(entity.getCol() + 1);
-			entity.collision();
+	public void moveRight() {
+		if (player.getMap().isValidMove(player.getRow(), player.getCol() + 1)) {
+			player.setCol(player.getCol() + 1);
+			player.collision();
 		}
 	}
 
-	public void moveLeft(Entity entity) {
-		if (entity.getMap().isValidMove(entity.getRow(), entity.getCol() - 1)) {
-			entity.setCol(entity.getCol() - 1);
-			entity.collision();
+	public void moveLeft() {
+		if (player.getMap().isValidMove(player.getRow(), player.getCol() - 1)) {
+			player.setCol(player.getCol() - 1);
+			player.collision();
 		}
 	}
 }

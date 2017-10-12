@@ -21,10 +21,12 @@ public class GUImain extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 501298079830563846L;
 
+	// Window stuff
 	private Window window;
 	public static final int WIDTH = 900;
 	public static final int HEIGHT = WIDTH / 12 * 9;
 
+	// Running stuff
 	private Thread thread;
 	private boolean running = false;
 
@@ -33,6 +35,7 @@ public class GUImain extends Canvas implements Runnable {
 	public GUIstate menuState;
 	public GUIstate tutorialState;
 
+	// Input
 	private KeyInput keyInput;
 	private MouseInput mouseInput;
 

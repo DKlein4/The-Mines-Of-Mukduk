@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import display.GUImain;
 import entities.EntityHandler;
 import entities.ID;
+import entities.Monster;
 import entities.Player;
 import items.Inventory;
 import main.Handler;
@@ -28,7 +29,9 @@ public class World {
 		inventory = new Inventory();
 		
 		gridSize = map.getGridSize();
+		
 		genPlayer();
+		genMonsters();
 	}
 
 	public void tick() {
@@ -49,8 +52,18 @@ public class World {
 			for (int r = 0; r < gridSize; r++) {
 				if (map.getTile(r, c).isSpawn() == true) {
 					entityHandler.addEntity(new Player(r, c, ID.Player, handler, map));
-
 					r = c = gridSize; // Break out of the loop
+				}
+			}
+		}
+	}
+	
+	// Places monster entities on every tile that has that attribute
+	private void genMonsters(){
+		for (int c = 0; c < gridSize; c++) {
+			for (int r = 0; r < gridSize; r++) {
+				if (map.getTile(r, c).isMonster() == true) {
+					entityHandler.addEntity(new Monster(r, c, ID.Monster, map));
 				}
 			}
 		}
@@ -91,7 +104,7 @@ public class World {
 					g.drawString("₧", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				} else if (map.getTile(r, c).isMonster()) {
 					g.setColor(Color.red);
-					g.drawString("§", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
+					g.drawString(".", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 				} else
 					g.drawString("X", c * tileSizeX + gridOffsetX, r * tileSizeY + gridOffsetY);
 			}
