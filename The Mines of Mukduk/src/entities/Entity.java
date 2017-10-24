@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import display.GUImain;
 import gfx.Assets;
 import world_gen.Map;
+import world_gen.Tile;
 
 /**
  * @author Dustin; This is the father class for any entities. Contains the
@@ -13,8 +14,11 @@ import world_gen.Map;
  */
 public abstract class Entity {
 	
+	protected int width;
+	protected int height;
+	
 	protected int row, col; // Positions on the grid
-	protected int tileSizeX, tileSizeY; // The sizes of an individual tile
+	protected int tileWidth, tileHeight; // The sizes of an individual tile
 	protected int gridOffsetX, gridOffsetY; // Offsets for formatting. Make the
 											// entity line up with the grid
 	protected int xPos, yPos; // Positions on the grid
@@ -28,15 +32,17 @@ public abstract class Entity {
 		this.id = id;
 		this.map = map;
 
-		tileSizeX = Assets.width;
-		tileSizeY = Assets.height;
+		tileWidth = Tile.TILEWIDTH;
+		tileHeight = Tile.TILEHEIGHT;
+		
+		width = Tile.TILEWIDTH;
+		height = Tile.TILEHEIGHT;
 
-		// These numbers are the way that they are and IDK why
 		gridOffsetX = 0;
-		gridOffsetY = - tileSizeY / 8;
+		gridOffsetY = - tileHeight / 8;
 
-		xPos = (col * tileSizeX) + gridOffsetX;
-		yPos = (row * tileSizeY) + gridOffsetY;
+		xPos = (col * tileWidth) + gridOffsetX;
+		yPos = (row * tileHeight) + gridOffsetY;
 	}
 
 	public abstract void tick();
@@ -89,4 +95,22 @@ public abstract class Entity {
 	public Map getMap() {
 		return map;
 	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	
+	
 }

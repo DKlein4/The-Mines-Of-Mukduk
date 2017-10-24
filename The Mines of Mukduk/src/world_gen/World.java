@@ -32,7 +32,7 @@ public class World {
 		gridSize = map.getGridSize();
 
 		genPlayer();
-		genMonsters();
+		//genMonsters();
 	}
 
 	public void tick() {
@@ -74,34 +74,21 @@ public class World {
 	private void renderMap(Graphics g) {
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
-				g.setColor(Color.white);
-
-				int x = c * Assets.width;
-				int y = r * Assets.height;
-
-				if (map.getTile(r, c).isWall()) {
-					g.drawImage(Assets.wall, x, y, Assets.width, Assets.height, null);
-				} else if (map.getTile(r, c).isFloor()) {
-					g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
-				} else if (map.getTile(r, c).isSpawn()) {
-					g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
-				} else if (map.getTile(r, c).isLadder()) {
-					g.setColor(Color.green);
-					g.drawString("▼", x, y);
-				} else if (map.getTile(r, c).isTreasure()) {
-					g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
-					g.setColor(Color.yellow);
-					g.drawString("₧", x + Assets.width / 4, y + Assets.height * 5 / 8);
-				} else if (map.getTile(r, c).isMonster()) {
-					g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
-				} else
-					g.drawImage(Assets.wall, x, y, Assets.width, Assets.height, null);
+				int cameraOffsetX = (int) handler.getGuiMain().getGameCamera().getxOffset();
+				int cameraOffsetY = (int) handler.getGuiMain().getGameCamera().getyOffset();
+				
+				
+				int x = c * Assets.width - cameraOffsetX;
+				int y = r * Assets.height - cameraOffsetY;
+				map.getTile(r, c).render(g, x, y);
 			}
 		}
 	}
 
+	
 	// GETTERS AND SETTERS
 
+	
 	public EntityHandler getEntityHandler() {
 		return entityHandler;
 	}

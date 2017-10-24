@@ -1,15 +1,44 @@
 package world_gen;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
+import gfx.Assets;
+
 /**
  * @author Dustin; One space on the map that has different attributes.
  */
 public class Tile {
+	
+	public static final int TILEWIDTH = Assets.height;
+	public static final int TILEHEIGHT = Assets.width;
 
 	// Different states a tile can be
 	private boolean isWall, isFloor, isLadder, isUnexplored, isTreasure, isMonster, isSpawn;
 
 	public Tile() {
 		isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = isSpawn = false;
+	}
+	
+	public void render(Graphics g, int x, int y) {
+		if (isWall()) {
+			g.drawImage(Assets.wall, x, y, Assets.width, Assets.height, null);
+		} else if (isFloor()) {
+			g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
+		} else if (isSpawn()) {
+			g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
+		} else if (isLadder()) {
+			g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
+			g.setColor(Color.green);
+			g.drawString("▼", x + Assets.width / 4, y + Assets.height * 5 / 8);
+		} else if (isTreasure()) {
+			g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
+			g.setColor(Color.yellow);
+			g.drawString("₧", x + Assets.width / 4, y + Assets.height * 5 / 8);
+		} else if (isMonster()) {
+			g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
+		} else
+			g.drawImage(Assets.wall, x, y, Assets.width, Assets.height, null);
 	}
 
 	private void clearTile() {

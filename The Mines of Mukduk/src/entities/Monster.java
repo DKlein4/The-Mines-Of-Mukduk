@@ -19,15 +19,15 @@ public class Monster extends Entity {
 
 	public void tick() {
 		// Update the position of the player
-		xPos = (col * tileSizeX) + gridOffsetX;
-		yPos = (row * tileSizeY) + gridOffsetY;
+		xPos = (col * tileWidth) + gridOffsetX;
+		yPos = (row * tileHeight) + gridOffsetY;
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(Assets.monster, xPos, yPos, tileSizeY, tileSizeY, null);
+		g.drawImage(Assets.monster, xPos, yPos, width, height, null);
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(xPos, yPos, tileSizeX, tileSizeY);
+		return new Rectangle(xPos, yPos, width, height);
 	}
 }

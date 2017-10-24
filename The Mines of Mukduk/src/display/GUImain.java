@@ -10,6 +10,7 @@ import display.gui_states.GameState;
 import display.gui_states.MenuState;
 import display.gui_states.TutorialState;
 import gfx.Assets;
+import gfx.GameCamera;
 import input.KeyInput;
 import input.MouseInput;
 import main.Handler;
@@ -41,11 +42,15 @@ public class GUImain extends Canvas implements Runnable {
 	private MouseInput mouseInput;
 
 	private Handler handler;
+	
+	private GameCamera gameCamera;
 
 	public GUImain() {
 		Assets.init();
 		
 		handler = new Handler(this);
+		
+		gameCamera = new GameCamera(handler, 0, 0);
 
 		mouseInput = new MouseInput();
 		keyInput = new KeyInput();
@@ -137,6 +142,10 @@ public class GUImain extends Canvas implements Runnable {
 	
 	public KeyInput getKeyInput() {
 		return keyInput;
+	}
+	
+	public GameCamera getGameCamera() {
+		return gameCamera;
 	}
 
 	public MouseInput getMouseInput() {
