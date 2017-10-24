@@ -6,6 +6,7 @@ import entities.Entity;
 import entities.EntityHandler;
 import entities.ID;
 import entities.Monster;
+import main.Handler;
 import utils.Utils;
 
 import java.lang.Math;
@@ -27,8 +28,10 @@ public class Map {
 	private Random rand;
 	private Tables table;
 	private EntityHandler entityHandler;
+	
+	private Handler handler;
 
-	public Map(EntityHandler entityHandler) {
+	public Map(Handler handler, EntityHandler entityHandler) {
 		grid = new Tile[gridSize][gridSize];
 		numRooms = 35;
 		levelNum = 0;
@@ -36,6 +39,8 @@ public class Map {
 		this.entityHandler = entityHandler;
 		rand = new Random();
 		table = new Tables();
+		
+		this.handler = handler;
 
 		reset();
 	}
@@ -89,7 +94,7 @@ public class Map {
 	// Checks if tile is spooky monster, starts combat if it is
 	public void isMonster(int r, int c) {
 		if (grid[r][c].isMonster()) {
-			entityHandler.removeEntity(new Monster(r, c, ID.Monster, this));
+			entityHandler.removeEntity(new Monster(r, c, ID.Monster, handler, this));
 			grid[r][c].setFloor(true);
 		}
 	}

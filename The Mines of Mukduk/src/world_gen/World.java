@@ -26,13 +26,13 @@ public class World {
 		this.handler = handler;
 
 		entityHandler = new EntityHandler();
-		map = new Map(entityHandler);
+		map = new Map(handler, entityHandler);
 		inventory = new Inventory();
 
 		gridSize = map.getGridSize();
 
 		genPlayer();
-		//genMonsters();
+		genMonsters();
 	}
 
 	public void tick() {
@@ -64,7 +64,7 @@ public class World {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (map.getTile(r, c).isMonster() == true) {
-					entityHandler.addEntity(new Monster(r, c, ID.Monster, map));
+					entityHandler.addEntity(new Monster(r, c, ID.Monster, handler, map));
 				}
 			}
 		}
@@ -76,7 +76,6 @@ public class World {
 			for (int c = 0; c < gridSize; c++) {
 				int cameraOffsetX = (int) handler.getGuiMain().getGameCamera().getxOffset();
 				int cameraOffsetY = (int) handler.getGuiMain().getGameCamera().getyOffset();
-				
 				
 				int x = c * Assets.width - cameraOffsetX;
 				int y = r * Assets.height - cameraOffsetY;

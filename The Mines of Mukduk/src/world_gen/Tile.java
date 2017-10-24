@@ -1,6 +1,7 @@
 package world_gen;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import gfx.Assets;
@@ -21,6 +22,8 @@ public class Tile {
 	}
 	
 	public void render(Graphics g, int x, int y) {
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 35));
+		
 		if (isWall()) {
 			g.drawImage(Assets.wall, x, y, Assets.width, Assets.height, null);
 		} else if (isFloor()) {
