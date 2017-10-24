@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 	
-	public static final int width = 32, height = 32;
+	public static final int width = 32 * 3, height = 32 * 3;
 	
 	public static BufferedImage dirt, wall;
 	public static BufferedImage player, monster;

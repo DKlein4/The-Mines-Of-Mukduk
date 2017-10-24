@@ -150,6 +150,9 @@ public class Map {
 				if (tokens[(x + y * 9)].equals(".")) {
 					grid[y + c][x + r].setFloor(true);
 				}
+				if (tokens[(x + y * 9)].equals("T")) {
+					grid[y + c][x + r].setTreasure(true);
+				}
 			}
 		}
 	}
