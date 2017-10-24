@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import gfx.Assets;
 import input.PlayerInput;
 import items.Inventory;
 import main.Handler;
@@ -18,9 +19,6 @@ import world_gen.Map;
  */
 public class Player extends Entity {
 
-	private File pathToSprite;
-	private Image playerSprite;
-
 	private Inventory inventory;
 	private PlayerInput playerInput;
 
@@ -30,13 +28,6 @@ public class Player extends Entity {
 		inventory = new Inventory();
 		playerInput = new PlayerInput(handler, this);
 
-		// Load in the sprite for the player
-		try {
-			pathToSprite = new File("src/Resources/Dwarf.png");
-			playerSprite = ImageIO.read(pathToSprite);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void tick() {
@@ -50,7 +41,7 @@ public class Player extends Entity {
 
 	public void render(Graphics g) {
 		// Draws the player on the GUI. Right now its just a sexy Dorf
-		g.drawImage(playerSprite, xPos, yPos, tileSizeY, tileSizeY, null);
+		g.drawImage(Assets.player, xPos, yPos, tileSizeY, tileSizeY, null);
 
 		inventory.render(g);
 	}

@@ -5,6 +5,7 @@ import java.util.Random;
 import entities.Entity;
 import entities.EntityHandler;
 import entities.ID;
+import entities.Monster;
 import utils.Utils;
 
 import java.lang.Math;
@@ -39,8 +40,10 @@ public class Map {
 		reset();
 	}
 
+	
 	// GETTERS AND SETTERS
 
+	
 	public int getGridSize() {
 		return gridSize;
 	}
@@ -53,8 +56,10 @@ public class Map {
 		return levelNum;
 	}
 
+	
 	// STATE CHECKERS
 
+	
 	// Returns true if the coordinates are within the grid
 	public boolean onGrid(int r, int c) {
 		return (0 <= r) && (r <= gridSize - 1) && (0 <= c) && (c <= gridSize - 1);
@@ -62,7 +67,7 @@ public class Map {
 
 	// Returns true if the coordinate is a valid tile to move to
 	public boolean isValidMove(int r, int c) {
-		return !grid[r][c].isWall();
+		return !grid[r][c].isSolid();
 	}
 
 	// Checks if tile is treasure, rolls on the table, then sets it back to
@@ -84,14 +89,15 @@ public class Map {
 	// Checks if tile is spooky monster, starts combat if it is
 	public void isMonster(int r, int c) {
 		if (grid[r][c].isMonster()) {
-			// Start combat
-			// combat.combatRound();
+			entityHandler.removeEntity(new Monster(r, c, ID.Monster, this));
 			grid[r][c].setFloor(true);
 		}
 	}
 
+	
 	// RESEST AND HELPER FUNCTIONS
 
+	
 	public void reset() {
 
 		// Initialize every tile and set it to a wall

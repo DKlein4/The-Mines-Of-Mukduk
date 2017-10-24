@@ -82,4 +82,8 @@ public class Tile {
 		clearTile();
 		this.isMonster = isMonster;
 	}
+	
+	public boolean isSolid() {
+		return isWall();
+	}
 }

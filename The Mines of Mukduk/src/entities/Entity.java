@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import display.GUImain;
+import gfx.Assets;
 import world_gen.Map;
 
 /**
@@ -12,7 +13,6 @@ import world_gen.Map;
  */
 public abstract class Entity {
 	
-	protected int gridSize; // Number of tiles on the map
 	protected int row, col; // Positions on the grid
 	protected int tileSizeX, tileSizeY; // The sizes of an individual tile
 	protected int gridOffsetX, gridOffsetY; // Offsets for formatting. Make the
@@ -27,15 +27,13 @@ public abstract class Entity {
 		this.col = c;
 		this.id = id;
 		this.map = map;
-		
-		gridSize = map.getGridSize();
 
-		tileSizeX = (GUImain.WIDTH / gridSize) - 1;
-		tileSizeY = (GUImain.HEIGHT / gridSize) - 1;
+		tileSizeX = Assets.width;
+		tileSizeY = Assets.height;
 
 		// These numbers are the way that they are and IDK why
-		gridOffsetX = (tileSizeX * 3 / 4) * 3 / 4;
-		gridOffsetY = tileSizeY / 4;
+		gridOffsetX = 0;
+		gridOffsetY = - tileSizeY / 8;
 
 		xPos = (col * tileSizeX) + gridOffsetX;
 		yPos = (row * tileSizeY) + gridOffsetY;
