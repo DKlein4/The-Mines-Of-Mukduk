@@ -56,13 +56,6 @@ public abstract class Entity {
 
 	public abstract Rectangle getBounds();
 
-	// Checks the entity's position to see if any actions need to be performed
-	public void collision() {
-		map.isTreasure(row, col);
-		map.isLadder(row, col);
-		map.isMonster(row, col);
-	}
-
 	// GETTERS AND SETTERS
 
 	public int getRow() {

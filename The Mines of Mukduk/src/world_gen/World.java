@@ -41,7 +41,7 @@ public class World {
 	public void tick() {
 		entityHandler.tick();
 		inventory.tick();
-		handler.getGuiMain().getWindow().setTitle("The Mines of Mukduk - Level " + map.getLevelNum());
+		handler.getGuiMain().getWindow().setTitle("The Mines of Mukduk - Level " + map.getLevelNum() + " - Steps: " + entityHandler.getPlayer().getSteps());
 	}
 
 	public void render(Graphics g) {
@@ -54,7 +54,7 @@ public class World {
 	private void genPlayer() {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
-				if (map.getTile(r, c).isSpawn() == true) {
+				if (map.getTile(r, c).isSpawn()) {
 					entityHandler.addEntity(new Player(r, c, ID.Player, handler, map));
 					r = c = gridSize; // Break out of the loop
 				}
@@ -66,7 +66,7 @@ public class World {
 	private void genMonsters() {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
-				if (map.getTile(r, c).isMonster() == true) {
+				if (map.getTile(r, c).isMonster()) {
 					entityHandler.addEntity(new Monster(r, c, ID.Monster, handler, map));
 				}
 			}

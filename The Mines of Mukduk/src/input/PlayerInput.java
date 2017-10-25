@@ -71,6 +71,7 @@ public class PlayerInput {
 		if (player.getMap().isValidMove(player.getRow() - 1, player.getCol())) {
 			player.setRow(player.getRow() - 1);
 			player.collision();
+			player.step();
 		}
 	}
 
@@ -78,6 +79,7 @@ public class PlayerInput {
 		if (player.getMap().isValidMove(player.getRow() + 1, player.getCol())) {
 			player.setRow(player.getRow() + 1);
 			player.collision();
+			player.step();
 		}
 	}
 
@@ -85,6 +87,7 @@ public class PlayerInput {
 		if (player.getMap().isValidMove(player.getRow(), player.getCol() + 1)) {
 			player.setCol(player.getCol() + 1);
 			player.collision();
+			player.step();
 		}
 	}
 
@@ -92,6 +95,7 @@ public class PlayerInput {
 		if (player.getMap().isValidMove(player.getRow(), player.getCol() - 1)) {
 			player.setCol(player.getCol() - 1);
 			player.collision();
+			player.step();
 		}
 	}
 }

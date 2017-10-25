@@ -180,7 +180,7 @@ public class Map {
 	private void placeSpawnPoint() {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
-				if (grid[r][c].isFloor() == true) {
+				if (grid[r][c].isFloor()) {
 					// Creates a room starting at the spawn point
 					for (int xs = r; xs < r + 4; xs++) {
 						for (int ys = c; ys < c + 4; ys++) {
@@ -201,7 +201,7 @@ public class Map {
 	private void placeLadder() {
 		for (int c = gridSize - 1; c >= 0; c--) {
 			for (int r = gridSize - 1; r >= 0; r--) {
-				if (grid[r][c].isFloor() == true) {
+				if (grid[r][c].isFloor()) {
 					// Creates a room starting at the ladder
 					for (int xl = r - 4; xl < r; xl++) {
 						for (int yl = c - 4; yl < c; yl++) {
@@ -222,7 +222,7 @@ public class Map {
 	private void placePlayer() {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
-				if (grid[r][c].isSpawn() == true) {
+				if (grid[r][c].isSpawn()) {
 					for (int i = 0; i < entityHandler.getEntities().size(); i++) {
 						Entity tempObject = entityHandler.getEntities().get(i);
 						if (tempObject.getId() == ID.Player) {
@@ -238,10 +238,10 @@ public class Map {
 	// Moves all of the monsters to their new locations on the map
 	private void placeMonsters() {
 		entityHandler.removeMonsters();
-		
+
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
-				if (grid[r][c].isMonster() == true) {
+				if (grid[r][c].isMonster()) {
 					entityHandler.addEntity(new Monster(r, c, ID.Monster, handler, this));
 				}
 			}

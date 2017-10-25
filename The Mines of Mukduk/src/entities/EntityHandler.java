@@ -1,7 +1,6 @@
 package entities;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -54,14 +53,19 @@ public class EntityHandler {
 				removeEntity(e);
 			}
 		}
-		
-		
 	}
 
 	// GETTERS AND SETTERS
 
 	public Player getPlayer() {
-		return player;
+		Iterator<Entity> it = entities.iterator();
+		while (it.hasNext()) {
+			Entity e = it.next();
+			if (e.getId() == ID.Player) {
+				return (Player) e;
+			}
+		}
+		return null;
 	}
 
 	public void setPlayer(Player player) {
