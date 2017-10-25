@@ -114,7 +114,7 @@ public class Map {
 		placeSpawnPoint();
 		placeLadder();
 		placePlayer();
-		// placeMonsters();
+		placeMonsters();
 
 		levelNum++;
 	}
@@ -237,9 +237,15 @@ public class Map {
 
 	// Moves all of the monsters to their new locations on the map
 	private void placeMonsters() {
-		entityHandler.setMarker(true);
 		entityHandler.removeMonsters();
-		entityHandler.setMarker(false);
+		
+		for (int c = 0; c < gridSize; c++) {
+			for (int r = 0; r < gridSize; r++) {
+				if (grid[r][c].isMonster() == true) {
+					entityHandler.addEntity(new Monster(r, c, ID.Monster, handler, this));
+				}
+			}
+		}
 	}
 
 	// Place walls around the outside of the grid

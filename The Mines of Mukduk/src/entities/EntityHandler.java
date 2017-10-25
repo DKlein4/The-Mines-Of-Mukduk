@@ -3,6 +3,7 @@ package entities;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * This class handles all entities. It basically updates every single entity
@@ -13,33 +14,27 @@ import java.util.Iterator;
 public class EntityHandler {
 
 	// This list holds every entity
-	private static ArrayList<Entity> entities = new ArrayList<Entity>();
+	private static CopyOnWriteArrayList<Entity> entities;
 
 	private Player player;
 
-	// prevents altering entities while it is being accessed
-	private static boolean marker = false;
-
 	public EntityHandler() {
+		entities = new CopyOnWriteArrayList<Entity>();
 	}
 
 	public void tick() {
-		if (!marker) {
-			Iterator<Entity> it = entities.iterator();
-			while (it.hasNext()) {
-				Entity e = it.next();
-				e.tick();
-			}
+		Iterator<Entity> it = entities.iterator();
+		while (it.hasNext()) {
+			Entity e = it.next();
+			e.tick();
 		}
 	}
 
 	public void render(Graphics g) {
-		if (!marker) {
-			Iterator<Entity> it = entities.iterator();
-			while (it.hasNext()) {
-				Entity e = it.next();
-				e.render(g);
-			}
+		Iterator<Entity> it = entities.iterator();
+		while (it.hasNext()) {
+			Entity e = it.next();
+			e.render(g);
 		}
 	}
 
@@ -59,6 +54,8 @@ public class EntityHandler {
 				removeEntity(e);
 			}
 		}
+		
+		
 	}
 
 	// GETTERS AND SETTERS
@@ -71,11 +68,7 @@ public class EntityHandler {
 		this.player = player;
 	}
 
-	public ArrayList<Entity> getEntities() {
+	public CopyOnWriteArrayList<Entity> getEntities() {
 		return entities;
-	}
-
-	public void setMarker(boolean marker) {
-		this.marker = marker;
 	}
 }
