@@ -1,9 +1,10 @@
 package entities;
 
 /**
- * @author Dustin;  The different types of entity one can be.
+ * The different types of entity one can be.
+ * 
+ * @author Dustin
  */
 public enum ID {
-	Player(),
-	Monster();
+	Player(), Monster();
 }

@@ -7,10 +7,12 @@ import java.awt.Graphics;
 import gfx.Assets;
 
 /**
- * @author Dustin; One space on the map that has different attributes.
+ * One space on the map that has different attributes.
+ * 
+ * @author Dustin
  */
 public class Tile {
-	
+
 	public static final int TILEWIDTH = Assets.height;
 	public static final int TILEHEIGHT = Assets.width;
 
@@ -18,12 +20,12 @@ public class Tile {
 	private boolean isWall, isFloor, isLadder, isUnexplored, isTreasure, isMonster, isSpawn;
 
 	public Tile() {
-		isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = isSpawn = false;
+		clearTile();
 	}
-	
+
 	public void render(Graphics g, int x, int y) {
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 35));
-		
+
 		if (isWall()) {
 			g.drawImage(Assets.wall, x, y, Assets.width, Assets.height, null);
 		} else if (isFloor()) {
@@ -47,10 +49,8 @@ public class Tile {
 	private void clearTile() {
 		isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = isSpawn = false;
 	}
-	
-	
+
 	// GETTERS AND SETTERS
-	
 
 	public boolean isWall() {
 		return isWall;
@@ -114,7 +114,7 @@ public class Tile {
 		clearTile();
 		this.isMonster = isMonster;
 	}
-	
+
 	public boolean isSolid() {
 		return isWall();
 	}

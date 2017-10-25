@@ -4,7 +4,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /**
- * @author Dustin; This class handles the keyboard input.
+ * This class handles the keyboard input.
+ * 
+ * @author Dustin
  */
 public class KeyInput extends KeyAdapter {
 
@@ -51,8 +53,8 @@ public class KeyInput extends KeyAdapter {
 		if (key == KeyEvent.VK_E)
 			keyDown[4] = false;
 	}
-	
-	public boolean[] getKeyDown(){
+
+	public boolean[] getKeyDown() {
 		return keyDown;
 	}
 }

@@ -14,8 +14,10 @@ import java.lang.Math;
 import world_gen.Tile;
 
 /**
- * @author Dustin; This is the grid that houses all of the tiles. Basically a
- *         level with random generation
+ * This is the grid that houses all of the tiles. Basically a level with random
+ * generation
+ * 
+ * @author Dustin
  */
 public class Map {
 
@@ -28,7 +30,7 @@ public class Map {
 	private Random rand;
 	private Tables table;
 	private EntityHandler entityHandler;
-	
+
 	private Handler handler;
 
 	public Map(Handler handler, EntityHandler entityHandler) {
@@ -39,16 +41,14 @@ public class Map {
 		this.entityHandler = entityHandler;
 		rand = new Random();
 		table = new Tables();
-		
+
 		this.handler = handler;
 
 		reset();
 	}
 
-	
 	// GETTERS AND SETTERS
 
-	
 	public int getGridSize() {
 		return gridSize;
 	}
@@ -61,10 +61,8 @@ public class Map {
 		return levelNum;
 	}
 
-	
 	// STATE CHECKERS
 
-	
 	// Returns true if the coordinates are within the grid
 	public boolean onGrid(int r, int c) {
 		return (0 <= r) && (r <= gridSize - 1) && (0 <= c) && (c <= gridSize - 1);
@@ -75,8 +73,7 @@ public class Map {
 		return !grid[r][c].isSolid();
 	}
 
-	// Checks if tile is treasure, rolls on the table, then sets it back to
-	// floor
+	// Checks if tile is treasure, rolls loot, then sets it back to floor
 	public void isTreasure(int r, int c) {
 		if (grid[r][c].isTreasure()) {
 			table.lootRoll();
@@ -99,10 +96,8 @@ public class Map {
 		}
 	}
 
-	
 	// RESEST AND HELPER FUNCTIONS
 
-	
 	public void reset() {
 
 		// Initialize every tile and set it to a wall
@@ -119,9 +114,12 @@ public class Map {
 		placeSpawnPoint();
 		placeLadder();
 		placePlayer();
+		// placeMonsters();
 
 		levelNum++;
 	}
+
+	// MAP GENERATION
 
 	private void parcelMap() {
 		String file = Utils.loadFileAsString("src/Resources/Test Map.txt");
@@ -141,7 +139,7 @@ public class Map {
 		if (parcelRoll == 1) {
 			file = Utils.loadFileAsString("src/Resources/Parcel1.txt");
 		}
-		
+
 		else if (parcelRoll == 2) {
 			file = Utils.loadFileAsString("src/Resources/Parcel2.txt");
 		}
@@ -235,6 +233,13 @@ public class Map {
 				}
 			}
 		}
+	}
+
+	// Moves all of the monsters to their new locations on the map
+	private void placeMonsters() {
+		entityHandler.setMarker(true);
+		entityHandler.removeMonsters();
+		entityHandler.setMarker(false);
 	}
 
 	// Place walls around the outside of the grid

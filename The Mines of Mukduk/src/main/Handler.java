@@ -4,6 +4,11 @@ import display.GUImain;
 import input.KeyInput;
 import world_gen.World;
 
+/**
+ * Collection of some classes for ease of access.
+ * 
+ * @author Dustin
+ */
 public class Handler {
 
 	private GUImain guiMain;
@@ -13,10 +18,8 @@ public class Handler {
 		this.guiMain = guiMain;
 	}
 
-	
 	// GETTERS AND SETTERS
 
-	
 	public KeyInput getKeyInput() {
 		return guiMain.getKeyInput();
 	}

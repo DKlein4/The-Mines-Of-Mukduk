@@ -1,67 +1,67 @@
 package input;
 
-
 import entities.Player;
 import items.Inventory;
 import main.Handler;
 
 /**
- * @author Dustin; Performs the correct actions depending on which way the
- *         player wants to move
+ * Moves the player based on keyboard input.
+ * 
+ * @author Dustin
  */
 public class PlayerInput {
-	
+
 	private Handler handler;
 	private KeyInput keyInput;
 	private Player player;
 	private Inventory inventory;
-	
+
 	private boolean[] keyDown;
 	private boolean init;
-	
-	public PlayerInput(Handler handler, Player player){
+
+	public PlayerInput(Handler handler, Player player) {
 		this.handler = handler;
 		this.player = player;
 		init = false;
 	}
-	
-	public void tick(){
+
+	public void tick() {
 		// Get these things only once
-		if(!init){
+		if (!init) {
 			keyInput = handler.getKeyInput();
 			keyDown = keyInput.getKeyDown();
 			inventory = handler.getWorld().getInventory();
-			
+
 			init = true;
 		}
-		
+
 		// E pressed
-		if(keyDown[4]){
+		if (keyDown[4]) {
 			inventory.toggleActive();
 			keyDown[4] = false;
 		}
-		
+
 		// Break if the inventory is active
-		if(inventory.isActive())
+		if (inventory.isActive())
 			return;
 
 		// W pressed
-		if(keyDown[0]){
+		if (keyDown[0]) {
 			moveUp();
 			keyDown[0] = false;
 		}
 		// S pressed
-		if(keyDown[1]){
+		if (keyDown[1]) {
 			moveDown();
 			keyDown[1] = false;
 		}
 		// D pressed
-		if(keyDown[2]){
+		if (keyDown[2]) {
 			moveRight();
 			keyDown[2] = false;
 		}
 		// A pressed
-		if(keyDown[3]){
+		if (keyDown[3]) {
 			moveLeft();
 			keyDown[3] = false;
 		}

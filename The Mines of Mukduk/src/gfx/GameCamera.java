@@ -5,53 +5,61 @@ import entities.Entity;
 import main.Handler;
 import world_gen.Tile;
 
+/**
+ * This "moves" the screen centered around the player.
+ * 
+ * @author Dustin
+ */
 public class GameCamera {
-	
+
 	private Handler handler;
-	
-	private float xOffset, yOffset;
-	
-	private int tileWidth;
-	private int tileHeight;
-	private int screenWidth;
-	private int screenHeight;
+
+	private int xOffset, yOffset;
+	private int tileWidth, tileHeight;
+	private int screenWidth, screenHeight;
 	private int gridSize;
-	
-	public GameCamera(Handler handler, float xOffset, float yOffset){
+
+	public GameCamera(Handler handler, int xOffset, int yOffset) {
 		this.handler = handler;
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
-		
+
 		tileWidth = Tile.TILEWIDTH;
 		tileHeight = Tile.TILEHEIGHT;
 		screenWidth = GUImain.WIDTH;
 		screenHeight = GUImain.HEIGHT;
-		
+
 	}
-	
-	public void checkBlankSpace(){
+
+	public void checkBlankSpace() {
 		gridSize = handler.getWorld().getMap().getGridSize();
-		
-		if(xOffset < 0){
+
+		// Doesn't allow the camera to go off the screen to the left
+		if (xOffset < 0) {
 			xOffset = 0;
-		}else if(xOffset > gridSize * tileWidth - screenWidth){
+		}
+		// Doesn't allow the camera to go off the screen to the right
+		else if (xOffset > gridSize * tileWidth - screenWidth) {
 			xOffset = gridSize * tileWidth - screenWidth;
 		}
-		
-		if(yOffset < 0){
+
+		// Doesn't allow the camera to go off the screen to the top
+		if (yOffset < 0) {
 			yOffset = 0;
-		}else if(yOffset > gridSize * tileHeight - screenHeight){
+		}
+		// Doesn't allow the camera to go off the screen to the bottom
+		else if (yOffset > gridSize * tileHeight - screenHeight) {
 			yOffset = gridSize * tileHeight - screenHeight;
 		}
 	}
-	
-	public void centerOnEntity(Entity e){
+
+	public void centerOnEntity(Entity e) {
 		xOffset = e.getXPos() - GUImain.WIDTH / 2 + e.getWidth() / 2;
 		yOffset = e.getYPos() - GUImain.HEIGHT / 2 + e.getHeight() / 2;
 		checkBlankSpace();
 	}
-	
-	public void move(float xAmt, float yAmt){
+
+	public void move(float xAmt, float yAmt) {
 		xOffset += xAmt;
 		yOffset += yAmt;
 		checkBlankSpace();
@@ -61,7 +69,7 @@ public class GameCamera {
 		return xOffset;
 	}
 
-	public void setxOffset(float xOffset) {
+	public void setxOffset(int xOffset) {
 		this.xOffset = xOffset;
 	}
 
@@ -69,7 +77,7 @@ public class GameCamera {
 		return yOffset;
 	}
 
-	public void setyOffset(float yOffset) {
+	public void setyOffset(int yOffset) {
 		this.yOffset = yOffset;
 	}
 }

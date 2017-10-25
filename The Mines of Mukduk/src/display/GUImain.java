@@ -16,8 +16,10 @@ import input.MouseInput;
 import main.Handler;
 
 /**
- * @author Dustin; This is the main class that creates the GUI and manages the
- *         actions on the GUI
+ * This is the main class that creates the GUI and manages the actions on the
+ * GUI.
+ * 
+ * @author Dustin
  */
 public class GUImain extends Canvas implements Runnable {
 
@@ -41,15 +43,15 @@ public class GUImain extends Canvas implements Runnable {
 	private KeyInput keyInput;
 	private MouseInput mouseInput;
 
+	// Other stuff
 	private Handler handler;
-	
 	private GameCamera gameCamera;
 
 	public GUImain() {
 		Assets.init();
-		
+
 		handler = new Handler(this);
-		
+
 		gameCamera = new GameCamera(handler, 0, 0);
 
 		mouseInput = new MouseInput();
@@ -63,7 +65,6 @@ public class GUImain extends Canvas implements Runnable {
 		GUIstate.setState(menuState);
 
 		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
-		
 	}
 
 	private void tick() {
@@ -136,14 +137,12 @@ public class GUImain extends Canvas implements Runnable {
 		}
 	}
 
-	
 	// GETTERS AND SETTERS
 
-	
 	public KeyInput getKeyInput() {
 		return keyInput;
 	}
-	
+
 	public GameCamera getGameCamera() {
 		return gameCamera;
 	}
@@ -151,7 +150,7 @@ public class GUImain extends Canvas implements Runnable {
 	public MouseInput getMouseInput() {
 		return mouseInput;
 	}
-	
+
 	public Window getWindow() {
 		return window;
 	}

@@ -1,36 +1,32 @@
 package entities;
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Rectangle;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import gfx.Assets;
-import gfx.GameCamera;
 import main.Handler;
 import world_gen.Map;
 
+/**
+ * This entity is the main enemy on the map.
+ * 
+ * @author Dustin
+ */
 public class Monster extends Entity {
-	
-	private GameCamera gameCamera;
 
 	public Monster(int row, int col, ID id, Handler handler, Map map) {
-		super(row, col, ID.Monster, map);
-		
-		gameCamera = handler.getGuiMain().getGameCamera();
+		super(row, col, ID.Monster, handler, map);
 	}
 
 	public void tick() {
-		// Update the position of the player
+		// Update the position of the monster
 		xPos = (col * tileWidth) + gridOffsetX;
 		yPos = (row * tileHeight) + gridOffsetY;
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(Assets.monster,(int) (xPos - gameCamera.getxOffset()), (int) (yPos - gameCamera.getyOffset()), width, height, null);
+		g.drawImage(Assets.monster, (int) (xPos - gameCamera.getxOffset()), (int) (yPos - gameCamera.getyOffset()),
+				width, height, null);
 	}
 
 	public Rectangle getBounds() {

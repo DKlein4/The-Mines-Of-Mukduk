@@ -6,6 +6,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Easily reads in and returns an image.
+ * 
+ * @author Dustin
+ */
 public class ImageLoader {
 	
 	public static BufferedImage loadImage(String path) {

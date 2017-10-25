@@ -1,8 +1,10 @@
 package items;
 
 /**
- * @author Dustin; An item is something that a player can obtain with different
- *         attributes. Is stored in the inventory.
+ * An item is something that a player can obtain with different attributes. Is
+ * stored in the inventory.
+ * 
+ * @author Dustin
  */
 public class Item {
 
@@ -16,10 +18,8 @@ public class Item {
 		count = 1;
 	}
 
-	
 	// GETTERS AND SETTERS
 
-	
 	public int getID() {
 		return ID;
 	}

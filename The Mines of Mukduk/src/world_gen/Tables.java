@@ -6,8 +6,9 @@ import items.Inventory;
 import items.Item;
 
 /**
- * @author Brett; This is the class that holds all the random tables for random
- *         rolls
+ * This is the class that holds all the tables for random rolls
+ * 
+ * @author Brett
  */
 public class Tables {
 
@@ -62,10 +63,8 @@ public class Tables {
 		}
 	}
 
-	
 	// HELPER FUNCTIONS
 
-	
 	public void armorRoll() {
 		// Boots
 		// Legs

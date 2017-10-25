@@ -8,15 +8,16 @@ import java.util.ArrayList;
 import display.GUImain;
 
 /**
- * @author Dustin; This holds an arraylist of items that acts as the inventory
- *         for the player.
+ * This holds an arraylist of items that acts as the inventory for the player.
+ * 
+ * @author Dustin
  */
 public class Inventory {
 
-	private static ArrayList<Item> inventoryItems; // Stores all the items in the
-													// inventory
-	private static boolean active; // Used to determine whether or not the
-									// inventory should be rendered
+	// Stores all the items in the inventory
+	private static ArrayList<Item> inventoryItems;
+	// Used to determine whether or not the inventory should be rendered
+	private static boolean active;
 
 	public Inventory() {
 		inventoryItems = new ArrayList<Item>();
@@ -62,10 +63,8 @@ public class Inventory {
 		inventoryItems.add(item);
 	}
 
-	
 	// GETTERS AND SETTERS
 
-	
 	public boolean isActive() {
 		return active;
 	}

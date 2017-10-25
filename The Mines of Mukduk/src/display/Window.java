@@ -6,7 +6,9 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 /**
- * @author Dustin; Creates a new JFrame with the correct parameters.
+ * Creates a new JFrame.
+ * 
+ * @author Dustin
  */
 public class Window extends Canvas {
 
@@ -27,10 +29,8 @@ public class Window extends Canvas {
 		guiMain.start();
 	}
 
-	
 	// GETTERS AND SETTERS
 
-	
 	public void setTitle(String title) {
 		frame.setTitle(title);
 	}

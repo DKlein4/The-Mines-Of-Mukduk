@@ -7,6 +7,11 @@ import java.awt.Graphics;
 import input.MouseInput;
 import main.Handler;
 
+/**
+ * This is the state of the GUI when the menu is active.
+ * 
+ * @author Dustin
+ */
 public class MenuState extends GUIstate {
 
 	private MouseInput mouseInput;

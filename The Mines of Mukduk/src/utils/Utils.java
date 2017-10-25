@@ -4,10 +4,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import world_gen.Tile;
 
+/**
+ * Class for utility functions.
+ * 
+ * @author Dustin
+ */
 public class Utils {
 	
+	// Reads in a file
 	public static String loadFileAsString(String path){
 		StringBuilder builder = new StringBuilder();
 		

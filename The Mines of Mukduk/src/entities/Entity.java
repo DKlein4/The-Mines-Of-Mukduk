@@ -3,20 +3,22 @@ package entities;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import display.GUImain;
-import gfx.Assets;
+import gfx.GameCamera;
+import main.Handler;
 import world_gen.Map;
 import world_gen.Tile;
 
 /**
- * @author Dustin; This is the father class for any entities. Contains the
- *         position, type, and other describing info of the entity.
+ * This is the father class for any entities. Contains the position, type, and
+ * other describing info of the entity.
+ * 
+ * @author Dustin
  */
 public abstract class Entity {
-	
-	protected int width;
-	protected int height;
-	
+
+	protected int width; // width of the entity itself
+	protected int height; // height of the entity itself
+
 	protected int row, col; // Positions on the grid
 	protected int tileWidth, tileHeight; // The sizes of an individual tile
 	protected int gridOffsetX, gridOffsetY; // Offsets for formatting. Make the
@@ -24,22 +26,25 @@ public abstract class Entity {
 	protected int xPos, yPos; // Positions on the grid
 	protected ID id; // Type of entity
 
+	protected GameCamera gameCamera;
 	protected Map map;
 
-	public Entity(int r, int c, ID id, Map map) {
+	public Entity(int r, int c, ID id, Handler handler, Map map) {
 		this.row = r;
 		this.col = c;
 		this.id = id;
 		this.map = map;
 
+		gameCamera = handler.getGuiMain().getGameCamera();
+
 		tileWidth = Tile.TILEWIDTH;
 		tileHeight = Tile.TILEHEIGHT;
-		
+
 		width = Tile.TILEWIDTH;
 		height = Tile.TILEHEIGHT;
 
 		gridOffsetX = 0;
-		gridOffsetY = - tileHeight / 8;
+		gridOffsetY = -tileHeight / 8;
 
 		xPos = (col * tileWidth) + gridOffsetX;
 		yPos = (row * tileHeight) + gridOffsetY;
@@ -111,6 +116,5 @@ public abstract class Entity {
 	public void setHeight(int height) {
 		this.height = height;
 	}
-	
-	
+
 }

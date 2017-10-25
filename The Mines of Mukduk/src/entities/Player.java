@@ -1,34 +1,26 @@
 package entities;
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Rectangle;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import gfx.Assets;
-import gfx.GameCamera;
 import input.PlayerInput;
 import items.Inventory;
 import main.Handler;
 import world_gen.Map;
 
 /**
- * @author Dustin; The entity that the user plays as.
+ * The entity that the user plays as.
+ * 
+ * @author Dustin
  */
 public class Player extends Entity {
 
 	private Inventory inventory;
 	private PlayerInput playerInput;
 	
-	private GameCamera gameCamera;
-
 	public Player(int row, int col, ID id, Handler handler, Map map) {
-		super(row, col, ID.Player, map);
-
-		gameCamera = handler.getGuiMain().getGameCamera();
+		super(row, col, ID.Player, handler, map);
 		
 		inventory = new Inventory();
 		playerInput = new PlayerInput(handler, this);
@@ -53,6 +45,6 @@ public class Player extends Entity {
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(xPos, yPos, tileWidth, tileHeight);
+		return new Rectangle(xPos, yPos, width, height);
 	}
 }

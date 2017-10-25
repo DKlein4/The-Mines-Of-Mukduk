@@ -1,9 +1,7 @@
 package world_gen;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
-import display.GUImain;
 import entities.EntityHandler;
 import entities.ID;
 import entities.Monster;
@@ -12,6 +10,11 @@ import gfx.Assets;
 import items.Inventory;
 import main.Handler;
 
+/**
+ * Holds the map and other aspects of the game.
+ * 
+ * @author Dustin
+ */
 public class World {
 
 	private int gridSize;
@@ -76,7 +79,7 @@ public class World {
 			for (int c = 0; c < gridSize; c++) {
 				int cameraOffsetX = (int) handler.getGuiMain().getGameCamera().getxOffset();
 				int cameraOffsetY = (int) handler.getGuiMain().getGameCamera().getyOffset();
-				
+
 				int x = c * Assets.width - cameraOffsetX;
 				int y = r * Assets.height - cameraOffsetY;
 				map.getTile(r, c).render(g, x, y);
@@ -84,10 +87,8 @@ public class World {
 		}
 	}
 
-	
 	// GETTERS AND SETTERS
 
-	
 	public EntityHandler getEntityHandler() {
 		return entityHandler;
 	}
