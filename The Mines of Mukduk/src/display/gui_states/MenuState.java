@@ -38,17 +38,15 @@ public class MenuState extends GUIstate {
 
 		if (mouseInput.isLeftPressed()) {
 			// Play button
-			if (mouseInput.mouseOver(xSpacing, (2 * ySpacing) - fontSize + (ySpacing / 6), (int) (GUImain.WIDTH / 9.7),
-					fontSize - (ySpacing / 6))) {
+			if (mouseInput.mouseOver(xSpacing, (2 * ySpacing) - fontSize + (ySpacing / 6), (int) (fontSize * 2.7), fontSize - (ySpacing / 6))) {
 				GUIstate.setState(handler.getGuiMain().gameState);
 			}
 			// Tutorial button
-			if (mouseInput.mouseOver(xSpacing, (3 * ySpacing) - fontSize + (ySpacing / 6), (int) (GUImain.WIDTH / 5),
-					fontSize - (ySpacing / 6))) {
+			if (mouseInput.mouseOver(xSpacing, (3 * ySpacing) - fontSize + (ySpacing / 6), (int) (fontSize * 4.9), fontSize - (ySpacing / 6))) {
 				GUIstate.setState(handler.getGuiMain().tutorialState);
 			}
 			// Quit button
-			if (mouseInput.mouseOver(xSpacing, (4 * ySpacing) - fontSize + (ySpacing/6), (int) (GUImain.WIDTH / 10.5), fontSize - (ySpacing/6))) {
+			if (mouseInput.mouseOver(xSpacing, (4 * ySpacing) - fontSize + (ySpacing/6), (int) (fontSize * 2.4), fontSize - (ySpacing/6))) {
 				System.exit(1);
 			}
 		}
