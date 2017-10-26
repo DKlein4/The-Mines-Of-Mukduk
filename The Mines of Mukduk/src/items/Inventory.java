@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import display.GUImain;
 
@@ -18,6 +20,13 @@ public class Inventory {
 	private static ArrayList<Item> inventoryItems;
 	// Used to determine whether or not the inventory should be rendered
 	private static boolean active;
+	
+	private Comparator<Item> comp = new Comparator<Item>(){
+		@Override
+		public int compare(Item a, Item b) {
+			return a.getName().compareTo(b.getName());
+		}
+	};
 
 	public Inventory() {
 		inventoryItems = new ArrayList<Item>();
@@ -56,11 +65,13 @@ public class Inventory {
 			// If it is already in the inventory, increase the count
 			if (i.getID() == item.getID()) {
 				i.setCount(i.getCount() + item.getCount());
+				inventoryItems.sort(comp);
 				return;
 			}
 		}
 		// If it is not in the inventory, add it
 		inventoryItems.add(item);
+		inventoryItems.sort(comp);
 	}
 
 	// GETTERS AND SETTERS

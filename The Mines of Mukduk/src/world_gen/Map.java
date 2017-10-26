@@ -15,7 +15,7 @@ import world_gen.Tile;
 
 /**
  * This is the grid that houses all of the tiles. Basically a level with random
- * generation
+ * generation.
  * 
  * @author Dustin
  */

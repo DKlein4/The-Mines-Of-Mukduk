@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import display.GUImain;
+import gfx.Assets;
 import input.MouseInput;
 import main.Handler;
 
@@ -24,37 +26,38 @@ public class MenuState extends GUIstate {
 	public void tick() {
 		if (mouseInput.isLeftPressed()) {
 			// Play button
-			if (mouseInput.mouseOver(325, 225, 250, 70)) {
+			if (mouseInput.mouseOver(60, 56, 130, 50)) {
 				GUIstate.setState(handler.getGuiMain().gameState);
 			}
 			// Tutorial button
-			if (mouseInput.mouseOver(315, 325, 270, 70)) {
+			if (mouseInput.mouseOver(60, 132, 250, 50)) {
 				GUIstate.setState(handler.getGuiMain().tutorialState);
 			}
 			// Quit button
-			if (mouseInput.mouseOver(325, 425, 250, 70)) {
+			if (mouseInput.mouseOver(60, 208, 120, 50)) {
 				System.exit(1);
 			}
 		}
 	}
 
 	public void render(Graphics g) {
+		// Background
+		g.drawImage(Assets.menuBackground, 0, 0, GUImain.WIDTH, GUImain.HEIGHT, null);
+		
 		g.setColor(Color.WHITE);
-		g.setFont(new Font("TimesRoman", Font.BOLD, 100));
-		g.drawString("Menu", 320, 125);
 
-		g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
+		g.setFont(new Font("ComicSans", Font.PLAIN, 50));
 
 		// Play button
-		g.drawRect(325, 225, 250, 70);
-		g.drawString("PLAY", 385, 275);
+		//g.drawRect(60, 56, 130, 50);
+		g.drawString("PLAY", 60, 100);
 
 		// Tutorial button
-		g.drawRect(315, 325, 270, 70);
-		g.drawString("TUTORIAL", 325, 375);
+		//g.drawRect(60, 132, 250, 50);
+		g.drawString("TUTORIAL", 60, 175);
 
 		// Quit button
-		g.drawRect(325, 425, 250, 70);
-		g.drawString("QUIT", 385, 475);
+		//g.drawRect(60, 208, 120, 50);
+		g.drawString("QUIT", 60, 250);
 	}
 }

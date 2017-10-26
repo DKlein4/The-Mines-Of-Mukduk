@@ -13,6 +13,7 @@ public class Assets {
 
 	public static BufferedImage dirt, wall;
 	public static BufferedImage player, monster;
+	public static BufferedImage menuBackground;
 
 	public static void init() {
 		dirt = ImageLoader.loadImage("src/Resources/Dirt.png");
@@ -20,5 +21,7 @@ public class Assets {
 
 		player = ImageLoader.loadImage("src/Resources/Dwarf.png");
 		monster = ImageLoader.loadImage("src/Resources/Goblin.png");
+		
+		menuBackground = ImageLoader.loadImage("src/Resources/Main Menu Background.png");
 	}
 }
