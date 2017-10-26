@@ -27,8 +27,8 @@ public class GUImain extends Canvas implements Runnable {
 
 	// Window stuff
 	private Window window;
-	public static int WIDTH;
-	public static int HEIGHT;
+	public static int WIDTH = 1080;
+	public static int HEIGHT = WIDTH / 16 * 9;
 
 	// Running stuff
 	private Thread thread;
@@ -77,6 +77,9 @@ public class GUImain extends Canvas implements Runnable {
 	}
 
 	private void render() {
+		WIDTH = window.getWidth();
+		HEIGHT = window.getHeight();
+		
 		// Setup crap
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
@@ -84,7 +87,7 @@ public class GUImain extends Canvas implements Runnable {
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-
+		
 		// Draw the background
 		g.setColor(Color.gray);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
