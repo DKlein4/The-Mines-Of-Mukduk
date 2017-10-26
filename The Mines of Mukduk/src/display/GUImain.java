@@ -27,8 +27,8 @@ public class GUImain extends Canvas implements Runnable {
 
 	// Window stuff
 	private Window window;
-	public static final int WIDTH = 900;
-	public static final int HEIGHT = WIDTH / 12 * 9;
+	public static int WIDTH;
+	public static int HEIGHT;
 
 	// Running stuff
 	private Thread thread;
@@ -65,6 +65,9 @@ public class GUImain extends Canvas implements Runnable {
 		GUIstate.setState(menuState);
 
 		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
+		
+		WIDTH = window.getWidth();
+		HEIGHT = window.getHeight();
 	}
 
 	private void tick() {

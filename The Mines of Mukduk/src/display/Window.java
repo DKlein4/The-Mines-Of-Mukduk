@@ -25,6 +25,8 @@ public class Window extends Canvas {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.add(guiMain);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setUndecorated(true);
 		frame.setVisible(true);
 		guiMain.start();
 	}
@@ -33,5 +35,13 @@ public class Window extends Canvas {
 
 	public void setTitle(String title) {
 		frame.setTitle(title);
+	}
+	
+	public int getWidth() {
+		return frame.getWidth();
+	}
+	
+	public int getHeight() {
+		return frame.getHeight();
 	}
 }
