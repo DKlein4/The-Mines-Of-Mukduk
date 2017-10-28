@@ -58,6 +58,7 @@ public class GUImain extends Canvas implements Runnable {
 		keyInput = new KeyInput();
 		this.addKeyListener(keyInput);
 		this.addMouseListener(mouseInput);
+		this.addMouseMotionListener(mouseInput);
 
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler, mouseInput);
@@ -70,7 +71,7 @@ public class GUImain extends Canvas implements Runnable {
 		HEIGHT = window.getHeight();
 	}
 
-	private void tick() {
+	private void tick() {	
 		// Tick the right screen depending on the state
 		if (GUIstate.getState() != null)
 			GUIstate.getState().tick();

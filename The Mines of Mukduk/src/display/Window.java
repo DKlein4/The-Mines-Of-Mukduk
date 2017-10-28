@@ -32,6 +32,10 @@ public class Window extends Canvas {
 	}
 
 	// GETTERS AND SETTERS
+	
+	public JFrame getFrame() {
+		return frame;
+	}
 
 	public void setTitle(String title) {
 		frame.setTitle(title);

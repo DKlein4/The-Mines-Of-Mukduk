@@ -2,6 +2,7 @@ package main;
 
 import display.GUImain;
 import input.KeyInput;
+import input.MouseInput;
 import world_gen.World;
 
 /**
@@ -22,6 +23,10 @@ public class Handler {
 
 	public KeyInput getKeyInput() {
 		return guiMain.getKeyInput();
+	}
+	
+	public MouseInput getMouseInput() {
+		return guiMain.getMouseInput();
 	}
 
 	public World getWorld() {
