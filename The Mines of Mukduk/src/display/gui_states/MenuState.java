@@ -9,6 +9,7 @@ import main.Handler;
 import ui.ClickListener;
 import ui.UIImageButton;
 import ui.UIManager;
+import ui.UIObject;
 
 /**
  * This is the state of the GUI when the menu is active.
@@ -22,8 +23,10 @@ public class MenuState extends GUIstate {
 
 	private UIManager uiManager;
 
-	private int xEdgeSpacing, yEdgeSpacing, fontSize;
+	private int xEdgeSpacing, yEdgeSpacing, buttonHeight;
 	private int yButtonSpacing;
+
+	private UIImageButton playButton, tutorialButton, quitButton;
 
 	public MenuState(Handler handler) {
 		super(handler);
@@ -34,41 +37,55 @@ public class MenuState extends GUIstate {
 		xEdgeSpacing = GUImain.WIDTH / 15;
 		yEdgeSpacing = GUImain.HEIGHT / 12;
 		yButtonSpacing = GUImain.HEIGHT / 8;
-		fontSize = GUImain.HEIGHT / 12;
+		buttonHeight = GUImain.HEIGHT / 12;
 
 		// Play button
-		uiManager.addObject(new UIImageButton("PLAY", xEdgeSpacing, yEdgeSpacing, 100, fontSize, Assets.button, new ClickListener() {
+		playButton = new UIImageButton("PLAY", xEdgeSpacing, yEdgeSpacing, 100, buttonHeight, Assets.button, new ClickListener() {
 					@Override
 					public void onClick() {
 						GUIstate.setState(handler.getGuiMain().gameState);
 					}
-				}));
-		
+				});
+		uiManager.addObject(playButton);
+
 		// Tutorial button
-		uiManager.addObject(new UIImageButton("TUTORIAL", xEdgeSpacing, yEdgeSpacing + yButtonSpacing, 100, fontSize, Assets.button, new ClickListener() {
-			@Override
-			public void onClick() {
-				GUIstate.setState(handler.getGuiMain().tutorialState);
-			}
-		}));
-		
+		tutorialButton = new UIImageButton("TUTORIAL", xEdgeSpacing, yEdgeSpacing + yButtonSpacing, 100, buttonHeight, Assets.button, new ClickListener() {
+					@Override
+					public void onClick() {
+						GUIstate.setState(handler.getGuiMain().tutorialState);
+					}
+				});
+		uiManager.addObject(tutorialButton);
+
 		// Quit button
-		uiManager.addObject(new UIImageButton("QUIT", xEdgeSpacing, yEdgeSpacing + yButtonSpacing * 2, 100, fontSize, Assets.button, new ClickListener() {
-			@Override
-			public void onClick() {
-				System.exit(1);
-			}
-		}));
+		quitButton = new UIImageButton("QUIT", xEdgeSpacing, yEdgeSpacing + yButtonSpacing * 2, 100, buttonHeight, Assets.button, new ClickListener() {
+					@Override
+					public void onClick() {
+						System.exit(1);
+					}
+				});
+		uiManager.addObject(quitButton);
 	}
 
 	public void tick() {
 		uiManager.tick();
+		
+		// Update the spacing variables if the screen has changed size
+		xEdgeSpacing = GUImain.WIDTH / 15;
+		yEdgeSpacing = GUImain.HEIGHT / 12;
+		yButtonSpacing = GUImain.HEIGHT / 8;
+		buttonHeight = GUImain.HEIGHT / 12;
+		
+		// Update the location and size of the buttons if the screen has changed size
+		playButton.updatePostition(xEdgeSpacing, yEdgeSpacing, buttonHeight);
+		tutorialButton.updatePostition(xEdgeSpacing, yEdgeSpacing + yButtonSpacing, buttonHeight);
+		quitButton.updatePostition(xEdgeSpacing, yEdgeSpacing + yButtonSpacing * 2, buttonHeight);
 	}
 
 	public void render(Graphics g) {
 		// Background
 		g.drawImage(Assets.menuBackground, 0, 0, GUImain.WIDTH, GUImain.HEIGHT, null);
-		
+
 		uiManager.render(g);
 	}
 }

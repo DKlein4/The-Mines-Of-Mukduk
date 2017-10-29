@@ -16,7 +16,7 @@ public class UIImageButton extends UIObject{
 	
 	private String text;
 	
-	public UIImageButton(String text, double x, double y,int width, int height, BufferedImage[] images, ClickListener clicker) {
+	public UIImageButton(String text, double x, double y, int width, int height, BufferedImage[] images, ClickListener clicker) {
 		super(x, y, width, height);
 		
 		this.text = text;
@@ -49,5 +49,11 @@ public class UIImageButton extends UIObject{
 
 		FontMetrics fm = g.getFontMetrics(buttonFont);
 		setWidth(fm.stringWidth(text));
+	}
+	
+	public void updatePostition(int x, int y, int height) {
+		setX(x);
+		setY(y);
+		setHeight(height);
 	}
 }

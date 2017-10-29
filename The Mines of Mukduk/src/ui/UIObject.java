@@ -43,16 +43,18 @@ public abstract class UIObject {
 		return x;
 	}
 
-	public void setX(float x) {
+	public void setX(double x) {
 		this.x = x;
+		bounds.x = (int) x;
 	}
 
 	public double getY() {
 		return y;
 	}
 
-	public void setY(float y) {
+	public void setY(double y) {
 		this.y = y;
+		bounds.y = (int) y;
 	}
 
 	public int getWidth() {
