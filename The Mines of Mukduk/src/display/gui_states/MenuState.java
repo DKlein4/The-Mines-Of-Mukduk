@@ -1,6 +1,5 @@
 package display.gui_states;
 
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 import display.GUImain;
@@ -9,7 +8,6 @@ import main.Handler;
 import ui.ClickListener;
 import ui.UIImageButton;
 import ui.UIManager;
-import ui.UIObject;
 
 /**
  * This is the state of the GUI when the menu is active.

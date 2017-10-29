@@ -15,6 +15,7 @@ public class EntityHandler {
 	// This list holds every entity
 	private static CopyOnWriteArrayList<Entity> entities;
 
+	@SuppressWarnings("unused")
 	private Player player;
 
 	public EntityHandler() {

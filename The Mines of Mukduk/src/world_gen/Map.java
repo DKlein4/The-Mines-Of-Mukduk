@@ -161,6 +161,7 @@ public class Map {
 	}
 
 	// Checks for one Wall Tile blockages and clears them
+	@SuppressWarnings("unused")
 	private void clearBlockages() {
 		for (int c = 1; c < gridSize - 1; c++) {
 			for (int r = 1; r < gridSize - 1; r++) {
