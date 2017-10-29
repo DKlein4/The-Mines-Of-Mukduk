@@ -2,7 +2,7 @@ package main;
 
 import display.GUImain;
 
-public class main {
+public class Launcher {
 
 	public static void main(String[] args) {		
 		new GUImain();

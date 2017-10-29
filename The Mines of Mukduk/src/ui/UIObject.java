@@ -61,6 +61,7 @@ public abstract class UIObject {
 
 	public void setWidth(int width) {
 		this.width = width;
+		bounds.width = width;
 	}
 
 	public int getHeight() {
@@ -69,6 +70,7 @@ public abstract class UIObject {
 
 	public void setHeight(int height) {
 		this.height = height;
+		bounds.height = height;
 	}
 
 	public boolean isHovering() {

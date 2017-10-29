@@ -61,7 +61,7 @@ public class GUImain extends Canvas implements Runnable {
 		this.addMouseMotionListener(mouseInput);
 
 		gameState = new GameState(handler);
-		menuState = new MenuState(handler, mouseInput);
+		menuState = new MenuState(handler);
 		tutorialState = new TutorialState(handler, mouseInput);
 		GUIstate.setState(menuState);
 

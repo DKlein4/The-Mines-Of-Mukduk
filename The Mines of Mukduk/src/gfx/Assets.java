@@ -17,15 +17,15 @@ public class Assets {
 	public static BufferedImage[] button = new BufferedImage[2];
 
 	public static void init() {
-		dirt = ImageLoader.loadImage("src/Resources/Dirt.png");
-		wall = ImageLoader.loadImage("src/REsources/Wall.png");
+		dirt = ImageLoader.loadImage("res/Dirt.png");
+		wall = ImageLoader.loadImage("res/Wall.png");
 
-		player = ImageLoader.loadImage("src/Resources/Dwarf.png");
-		monster = ImageLoader.loadImage("src/Resources/Goblin.png");
+		player = ImageLoader.loadImage("res/Dwarf.png");
+		monster = ImageLoader.loadImage("res/Goblin.png");
 		
-		menuBackground = ImageLoader.loadImage("src/Resources/Main Menu Background.png");
+		menuBackground = ImageLoader.loadImage("res/Main Menu Background.png");
 		
-		button[0] = ImageLoader.loadImage("src/Resources/Button.png");
-		button[1] = ImageLoader.loadImage("src/Resources/Button-Hovered.png");
+		button[0] = ImageLoader.loadImage("res/Button.png");
+		button[1] = ImageLoader.loadImage("res/Button-Hovered.png");
 	}
 }

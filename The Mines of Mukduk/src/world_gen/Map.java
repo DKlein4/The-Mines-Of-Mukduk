@@ -122,7 +122,7 @@ public class Map {
 	// MAP GENERATION
 
 	private void parcelMap() {
-		String file = Utils.loadFileAsString("src/Resources/Test Map.txt");
+		String file = Utils.loadFileAsString("res/Test Map.txt");
 		String[] tokens = file.split("\\s+");
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
@@ -137,11 +137,11 @@ public class Map {
 		String file = null;
 		int parcelRoll = rand.nextInt((2 - 1) + 1) + 1;
 		if (parcelRoll == 1) {
-			file = Utils.loadFileAsString("src/Resources/Parcel1.txt");
+			file = Utils.loadFileAsString("res/Parcel1.txt");
 		}
 
 		else if (parcelRoll == 2) {
-			file = Utils.loadFileAsString("src/Resources/Parcel2.txt");
+			file = Utils.loadFileAsString("res/Parcel2.txt");
 		}
 
 		String[] tokens = file.split("\\s+");
