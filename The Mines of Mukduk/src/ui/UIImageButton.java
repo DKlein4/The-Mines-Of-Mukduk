@@ -39,7 +39,7 @@ public class UIImageButton extends UIObject{
 	}
 	
 	public void renderText(Graphics g) {
-		Font buttonFont = new Font("MonoSpaced", Font.PLAIN, height);
+		Font buttonFont = new Font("MonoSpaced", Font.PLAIN, height - height/12);
 		
 		if(hovering)
 			Text.drawStringFrom(g, text, (int) x + width/2, (int) y + height/2, true, Color.black, buttonFont);
@@ -47,7 +47,7 @@ public class UIImageButton extends UIObject{
 			Text.drawStringFrom(g, text, (int) x + width/2, (int) y + height/2, true, Color.white, buttonFont);
 
 		FontMetrics fm = g.getFontMetrics(buttonFont);
-		setWidth(fm.stringWidth(text));
+		setWidth(fm.stringWidth(text) + fm.stringWidth(text) / 12);
 	}
 	
 	public void updatePostition(int x, int y, int height) {

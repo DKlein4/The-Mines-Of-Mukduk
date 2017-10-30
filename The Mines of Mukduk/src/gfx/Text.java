@@ -14,7 +14,7 @@ public class Text {
 		if(center){
 			FontMetrics fm = g.getFontMetrics(font);
 			x = xPos - fm.stringWidth(text) / 2;
-			y = (yPos - fm.getHeight() / 2) + fm.getAscent();
+			y = (yPos - fm.getHeight() / 2) + fm.getAscent() - fm.getHeight() / 12;
 		}
 		g.drawString(text, x, y);
 	}
