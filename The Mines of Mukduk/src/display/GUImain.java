@@ -68,7 +68,8 @@ public class GUImain extends Canvas implements Runnable {
 		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
 		
 		WIDTH = window.getWidth();
-		HEIGHT = window.getHeight();
+		HEIGHT = WIDTH / 16 * 9;
+		window.getFrame().setSize(WIDTH, HEIGHT);
 	}
 
 	private void tick() {	
@@ -79,8 +80,9 @@ public class GUImain extends Canvas implements Runnable {
 
 	private void render() {
 		WIDTH = window.getWidth();
-		HEIGHT = window.getHeight();
-		
+		HEIGHT = WIDTH / 16 * 9;
+		window.getFrame().setSize(WIDTH, HEIGHT);
+
 		// Setup crap
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
