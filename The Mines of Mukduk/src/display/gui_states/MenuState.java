@@ -81,6 +81,8 @@ public class MenuState extends GUIstate {
 	}
 
 	public void render(Graphics g) {
+		handler.getMouseInput().setUIManager(uiManager);
+		
 		// Background
 		g.drawImage(Assets.menuBackground, 0, 0, GUImain.WIDTH, GUImain.HEIGHT, null);
 

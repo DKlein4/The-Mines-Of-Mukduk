@@ -62,7 +62,7 @@ public class GUImain extends Canvas implements Runnable {
 
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler);
-		tutorialState = new TutorialState(handler, mouseInput);
+		tutorialState = new TutorialState(handler);
 		GUIstate.setState(menuState);
 
 		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);
