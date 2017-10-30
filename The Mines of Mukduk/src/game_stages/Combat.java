@@ -14,57 +14,63 @@ import main.Handler;
 public class Combat {
 	private Player player;
 	private Monster monster;
-	private Handler handler;
-	private boolean combat = false;
+	private boolean combat;
 
 	private GUIstate combatState;
 	
+	private int monsterInit, playerInit;
+	private Handler handler;
+
 	public Combat(Handler handler, Player player, Monster monster) {
-		combat = true;
 		this.player = player;
 		this.monster = monster;
 		this.handler = handler;
-		
+
+		combat = true;
+		combatState = new CombatState(handler);
 
 		start();
 	}
-	
+
 	public void start() {
-		int monsterInit = monster.initiativeRoll();
-		int playerInit = player.initiativeRoll();
+		GUIstate.setState(combatState);
 		
+		monsterInit = monster.initiativeRoll();
+		playerInit = player.initiativeRoll();
+
+		run();
+	}
+	
+	public void run() {
 		if (monsterInit > playerInit) {
 			while (combat) {
-				mTurn();
+				monsterTurn();
+				playerTurn();
+			}
+		}
+		else if (monsterInit <= playerInit) {
+			while (combat) {
+				playerTurn();
+				monsterTurn();
 			}
 		}
 		
-		else if (monsterInit <= playerInit) {
-			while (combat) {
-				pTurn();
-			}
-		}
+		end();
+	}
+	
+	public void end() {
+		System.out.println("Combat has ended");
+		GUIstate.setState(handler.getGuiMain().gameState);
+	}
 
-	}
-	
-	public void pTurn() {
-		playerTurn();
-		monsterTurn();
-	}
-	
-	public void mTurn() {
-		monsterTurn();
-		playerTurn();
-	}
-	
 	public void playerTurn() {
 		resolve();
 	}
-	
+
 	public void monsterTurn() {
 		resolve();
 	}
-	
+
 	public void resolve() {
 		if (monster.getHealth() <= 0) {
 			combat = false;
@@ -72,6 +78,8 @@ public class Combat {
 		if (player.getHealth() <= 0) {
 			combat = false;
 		}
+		
+		// Temporarily end combat immediately
 		combat = false;
 	}
 }
