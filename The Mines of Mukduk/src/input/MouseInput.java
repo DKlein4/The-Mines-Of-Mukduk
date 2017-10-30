@@ -67,16 +67,6 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
 	}
 
-	public boolean mouseOver(int x, int y, int width, int height) {
-		if (mouseX > x && mouseX < x + width)
-			if (mouseY > y && mouseY < y + height)
-				return true;
-			else
-				return false;
-		else
-			return false;
-	}
-
 	// GETTERS AND SETTERS
 
 	public void setUIManager(UIManager uiManager) {
