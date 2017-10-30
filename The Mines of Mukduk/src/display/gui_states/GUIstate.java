@@ -11,7 +11,7 @@ import main.Handler;
  */
 public abstract class GUIstate {
 
-	// STATIC CRAP
+	// STATIC SHIT
 
 	private static GUIstate currentState = null;
 

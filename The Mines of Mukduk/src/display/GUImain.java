@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import display.gui_states.CombatState;
 import display.gui_states.GUIstate;
 import display.gui_states.GameState;
 import display.gui_states.MenuState;
@@ -38,6 +39,7 @@ public class GUImain extends Canvas implements Runnable {
 	public GUIstate gameState;
 	public GUIstate menuState;
 	public GUIstate tutorialState;
+	public GUIstate combatState;
 
 	// Input
 	private KeyInput keyInput;
@@ -63,6 +65,7 @@ public class GUImain extends Canvas implements Runnable {
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler);
 		tutorialState = new TutorialState(handler);
+		combatState = new CombatState(handler);
 		GUIstate.setState(menuState);
 
 		window = new Window(WIDTH, HEIGHT, "The Mines of Mukduk", this);

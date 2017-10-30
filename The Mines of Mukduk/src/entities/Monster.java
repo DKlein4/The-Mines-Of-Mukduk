@@ -16,6 +16,7 @@ public class Monster extends Entity {
 
 	public Monster(int row, int col, ID id, Handler handler, Map map) {
 		super(row, col, ID.Monster, handler, map);
+		
 	}
 
 	public void tick() {

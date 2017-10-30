@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Random;
 
 import gfx.GameCamera;
 import main.Handler;
@@ -25,15 +26,25 @@ public abstract class Entity {
 											// entity line up with the grid
 	protected int xPos, yPos; // Positions on the grid
 	protected ID id; // Type of entity
+	
+	protected int health;
+	protected int dexterity;
+	protected int strength;
 
 	protected GameCamera gameCamera;
 	protected Map map;
+	
+	private Random rand;
 
 	public Entity(int r, int c, ID id, Handler handler, Map map) {
 		this.row = r;
 		this.col = c;
 		this.id = id;
 		this.map = map;
+		
+		health = 20;
+		dexterity = 10;
+		strength = 10;
 
 		gameCamera = handler.getGuiMain().getGameCamera();
 
@@ -48,6 +59,8 @@ public abstract class Entity {
 
 		xPos = (col * tileWidth) + gridOffsetX;
 		yPos = (row * tileHeight) + gridOffsetY;
+		
+		rand = new Random();
 	}
 
 	public abstract void tick();
@@ -55,6 +68,10 @@ public abstract class Entity {
 	public abstract void render(Graphics g);
 
 	public abstract Rectangle getBounds();
+	
+	public int initiativeRoll() {
+		return (rand.nextInt(20) + 1 + (this.dexterity - 10) / 2);
+	}
 
 	// GETTERS AND SETTERS
 
@@ -108,6 +125,30 @@ public abstract class Entity {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+	
+	public int getDexterity() {
+		return dexterity;
+	}
+
+	public void setDexterity(int dexterity) {
+		this.dexterity = dexterity;
+	}
+
+	public int getStrength() {
+		return strength;
+	}
+
+	public void setStrength(int strength) {
+		this.strength = strength;
 	}
 
 }

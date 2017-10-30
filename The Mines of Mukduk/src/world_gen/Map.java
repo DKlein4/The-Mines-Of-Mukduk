@@ -6,6 +6,8 @@ import entities.Entity;
 import entities.EntityHandler;
 import entities.ID;
 import entities.Monster;
+import entities.Player;
+import game_stages.Combat;
 import main.Handler;
 import utils.Utils;
 
@@ -91,7 +93,30 @@ public class Map {
 	// Checks if tile is spooky monster, starts combat if it is
 	public void isMonster(int r, int c) {
 		if (grid[r][c].isMonster()) {
-			entityHandler.removeEntity(new Monster(r, c, ID.Monster, handler, this));
+			
+			int mRow, mCol;
+			mRow = mCol = 0;
+			
+			Player player = null;
+			Monster monster = null;
+			for (int i = 0; i < entityHandler.getEntities().size(); i++) {
+				Entity tempPlayer = entityHandler.getEntities().get(i);
+				if (tempPlayer.getId() == ID.Player) {
+					mRow = tempPlayer.getRow();
+					mCol = tempPlayer.getCol();
+					
+					player = (Player)tempPlayer;
+				}
+			}
+			
+			for (int i = 0; i < entityHandler.getEntities().size(); i++) {
+				Entity tempMonster = entityHandler.getEntities().get(i);
+				if (tempMonster.getId() == ID.Monster && mRow == tempMonster.getRow() && mCol == tempMonster.getCol()) {
+					monster = (Monster)tempMonster;
+				}
+			}
+
+			new Combat(handler, player, monster);
 			grid[r][c].setFloor(true);
 		}
 	}
