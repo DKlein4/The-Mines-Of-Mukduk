@@ -60,7 +60,7 @@ public class Combat {
 	
 	public void end() {
 		System.out.println("Combat has ended");
-		GUIstate.setState(handler.getGuiMain().gameState);
+		// GUIstate.setState(handler.getGuiMain().gameState);
 	}
 
 	public void playerTurn() {

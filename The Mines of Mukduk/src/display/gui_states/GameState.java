@@ -21,6 +21,7 @@ public class GameState extends GUIstate {
 	}
 
 	public void tick() {
+		handler.getMouseInput().setUIManager(null);
 		world.tick();
 	}
 
