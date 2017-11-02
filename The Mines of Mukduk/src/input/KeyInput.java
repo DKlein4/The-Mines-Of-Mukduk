@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
  */
 public class KeyInput extends KeyAdapter {
 
-	private boolean[] keyDown = new boolean[5];
+	private boolean[] keyDown = new boolean[8];
 
 	public KeyInput() {
 		keyDown[0] = false; // W
@@ -18,6 +18,9 @@ public class KeyInput extends KeyAdapter {
 		keyDown[2] = false; // D
 		keyDown[3] = false; // A
 		keyDown[4] = false; // E
+		keyDown[5] = false; // Enter
+		keyDown[6] = false; // Spacebar
+		keyDown[7] = false; // Escape
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -33,10 +36,16 @@ public class KeyInput extends KeyAdapter {
 			keyDown[3] = true;
 		if (key == KeyEvent.VK_E)
 			keyDown[4] = true;
+		if (key == KeyEvent.VK_ENTER)
+			keyDown[5] = true;
+		if (key == KeyEvent.VK_SPACE)
+			keyDown[6] = true;
+		if (key == KeyEvent.VK_ESCAPE)
+			keyDown[7] = true;
 
 		// Exit if escape is pressed
-		if (key == KeyEvent.VK_ESCAPE)
-			System.exit(1);
+//		if (key == KeyEvent.VK_ESCAPE)
+//			System.exit(1);
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -52,6 +61,12 @@ public class KeyInput extends KeyAdapter {
 			keyDown[3] = false;
 		if (key == KeyEvent.VK_E)
 			keyDown[4] = false;
+		if (key == KeyEvent.VK_ENTER)
+			keyDown[5] = false;
+		if (key == KeyEvent.VK_SPACE)
+			keyDown[6] = false;
+		if (key == KeyEvent.VK_ESCAPE)
+			keyDown[7] = false;
 	}
 
 	public boolean[] getKeyDown() {

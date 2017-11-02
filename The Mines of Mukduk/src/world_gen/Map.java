@@ -42,7 +42,7 @@ public class Map {
 
 		this.entityHandler = entityHandler;
 		rand = new Random();
-		table = new Tables();
+		table = new Tables(handler);
 
 		this.handler = handler;
 

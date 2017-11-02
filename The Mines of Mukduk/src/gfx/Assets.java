@@ -2,6 +2,8 @@ package gfx;
 
 import java.awt.image.BufferedImage;
 
+import display.GUImain;
+
 /**
  * This class loads in all of the assets so they can be accessed easily.
  * 
@@ -9,12 +11,13 @@ import java.awt.image.BufferedImage;
  */
 public class Assets {
 
-	public static final int width = 96, height = 96;
+	public static final int width = GUImain.WIDTH / 11, height = GUImain.WIDTH / 11;
 
 	public static BufferedImage dirt, wall;
 	public static BufferedImage player, monster;
 	public static BufferedImage menuBackground;
 	public static BufferedImage[] button = new BufferedImage[2];
+	public static BufferedImage alert;
 
 	public static void init() {
 		dirt = ImageLoader.loadImage("res/Dirt.png");
@@ -27,5 +30,7 @@ public class Assets {
 		
 		button[0] = ImageLoader.loadImage("res/Button.png");
 		button[1] = ImageLoader.loadImage("res/Button-Hovered.png");
+		
+		alert = ImageLoader.loadImage("res/Dialogue.png");
 	}
 }

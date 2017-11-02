@@ -1,5 +1,6 @@
 package input;
 
+import display.MessageNotifier;
 import entities.Player;
 import items.Inventory;
 import main.Handler;
@@ -15,6 +16,7 @@ public class PlayerInput {
 	private KeyInput keyInput;
 	private Player player;
 	private Inventory inventory;
+	private MessageNotifier messenger;
 
 	private boolean[] keyDown;
 	private boolean init;
@@ -31,18 +33,21 @@ public class PlayerInput {
 			keyInput = handler.getKeyInput();
 			keyDown = keyInput.getKeyDown();
 			inventory = handler.getWorld().getInventory();
+			messenger = new MessageNotifier(handler, keyInput);
 
 			init = true;
 		}
 
 		// E pressed
 		if (keyDown[4]) {
+			if (messenger.isActive())
+				return;
 			inventory.toggleActive();
 			keyDown[4] = false;
 		}
 
 		// Break if the inventory is active
-		if (inventory.isActive())
+		if (inventory.isActive() || messenger.isActive())
 			return;
 
 		// W pressed

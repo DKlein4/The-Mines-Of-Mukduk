@@ -46,19 +46,21 @@ public class GUImain extends Canvas implements Runnable {
 	// Other stuff
 	private Handler handler;
 	private GameCamera gameCamera;
+	private MessageNotifier messenger;
 
 	public GUImain() {
 		Assets.init();
 
 		handler = new Handler(this);
-
-		gameCamera = new GameCamera(handler, 0, 0);
-
+		
 		mouseInput = new MouseInput();
 		keyInput = new KeyInput();
 		this.addKeyListener(keyInput);
 		this.addMouseListener(mouseInput);
 		this.addMouseMotionListener(mouseInput);
+
+		gameCamera = new GameCamera(handler, 0, 0);
+		messenger = new MessageNotifier(handler, keyInput);
 
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler);
@@ -157,5 +159,9 @@ public class GUImain extends Canvas implements Runnable {
 
 	public Window getWindow() {
 		return window;
+	}
+	
+	public MessageNotifier getMessageNotifier()	{
+		return messenger;
 	}
 }

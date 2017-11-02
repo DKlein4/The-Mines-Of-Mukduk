@@ -2,8 +2,10 @@ package world_gen;
 
 import java.util.Random;
 
+import display.MessageNotifier;
 import items.Inventory;
 import items.Item;
+import main.Handler;
 
 /**
  * This is the class that holds all the tables for random rolls
@@ -11,11 +13,13 @@ import items.Item;
  * @author Brett
  */
 public class Tables {
+	
+	private MessageNotifier messanger;
+	private Random rand;
+	private Inventory inventory;
 
-	Random rand;
-	Inventory inventory;
-
-	public Tables() {
+	public Tables(Handler handler) {
+		messanger = handler.getGuiMain().getMessageNotifier();
 		inventory = new Inventory();
 		rand = new Random();
 	}
@@ -26,21 +30,27 @@ public class Tables {
 		if (randRoll <= 30) {
 			armorRoll();
 			inventory.addItem(new Item("Armor", 0));
+			messanger.showMessage("You picked up ARMOR");
 		} else if (randRoll > 30 && randRoll <= 45) {
 			weaponRoll();
 			inventory.addItem(new Item("Weapon", 1));
+			messanger.showMessage("You picked up a WEAPON");
 		} else if (randRoll > 45 && randRoll <= 55) {
 			potionRoll();
 			inventory.addItem(new Item("Potion", 2));
+			messanger.showMessage("You picked up a POTION");
 		} else if (randRoll > 55 && randRoll <= 60) {
 			scrollRoll();
 			inventory.addItem(new Item("Scroll", 3));
+			messanger.showMessage("You picked up a SCROLL");
 		} else if (randRoll > 60 && randRoll <= 80) {
 			foodRoll();
 			inventory.addItem(new Item("Food", 4));
+			messanger.showMessage("You picked up FOOD");
 		} else if (randRoll > 80 && randRoll < 100) {
 			goldRoll();
 			inventory.addItem(new Item("Gold", 5));
+			messanger.showMessage("You picked up GOLD");
 		} else if (randRoll == 100) {
 			lootRoll();
 			lootRoll();

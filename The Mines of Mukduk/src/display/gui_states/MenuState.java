@@ -42,6 +42,7 @@ public class MenuState extends GUIstate {
 					@Override
 					public void onClick() {
 						GUIstate.setState(handler.getGuiMain().gameState);
+						handler.getMouseInput().setUIManager(null);
 					}
 				});
 		uiManager.addObject(playButton);
@@ -51,6 +52,7 @@ public class MenuState extends GUIstate {
 					@Override
 					public void onClick() {
 						GUIstate.setState(handler.getGuiMain().tutorialState);
+						handler.getMouseInput().setUIManager(null);
 					}
 				});
 		uiManager.addObject(tutorialButton);
