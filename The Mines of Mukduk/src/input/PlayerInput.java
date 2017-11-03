@@ -4,6 +4,7 @@ import display.MessageNotifier;
 import entities.Player;
 import items.Inventory;
 import main.Handler;
+import world_gen.Tables;
 
 /**
  * Moves the player based on keyboard input.
@@ -17,6 +18,7 @@ public class PlayerInput {
 	private Player player;
 	private Inventory inventory;
 	private MessageNotifier messenger;
+	private Tables table;
 
 	private boolean[] keyDown;
 	private boolean init;
@@ -34,6 +36,7 @@ public class PlayerInput {
 			keyDown = keyInput.getKeyDown();
 			inventory = handler.getWorld().getInventory();
 			messenger = new MessageNotifier(handler, keyInput);
+			table = new Tables(handler);
 
 			init = true;
 		}
@@ -77,6 +80,7 @@ public class PlayerInput {
 			player.setRow(player.getRow() - 1);
 			player.collision();
 			player.step();
+			table.encounterRoll();
 		}
 	}
 
@@ -85,6 +89,7 @@ public class PlayerInput {
 			player.setRow(player.getRow() + 1);
 			player.collision();
 			player.step();
+			table.encounterRoll();
 		}
 	}
 
@@ -93,6 +98,7 @@ public class PlayerInput {
 			player.setCol(player.getCol() + 1);
 			player.collision();
 			player.step();
+			table.encounterRoll();
 		}
 	}
 
@@ -101,6 +107,7 @@ public class PlayerInput {
 			player.setCol(player.getCol() - 1);
 			player.collision();
 			player.step();
+			table.encounterRoll();
 		}
 	}
 }

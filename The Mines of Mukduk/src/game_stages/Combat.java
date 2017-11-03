@@ -1,9 +1,11 @@
 package game_stages;
 
+import display.MessageNotifier;
 import display.gui_states.CombatState;
 import display.gui_states.GUIstate;
 import entities.Monster;
 import entities.Player;
+import input.KeyInput;
 import main.Handler;
 
 /**
@@ -20,6 +22,9 @@ public class Combat {
 	
 	private int monsterInit, playerInit;
 	private Handler handler;
+	
+	private KeyInput keyInput;	
+	private MessageNotifier messenger;
 
 	public Combat(Handler handler, Player player, Monster monster) {
 		this.player = player;
@@ -28,11 +33,15 @@ public class Combat {
 
 		combat = true;
 		combatState = new CombatState(handler);
+		
+		keyInput = handler.getKeyInput();
+		messenger = handler.getGuiMain().getMessageNotifier();
 
 		start();
 	}
 
 	public void start() {
+		messenger.showMessage("Combat has started!");
 		GUIstate.setState(combatState);
 		
 		monsterInit = monster.initiativeRoll();

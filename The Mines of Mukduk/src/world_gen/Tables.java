@@ -13,13 +13,13 @@ import main.Handler;
  * @author Brett
  */
 public class Tables {
-	
-	private MessageNotifier messanger;
+
+	private MessageNotifier messenger;
 	private Random rand;
 	private Inventory inventory;
 
 	public Tables(Handler handler) {
-		messanger = handler.getGuiMain().getMessageNotifier();
+		messenger = handler.getGuiMain().getMessageNotifier();
 		inventory = new Inventory();
 		rand = new Random();
 	}
@@ -30,28 +30,29 @@ public class Tables {
 		if (randRoll <= 30) {
 			armorRoll();
 			inventory.addItem(new Item("Armor", 0));
-			messanger.showMessage("You picked up ARMOR");
+			messenger.showMessage("You picked up ARMOR");
 		} else if (randRoll > 30 && randRoll <= 45) {
 			weaponRoll();
 			inventory.addItem(new Item("Weapon", 1));
-			messanger.showMessage("You picked up a WEAPON");
+			messenger.showMessage("You picked up a WEAPON");
 		} else if (randRoll > 45 && randRoll <= 55) {
 			potionRoll();
 			inventory.addItem(new Item("Potion", 2));
-			messanger.showMessage("You picked up a POTION");
+			messenger.showMessage("You picked up a POTION");
 		} else if (randRoll > 55 && randRoll <= 60) {
 			scrollRoll();
 			inventory.addItem(new Item("Scroll", 3));
-			messanger.showMessage("You picked up a SCROLL");
+			messenger.showMessage("You picked up a SCROLL");
 		} else if (randRoll > 60 && randRoll <= 80) {
 			foodRoll();
 			inventory.addItem(new Item("Food", 4));
-			messanger.showMessage("You picked up FOOD");
+			messenger.showMessage("You picked up FOOD");
 		} else if (randRoll > 80 && randRoll < 100) {
 			goldRoll();
 			inventory.addItem(new Item("Gold", 5));
-			messanger.showMessage("You picked up GOLD");
+			messenger.showMessage("You picked up GOLD");
 		} else if (randRoll == 100) {
+			messenger.showMessage("Wow! These treasures are glued together!");
 			lootRoll();
 			lootRoll();
 		}
@@ -59,17 +60,24 @@ public class Tables {
 
 	// Generates a random number to decide whether an encounter will occur
 	public void encounterRoll() {
-		switch (rand.nextInt((100 - 1) + 1) + 1) {
-		// 1-10 creates a loot roll
-		case 1:
-		case 10:
-			lootRoll();
-			break;
-		// 11-15 creates a trap roll
-		case 11:
-		case 15:
-			trapRoll();
-			break;
+		int randRoll = rand.nextInt((100 - 1) + 1) + 1;
+		if (randRoll <= 5) {
+			messenger.showMessage("Treasure Encounter");
+			//lootRoll();
+		} else if (randRoll > 5 && randRoll <= 10) {
+			messenger.showMessage("Event Encounter");
+
+		} else if (randRoll > 10 && randRoll <= 12) {
+			messenger.showMessage("OH SHIT, IT'S A TRAP");
+
+		} else if (randRoll > 12 && randRoll <= 13) {
+			messenger.showMessage("Combat...?");
+
+		} else if (randRoll > 13 && randRoll <= 80) {
+
+		} else if (randRoll > 80 && randRoll < 100) {
+
+		} else if (randRoll == 100) {
 		}
 	}
 
