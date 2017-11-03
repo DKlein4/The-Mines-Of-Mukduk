@@ -113,6 +113,7 @@ public class Map {
 				Entity tempMonster = entityHandler.getEntities().get(i);
 				if (tempMonster.getId() == ID.Monster && mRow == tempMonster.getRow() && mCol == tempMonster.getCol()) {
 					monster = (Monster)tempMonster;
+					entityHandler.removeEntity(tempMonster);
 				}
 			}
 

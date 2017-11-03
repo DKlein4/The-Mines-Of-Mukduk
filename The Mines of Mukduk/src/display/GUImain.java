@@ -128,7 +128,7 @@ public class GUImain extends Canvas implements Runnable {
 		stop();
 	}
 
-	public synchronized void start() {
+	public synchronized void start() {		
 		thread = new Thread(this);
 		thread.start();
 		running = true;
