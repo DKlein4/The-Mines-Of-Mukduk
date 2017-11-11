@@ -63,16 +63,16 @@ public class Tables {
 		int randRoll = rand.nextInt((100 - 1) + 1) + 1;
 		if (randRoll <= 5) {
 			messenger.showMessage("Treasure Encounter");
-			//lootRoll();
+			lootRoll();
 		} else if (randRoll > 5 && randRoll <= 10) {
 			messenger.showMessage("Event Encounter");
 
 		} else if (randRoll > 10 && randRoll <= 12) {
 			messenger.showMessage("OH SHIT, IT'S A TRAP");
+			messenger.showMessage("Is it gay?");
 
 		} else if (randRoll > 12 && randRoll <= 13) {
 			messenger.showMessage("Combat...?");
-
 		} else if (randRoll > 13 && randRoll <= 80) {
 
 		} else if (randRoll > 80 && randRoll < 100) {
