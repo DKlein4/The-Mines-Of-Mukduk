@@ -26,7 +26,7 @@ public class Tables {
 
 	// Randomly generates a piece of loot and adds it to the players inventory
 	public void lootRoll() {
-		int randRoll = rand.nextInt((100 - 1) + 1) + 1;
+		int randRoll = rand.nextInt(100) + 1;
 		if (randRoll <= 30) {
 			armorRoll();
 			inventory.addItem(new Item("Armor", 0));
