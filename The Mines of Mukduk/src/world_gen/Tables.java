@@ -60,7 +60,7 @@ public class Tables {
 
 	// Generates a random number to decide whether an encounter will occur
 	public void encounterRoll() {
-		int randRoll = rand.nextInt((100 - 1) + 1) + 1;
+		int randRoll = rand.nextInt(100) + 1;
 		if (randRoll <= 5) {
 			messenger.showMessage("Treasure Encounter");
 			lootRoll();
