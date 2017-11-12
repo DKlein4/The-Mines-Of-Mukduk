@@ -26,6 +26,8 @@ public class Player extends Entity {
 		inventory = new Inventory();
 		playerInput = new PlayerInput(handler, this);
 		
+		health = 30;
+		
 		steps = 0;
 	}
 

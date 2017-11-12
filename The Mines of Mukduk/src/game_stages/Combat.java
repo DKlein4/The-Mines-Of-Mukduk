@@ -42,22 +42,27 @@ public class Combat {
 
 	public void start() {
 		messenger.showMessage("Combat has started!");
-		GUIstate.setState(combatState);
+		//GUIstate.setState(combatState);
 		
 		monsterInit = monster.initiativeRoll();
 		playerInit = player.initiativeRoll();
+		
+		monster.updateArmorClass();
+		player.updateArmorClass();
 
 		run();
 	}
 	
 	public void run() {
 		if (monsterInit > playerInit) {
+			messenger.showMessage("The monster was quicker!");
 			while (combat) {
 				monsterTurn();
 				playerTurn();
 			}
 		}
 		else if (monsterInit <= playerInit) {
+			messenger.showMessage("You were quicker!");
 			while (combat) {
 				playerTurn();
 				monsterTurn();
@@ -73,14 +78,30 @@ public class Combat {
 	}
 
 	public void playerTurn() {
+		if (monster.attackCheck(player.attackRoll())) {
+			messenger.showMessage("You hit Goby the Goblin!");
+			monster.setHealth(monster.getHealth() - 2);
+		}
+		else {
+			messenger.showMessage("You missed, dumbass!");
+		}
 		resolve();
 	}
 
 	public void monsterTurn() {
+		if (player.attackCheck(monster.attackRoll())) {
+			messenger.showMessage("The monster hits you!");
+			player.setHealth(player.getHealth() - 2);
+		}
+		else {
+			messenger.showMessage("The monster misses!");
+		}
 		resolve();
 	}
 
 	public void resolve() {
+		System.out.println("Player Health: " + player.getHealth());
+		System.out.println("Monster Health: " + monster.getHealth());
 		if (monster.getHealth() <= 0) {
 			combat = false;
 		}
@@ -89,6 +110,6 @@ public class Combat {
 		}
 		
 		// Temporarily end combat immediately
-		combat = false;
+		//combat = false;
 	}
 }

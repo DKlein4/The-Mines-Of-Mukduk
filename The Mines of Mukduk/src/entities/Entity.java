@@ -30,6 +30,7 @@ public abstract class Entity {
 	protected int health;
 	protected int dexterity;
 	protected int strength;
+	protected int armorClass;
 
 	protected GameCamera gameCamera;
 	protected Map map;
@@ -45,6 +46,7 @@ public abstract class Entity {
 		health = 20;
 		dexterity = 10;
 		strength = 10;
+		armorClass = 10;
 
 		gameCamera = handler.getGuiMain().getGameCamera();
 
@@ -70,9 +72,34 @@ public abstract class Entity {
 	public abstract Rectangle getBounds();
 	
 	public int initiativeRoll() {
-		return (rand.nextInt(20) + 1 + (this.dexterity - 10) / 2);
+		return (rand.nextInt(20) + 1 + dexterityCheck());
+	}
+	
+	public int attackRoll() {
+		return (rand.nextInt(20) + 1 + strengthCheck());
+	}
+	
+	public boolean attackCheck(int attackRoll) {
+		if (attackRoll > this.armorClass) {
+			return true;
+		}
+		else return false;
+	}
+	
+	public void updateArmorClass() {
+		this.setArmorClass(10 + dexterityCheck());
 	}
 
+	// ABILITY SCORE CHECKS
+	
+	public int dexterityCheck() {
+		return ((this.dexterity - 10) / 2);
+	}
+	
+	public int strengthCheck() {
+		return ((this.strength - 10) / 2);
+	}
+	
 	// GETTERS AND SETTERS
 
 	public int getRow() {
@@ -149,6 +176,14 @@ public abstract class Entity {
 
 	public void setStrength(int strength) {
 		this.strength = strength;
+	}
+	
+	public int getArmorClass() {
+		return armorClass;
+	}
+	
+	public void setArmorClass(int armorClass) {
+		this.armorClass = armorClass;
 	}
 
 }
