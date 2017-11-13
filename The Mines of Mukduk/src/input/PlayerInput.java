@@ -80,7 +80,7 @@ public class PlayerInput {
 			player.setRow(player.getRow() - 1);
 			player.collision();
 			player.step();
-			table.encounterRoll();
+			//table.encounterRoll();
 		}
 	}
 
@@ -89,7 +89,7 @@ public class PlayerInput {
 			player.setRow(player.getRow() + 1);
 			player.collision();
 			player.step();
-			table.encounterRoll();
+			//table.encounterRoll();
 		}
 	}
 
@@ -98,7 +98,7 @@ public class PlayerInput {
 			player.setCol(player.getCol() + 1);
 			player.collision();
 			player.step();
-			table.encounterRoll();
+			//table.encounterRoll();
 		}
 	}
 
@@ -107,7 +107,7 @@ public class PlayerInput {
 			player.setCol(player.getCol() - 1);
 			player.collision();
 			player.step();
-			table.encounterRoll();
+			//table.encounterRoll();
 		}
 	}
 }

@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Scanner;
 
 import gfx.Assets;
 import input.PlayerInput;
@@ -15,14 +16,14 @@ import world_gen.Map;
  * @author Dustin
  */
 public class Player extends Entity {
-
+	
 	private Inventory inventory;
 	private PlayerInput playerInput;
 	private int steps;
 	
 	public Player(int row, int col, ID id, Handler handler, Map map) {
 		super(row, col, ID.Player, handler, map);
-		
+				
 		inventory = new Inventory();
 		playerInput = new PlayerInput(handler, this);
 		

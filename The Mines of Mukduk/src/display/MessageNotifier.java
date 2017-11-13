@@ -16,7 +16,6 @@ public class MessageNotifier {
 	private boolean[] keyDown;
 
 	private static boolean active;
-	// private String text;
 
 	private static Queue<String> messageList;
 
@@ -39,7 +38,7 @@ public class MessageNotifier {
 
 	public void render(Graphics g) {
 		if (!messageList.isEmpty()) {
-			// Draw the backround of the notification
+			// Draw the background of the notification
 			int x = (GUImain.WIDTH / 15) - (GUImain.WIDTH / 90);
 			int y = GUImain.HEIGHT * 5 / 7;
 			int width = GUImain.WIDTH * 13 / 15;
