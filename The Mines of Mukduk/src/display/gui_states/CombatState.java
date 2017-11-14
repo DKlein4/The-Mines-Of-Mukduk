@@ -21,7 +21,7 @@ public class CombatState extends GUIstate {
 	}
 	
 	public void tick() {
-		//combat.tick();
+		combat.tick();
 		messenger.tick();
 	}
 
@@ -30,7 +30,7 @@ public class CombatState extends GUIstate {
 		g.fillRect(0, 0, GUImain.WIDTH, GUImain.HEIGHT);
 		//System.out.println("Combat is rendering");
 		
-		//combat.render(g);
+		combat.render(g);
 		messenger.render(g);
 	}
 	

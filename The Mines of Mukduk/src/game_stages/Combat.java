@@ -1,5 +1,8 @@
 package game_stages;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import display.MessageNotifier;
 import display.gui_states.CombatState;
 import display.gui_states.GUIstate;
@@ -16,25 +19,34 @@ import main.Handler;
 public class Combat {
 	private Player player;
 	private Monster monster;
-	private boolean combat;
+	private boolean combatActive;
 
 	private GUIstate combatState;
 
+	private int selected;
 	private int monsterInit, playerInit;
 	private Handler handler;
 
 	private KeyInput keyInput;
+	private boolean[] keyDown;
 	private MessageNotifier messenger;
+	
+	private enum CombatStage {
+		playerTurn, monsterTurn, over;
+	}
 
 	public Combat(Handler handler, Player player, Monster monster) {
 		this.player = player;
 		this.monster = monster;
 		this.handler = handler;
 
-		combat = true;
+		combatActive = true;
 		combatState = new CombatState(handler);
 
+		selected = 1;
+		
 		keyInput = handler.getKeyInput();
+		keyDown = keyInput.getKeyDown();
 		messenger = handler.getGuiMain().getMessageNotifier();
 
 		start();
@@ -43,7 +55,8 @@ public class Combat {
 	public void start() {
 		messenger.showMessage("Combat has started!");
 
-		// GUIstate.setState(combatState);
+		GUIstate.setState(combatState);
+		((CombatState) combatState).setCombat(this);
 
 		monsterInit = monster.initiativeRoll();
 		playerInit = player.initiativeRoll();
@@ -51,35 +64,66 @@ public class Combat {
 		monster.updateArmorClass();
 		player.updateArmorClass();
 
-		run();
+		if (monsterInit > playerInit) 
+			messenger.showMessage("The monster was quicker!");
+		else if (monsterInit <= playerInit) 
+			messenger.showMessage("You were quicker!");
+		
 	}
 
-	public void run() {
+	public void tick() {
 		if (monsterInit > playerInit) {
-			messenger.showMessage("The monster was quicker!");
-			while (combat) {
+			if (combatActive) 
 				monsterTurn();
+			if (combatActive)
 				playerTurn();
-			}
 		} else if (monsterInit <= playerInit) {
-			messenger.showMessage("You were quicker!");
-			while (combat) {
+			if (combatActive)
 				playerTurn();
+			if (combatActive)
 				monsterTurn();
-			}
 		}
+	}
+	
+	public void render(Graphics g) {
+		g.setColor(Color.red);
+		
+		for(int i = 1; i <= 3; i++) {
+			g.fillRect(50 * i, 50, 50, 50);
+		}
+		
+		g.setColor(Color.YELLOW);
+		
+		g.fillRect(50 * selected, 105, 30, 30);
 	}
 
 	public void end() {
+		
 	}
 
 	public void playerTurn() {
-		if (monster.attackCheck(player.attackRoll())) {
-			messenger.showMessage("You hit Goby the Goblin!");
-			monster.setHealth(monster.getHealth() - 2);
-		} else {
-			messenger.showMessage("You missed, dumbass!");
+		// A, move the selector down
+		if (keyDown[3]) {
+			if (selected > 1)
+				selected--;
+			keyDown[3] = false;
 		}
+		// D, move the selector to the left
+		if (keyDown[2]) {
+			if (selected < 3)
+				selected++;
+			keyDown[2] = false;
+		}
+		// Enter, do action
+		if (keyDown[5]) {
+			if (monster.attackCheck(player.attackRoll())) {
+				messenger.showMessage("You hit Goby the Goblin!");
+				monster.setHealth(monster.getHealth() - 2);
+			} else {
+				messenger.showMessage("You missed, dumbass!");
+			}
+		}
+		
 		resolve();
 	}
 
@@ -97,11 +141,11 @@ public class Combat {
 		System.out.println("Player Health: " + player.getHealth());
 		System.out.println("Monster Health: " + monster.getHealth());
 		if (monster.getHealth() <= 0) {
-			combat = false;
+			combatActive = false;
 
 		}
 		if (player.getHealth() <= 0) {
-			combat = false;
+			combatActive = false;
 		}
 	}
 }
