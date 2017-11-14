@@ -1,7 +1,6 @@
 package game_stages;
 
 import java.awt.Graphics;
-import java.util.Scanner;
 
 import display.MessageNotifier;
 import display.gui_states.CombatState;
@@ -22,7 +21,6 @@ import ui.UIManager;
 public class Combat {
 	private Player player;
 	private Monster monster;
-	private boolean combatActive;
 
 	private GUIstate combatState;
 
@@ -34,12 +32,17 @@ public class Combat {
 	private UIManager uiManager;
 	private UIImageButton attackButton;
 
+	private enum CombatStage {
+		playerTurn, monsterTurn, over;
+	}
+
+	private CombatStage currentStage;
+
 	public Combat(Handler handler, Player player, Monster monster) {
 		this.player = player;
 		this.monster = monster;
 		this.handler = handler;
 
-		combatActive = true;
 		combatState = new CombatState(handler);
 
 		messenger = handler.getGuiMain().getMessageNotifier();
@@ -50,16 +53,21 @@ public class Combat {
 		attackButton = new UIImageButton("ATTACK", 100, 100, 100, 30, Assets.button, new ClickListener() {
 			@Override
 			public void onClick() {
-				if (monsterInit > playerInit) {
-					if (combatActive) 
-						monsterTurn();
-					if (combatActive) 
-						playerTurn();
-				} else if (monsterInit <= playerInit) {
-					if (combatActive)
-						playerTurn();
-					if (combatActive)
-						monsterTurn();
+				if (!messenger.isActive() && currentStage == CombatStage.playerTurn) {
+					if (monsterInit > playerInit) {
+						if (currentStage != CombatStage.over)
+							monsterTurn();
+						if (currentStage != CombatStage.over)
+							playerTurn();
+					} else if (monsterInit <= playerInit) {
+						if (currentStage != CombatStage.over)
+							playerTurn();
+						if (currentStage != CombatStage.over)
+							monsterTurn();
+					}
+					
+					if (currentStage != CombatStage.playerTurn)
+						currentStage = CombatStage.playerTurn;
 				}
 			}
 		});
@@ -78,25 +86,24 @@ public class Combat {
 
 		monster.updateArmorClass();
 		player.updateArmorClass();
+		
+		currentStage = CombatStage.playerTurn;
 
-		if (monsterInit > playerInit)
+		if (monsterInit > playerInit) 
 			messenger.showMessage("The monster was quicker!");
 		else if (monsterInit <= playerInit)
 			messenger.showMessage("You were quicker!");
 	}
 
 	public void tick() {
-		if (!messenger.isActive()) {
-			//if (combatActive)
+		if (!messenger.isActive())
+			if (currentStage != CombatStage.over)
 				uiManager.tick();
-			
-			
-		}
 	}
 
 	public void render(Graphics g) {
 		if (!messenger.isActive())
-			if (combatActive)
+			if (currentStage != CombatStage.over)
 				uiManager.render(g);
 	}
 
@@ -106,7 +113,10 @@ public class Combat {
 	}
 
 	public void playerTurn() {
-
+		handler.getMouseInput().setUIManager(uiManager);
+		currentStage = CombatStage.playerTurn;
+		
+		
 		if (monster.attackCheck(player.attackRoll())) {
 			messenger.showMessage("You hit Goby the Goblin!");
 			monster.setHealth(monster.getHealth() - 2);
@@ -117,6 +127,8 @@ public class Combat {
 	}
 
 	public void monsterTurn() {
+		handler.getMouseInput().setUIManager(null);
+		currentStage = CombatStage.monsterTurn;
 		if (player.attackCheck(monster.attackRoll())) {
 			messenger.showMessage("The monster hits you!");
 			player.setHealth(player.getHealth() - 2);
@@ -128,15 +140,15 @@ public class Combat {
 
 	public void resolve() {
 		System.out.println("Player Health: " + player.getHealth());
-		System.out.println("Monster Health: " + monster.getHealth());
+		System.out.println("Monster Health: " + monster.getHealth() + "\n");
+		
 		if (monster.getHealth() <= 0) {
-			combatActive = false;
+			currentStage = CombatStage.over;
+			end();
 		}
 		if (player.getHealth() <= 0) {
-			combatActive = false;
+			currentStage = CombatStage.over;
+			end();
 		}
-
-		// Temporarily end combat immediately
-		// combat = false;
 	}
 }
