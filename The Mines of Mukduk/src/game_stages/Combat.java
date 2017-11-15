@@ -10,6 +10,7 @@ import display.gui_states.CombatState;
 import display.gui_states.GUIstate;
 import entities.Monster;
 import entities.Player;
+import gfx.Assets;
 import gfx.Text;
 import input.KeyInput;
 import main.Handler;
@@ -90,16 +91,20 @@ public class Combat {
 			// Action choices
 			g.setColor(Color.red);
 			for (int i = 1; i <= 3; i++) {
-				g.fillRect((GUImain.WIDTH/8) * i - (GUImain.WIDTH / 32), GUImain.WIDTH / 16, GUImain.WIDTH / 16, GUImain.WIDTH / 16);
+				g.fillRect((GUImain.WIDTH / 3) + (GUImain.WIDTH/8) * i - (GUImain.WIDTH / 32), GUImain.WIDTH / 16, GUImain.WIDTH / 16, GUImain.WIDTH / 16);
 			}
 	
 			// Selector
 			g.setColor(Color.YELLOW);
-			g.fillRoundRect((GUImain.WIDTH/8) * selected - (GUImain.WIDTH / 60), GUImain.WIDTH / 8, GUImain.WIDTH / 30, GUImain.WIDTH / 30, 25, 25);
+			g.fillRoundRect((GUImain.WIDTH / 3) + (GUImain.WIDTH/8) * selected - (GUImain.WIDTH / 60), GUImain.WIDTH / 8, GUImain.WIDTH / 30, GUImain.WIDTH / 30, 25, 25);
 		}
 			
-		// Stats
-		Text.drawStringFrom(g, "HP:" + player.getHealth() + "  Dexterity:" + player.getDexterity() + "  Strength:" + player.getStrength(), GUImain.WIDTH / 60, GUImain.HEIGHT / 20, false, Color.WHITE, new Font("MonoSpaced", Font.PLAIN, GUImain.HEIGHT / 20));
+		// HUD
+		g.drawImage(Assets.combatHUD, 0, 0, GUImain.WIDTH, GUImain.HEIGHT, null);
+		// Health
+		Text.drawStringFrom(g, player.getHealth() + "", GUImain.WIDTH * 217 / 1000, GUImain.HEIGHT * 52 / 1000, true, Color.DARK_GRAY, new Font("MonoSpaced", Font.BOLD, GUImain.HEIGHT / 24));
+		// Armor class
+		Text.drawStringFrom(g, player.getArmorClass() + "", GUImain.WIDTH * 81 / 1000, GUImain.HEIGHT / 15, true, Color.DARK_GRAY, new Font("MonoSpaced", Font.BOLD, GUImain.HEIGHT / 30));
 	}
 	
 	// Plays one monster turn and one player turn

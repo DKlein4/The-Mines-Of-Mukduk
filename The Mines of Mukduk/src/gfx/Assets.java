@@ -18,6 +18,7 @@ public class Assets {
 	public static BufferedImage menuBackground;
 	public static BufferedImage[] button = new BufferedImage[2];
 	public static BufferedImage alert;
+	public static BufferedImage combatHUD;
 
 	public static void init() {
 		dirt = ImageLoader.loadImage("res/Dirt.png");
@@ -32,5 +33,7 @@ public class Assets {
 		button[1] = ImageLoader.loadImage("res/Button-Hovered.png");
 		
 		alert = ImageLoader.loadImage("res/Dialogue.png");
+		
+		combatHUD = ImageLoader.loadImage("res/CombatGUI.png");
 	}
 }
