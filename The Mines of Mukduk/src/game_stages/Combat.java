@@ -1,13 +1,16 @@
 package game_stages;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
+import display.GUImain;
 import display.MessageNotifier;
 import display.gui_states.CombatState;
 import display.gui_states.GUIstate;
 import entities.Monster;
 import entities.Player;
+import gfx.Text;
 import input.KeyInput;
 import main.Handler;
 
@@ -83,17 +86,22 @@ public class Combat {
 	}
 
 	public void render(Graphics g) {
-		g.setColor(Color.red);
-
-		for (int i = 1; i <= 3; i++) {
-			g.fillRect(50 * i + (30 * i), 50, 50, 50);
+		if (currentStage == CombatStage.playerTurn && !messenger.isActive()) {
+			// Action choices
+			g.setColor(Color.red);
+			for (int i = 1; i <= 3; i++) {
+				g.fillRect((GUImain.WIDTH/8) * i - (GUImain.WIDTH / 32), GUImain.WIDTH / 16, GUImain.WIDTH / 16, GUImain.WIDTH / 16);
+			}
+	
+			// Selector
+			g.setColor(Color.YELLOW);
+			g.fillRoundRect((GUImain.WIDTH/8) * selected - (GUImain.WIDTH / 60), GUImain.WIDTH / 8, GUImain.WIDTH / 30, GUImain.WIDTH / 30, 25, 25);
 		}
-
-		g.setColor(Color.YELLOW);
-
-		g.fillRect((50 * selected) + (30 * selected), 105, 30, 30);
+			
+		// Stats
+		Text.drawStringFrom(g, "HP:" + player.getHealth() + "  Dexterity:" + player.getDexterity() + "  Strength:" + player.getStrength(), GUImain.WIDTH / 60, GUImain.HEIGHT / 20, false, Color.WHITE, new Font("MonoSpaced", Font.PLAIN, GUImain.HEIGHT / 20));
 	}
-
+	
 	// Plays one monster turn and one player turn
 	public void playRound() {
 		if (currentStage != CombatStage.over) {
