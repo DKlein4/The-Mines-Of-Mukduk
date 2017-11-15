@@ -14,37 +14,37 @@ import main.Handler;
 /**
  * Handles the combat between player and enemies.
  * 
- * @author Brett
+ * @author Brett and Dustin
  */
 public class Combat {
 	private Player player;
 	private Monster monster;
-	private boolean combatActive;
 
 	private GUIstate combatState;
 
 	private int selected;
 	private int monsterInit, playerInit;
-	private Handler handler;
 
 	private KeyInput keyInput;
 	private boolean[] keyDown;
 	private MessageNotifier messenger;
-	
+	private Handler handler;
+
 	private enum CombatStage {
 		playerTurn, monsterTurn, over;
 	}
 
+	private CombatStage currentStage;
+
 	public Combat(Handler handler, Player player, Monster monster) {
+		this.handler = handler;
 		this.player = player;
 		this.monster = monster;
-		this.handler = handler;
 
-		combatActive = true;
 		combatState = new CombatState(handler);
 
 		selected = 1;
-		
+
 		keyInput = handler.getKeyInput();
 		keyDown = keyInput.getKeyDown();
 		messenger = handler.getGuiMain().getMessageNotifier();
@@ -52,6 +52,7 @@ public class Combat {
 		start();
 	}
 
+	// Initialization crap
 	public void start() {
 		messenger.showMessage("Combat has started!");
 
@@ -64,88 +65,135 @@ public class Combat {
 		monster.updateArmorClass();
 		player.updateArmorClass();
 
-		if (monsterInit > playerInit) 
+		if (monsterInit > playerInit) {
 			messenger.showMessage("The monster was quicker!");
-		else if (monsterInit <= playerInit) 
+			currentStage = CombatStage.monsterTurn;
+		} else if (monsterInit <= playerInit) {
 			messenger.showMessage("You were quicker!");
-		
+			currentStage = CombatStage.playerTurn;
+		}
 	}
 
 	public void tick() {
-		if (monsterInit > playerInit) {
-			if (combatActive) 
-				monsterTurn();
-			if (combatActive)
-				playerTurn();
-		} else if (monsterInit <= playerInit) {
-			if (combatActive)
-				playerTurn();
-			if (combatActive)
-				monsterTurn();
-		}
-	}
-	
-	public void render(Graphics g) {
-		g.setColor(Color.red);
-		
-		for(int i = 1; i <= 3; i++) {
-			g.fillRect(50 * i, 50, 50, 50);
-		}
-		
-		g.setColor(Color.YELLOW);
-		
-		g.fillRect(50 * selected, 105, 30, 30);
+		if (!messenger.isActive())
+			playRound();
+
+		if (currentStage == CombatStage.over)
+			end();
 	}
 
-	public void end() {
-		
+	public void render(Graphics g) {
+		g.setColor(Color.red);
+
+		for (int i = 1; i <= 3; i++) {
+			g.fillRect(50 * i + (30 * i), 50, 50, 50);
+		}
+
+		g.setColor(Color.YELLOW);
+
+		g.fillRect((50 * selected) + (30 * selected), 105, 30, 30);
+	}
+
+	// Plays one monster turn and one player turn
+	public void playRound() {
+		if (currentStage != CombatStage.over) {
+			if (monsterInit > playerInit) {
+				if (currentStage == CombatStage.monsterTurn)
+					monsterTurn();
+				if (currentStage == CombatStage.playerTurn)
+					playerTurn();
+			} else if (monsterInit <= playerInit) {
+				if (currentStage == CombatStage.playerTurn)
+					playerTurn();
+				if (currentStage == CombatStage.monsterTurn)
+					monsterTurn();
+			}
+		}
 	}
 
 	public void playerTurn() {
+		if (messenger.isActive())
+			return;
+
 		// A, move the selector down
 		if (keyDown[3]) {
 			if (selected > 1)
 				selected--;
-			keyDown[3] = false;
+			keyDown[3] = false; // Prevents spam of the key
 		}
+
 		// D, move the selector to the left
 		if (keyDown[2]) {
 			if (selected < 3)
 				selected++;
-			keyDown[2] = false;
+			keyDown[2] = false; // Prevents spam of the key
 		}
-		// Enter, do action
-		if (keyDown[5]) {
-			if (monster.attackCheck(player.attackRoll())) {
-				messenger.showMessage("You hit Goby the Goblin!");
-				monster.setHealth(monster.getHealth() - 2);
-			} else {
-				messenger.showMessage("You missed, dumbass!");
+
+		// Enter, do selected action
+		if (keyDown[8]) {
+			keyDown[8] = false; // Prevents spam of the key
+			System.out.println();
+			// Attack
+			if (selected == 1) {
+				// Player rolling on whether its attack hit or not
+				if (monster.attackCheck(player.attackRoll())) {
+					messenger.showMessage("You hit Goby the Goblin!");
+					monster.setHealth(monster.getHealth() - 3);
+				} else {
+					messenger.showMessage("You missed, dumbass!");
+				}
+
+				System.out.println("Player attacked");
 			}
+			// Use item
+			else if (selected == 2) {
+				System.out.println("Player Used Item");
+			}
+			// Flee
+			else if (selected == 3) {
+				System.out.println("Player Fled");
+				messenger.showMessage("You pussed out!");
+				currentStage = CombatStage.over;
+			}
+
+			resolve();
+			// Player turn is over so change it to monster turn
+			if (currentStage != CombatStage.over)
+				currentStage = CombatStage.monsterTurn;
 		}
-		
-		resolve();
 	}
 
 	public void monsterTurn() {
+		// Monster rolling on whether its attack hit or not
 		if (player.attackCheck(monster.attackRoll())) {
 			messenger.showMessage("The monster hits you!");
 			player.setHealth(player.getHealth() - 2);
 		} else {
 			messenger.showMessage("The monster misses!");
 		}
+
 		resolve();
+		// Monster turn has ended so switch to player turn
+		if (currentStage != CombatStage.over)
+			currentStage = CombatStage.playerTurn;
 	}
 
+	// Checks to see if combat should finish
 	public void resolve() {
+		System.out.println(currentStage);
 		System.out.println("Player Health: " + player.getHealth());
 		System.out.println("Monster Health: " + monster.getHealth());
-		if (monster.getHealth() <= 0) {
-			combatActive = false;
 
+		if (monster.getHealth() <= 0 || player.getHealth() <= 0) {
+			messenger.showMessage("You defeated Goby the Goblin!");
+			currentStage = CombatStage.over;
 		}
-		if (player.getHealth() <= 0) {
-			combatActive = false;
-		}
+	}
+
+	// Ran when combat is over
+	public void end() {
+		// Wait until all messages are gone then return to map
+		if (!messenger.isActive())
+			GUIstate.setState(handler.getGuiMain().gameState);
 	}
 }
