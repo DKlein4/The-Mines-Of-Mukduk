@@ -16,9 +16,7 @@ import world_gen.Map;
  * @author Dustin
  */
 public class Player extends Entity {
-	
-	private int maxHealth;
-	
+		
 	private Inventory inventory;
 	private PlayerInput playerInput;
 	private int steps;
@@ -29,9 +27,9 @@ public class Player extends Entity {
 		inventory = new Inventory();
 		playerInput = new PlayerInput(handler, this);
 		
-		maxHealth = 30;
 		health = 30;
-		
+		maxHealth = 30;
+
 		steps = 0;
 	}
 
@@ -62,14 +60,6 @@ public class Player extends Entity {
 		map.isTreasure(row, col);
 		map.isLadder(row, col);
 		map.isMonster(row, col);
-	}
-	
-	public int getMaxHealth() {
-		return maxHealth;
-	}
-
-	public void setMaxHealth(int maxHealth) {
-		this.maxHealth = maxHealth;
 	}
 	
 	public void setSteps(int steps) {

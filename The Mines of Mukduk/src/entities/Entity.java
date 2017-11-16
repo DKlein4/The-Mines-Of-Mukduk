@@ -27,7 +27,7 @@ public abstract class Entity {
 	protected int xPos, yPos; // Positions on the grid
 	protected ID id; // Type of entity
 	
-	protected int health;
+	protected int health, maxHealth;
 	protected int dexterity;
 	protected int strength;
 	protected int armorClass;
@@ -44,6 +44,7 @@ public abstract class Entity {
 		this.map = map;
 		
 		health = 20;
+		maxHealth = 20;
 		dexterity = 10;
 		strength = 10;
 		armorClass = 10;
@@ -160,6 +161,14 @@ public abstract class Entity {
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+	
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
 	}
 	
 	public int getDexterity() {

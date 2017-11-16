@@ -19,6 +19,7 @@ public class Assets {
 	public static BufferedImage[] button = new BufferedImage[2];
 	public static BufferedImage alert;
 	public static BufferedImage combatHUD, combatButtons, pointer;
+	public static BufferedImage seamlessRock;
 
 	public static void init() {
 		dirt = ImageLoader.loadImage("res/Dirt.png");
@@ -37,5 +38,7 @@ public class Assets {
 		combatHUD = ImageLoader.loadImage("res/CombatGUI.png");
 		combatButtons = ImageLoader.loadImage("res/CombatButtons.png");
 		pointer = ImageLoader.loadImage("res/pointer.png");
+		
+		seamlessRock = ImageLoader.loadImage("res/Seamless Rock Texture.png");
 	}
 }
