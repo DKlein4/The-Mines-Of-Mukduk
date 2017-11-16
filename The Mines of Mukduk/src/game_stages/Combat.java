@@ -105,6 +105,10 @@ public class Combat {
 		Text.drawStringFrom(g, player.getHealth() + "", GUImain.WIDTH * 217 / 1000, GUImain.HEIGHT * 52 / 1000, true, Color.DARK_GRAY, new Font("MonoSpaced", Font.BOLD, GUImain.HEIGHT / 24));
 		// Armor class
 		Text.drawStringFrom(g, player.getArmorClass() + "", GUImain.WIDTH * 81 / 1000, GUImain.HEIGHT / 15, true, Color.DARK_GRAY, new Font("MonoSpaced", Font.BOLD, GUImain.HEIGHT / 30));
+		// Health bar
+		g.setColor(Color.RED);
+		g.fillRoundRect(GUImain.WIDTH * 109 / 1000, GUImain.HEIGHT * 107 / 1000, (int) ((GUImain.WIDTH * 145 / 1000) * ((double) player.getHealth() / player.getMaxHealth())), GUImain.HEIGHT * 30 / 1000,  GUImain.HEIGHT * 10 / 1000,  GUImain.HEIGHT * 20 / 1000);
+		System.out.println((double)player.getHealth() / player.getMaxHealth());
 	}
 	
 	// Plays one monster turn and one player turn

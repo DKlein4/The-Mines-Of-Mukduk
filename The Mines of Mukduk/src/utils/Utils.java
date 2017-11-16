@@ -29,5 +29,12 @@ public class Utils {
 		return builder.toString();
 	}
 	
-	
+	public static double clamp(double var, double min, double max) {
+		if (var >= max)
+			return var = max;
+		else if (var < min)
+			return var = min;
+		else
+			return var;
+	}
 }
