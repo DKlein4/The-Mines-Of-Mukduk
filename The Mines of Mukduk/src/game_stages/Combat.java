@@ -47,7 +47,7 @@ public class Combat {
 
 		combatState = new CombatState(handler);
 
-		selected = 1;
+		selected = 0;
 
 		keyInput = handler.getKeyInput();
 		keyDown = keyInput.getKeyDown();
@@ -89,14 +89,10 @@ public class Combat {
 	public void render(Graphics g) {
 		if (currentStage == CombatStage.playerTurn && !messenger.isActive()) {
 			// Action choices
-			g.setColor(Color.red);
-			for (int i = 1; i <= 3; i++) {
-				g.fillRect((GUImain.WIDTH / 3) + (GUImain.WIDTH/8) * i - (GUImain.WIDTH / 32), GUImain.WIDTH / 16, GUImain.WIDTH / 16, GUImain.WIDTH / 16);
-			}
+			g.drawImage(Assets.combatButtons, 0, 0, GUImain.WIDTH, GUImain.HEIGHT, null);
 	
 			// Selector
-			g.setColor(Color.YELLOW);
-			g.fillRoundRect((GUImain.WIDTH / 3) + (GUImain.WIDTH/8) * selected - (GUImain.WIDTH / 60), GUImain.WIDTH / 8, GUImain.WIDTH / 30, GUImain.WIDTH / 30, 25, 25);
+			g.drawImage(Assets.pointer, (GUImain.WIDTH * 420 / 1000) + (selected * GUImain.WIDTH * 168 / 1000), GUImain.HEIGHT * 160 / 1000, GUImain.WIDTH * 90 /1000, GUImain.HEIGHT * 26 / 1000, null);
 		}
 			
 		// HUD
@@ -108,7 +104,6 @@ public class Combat {
 		// Health bar
 		g.setColor(Color.RED);
 		g.fillRoundRect(GUImain.WIDTH * 109 / 1000, GUImain.HEIGHT * 107 / 1000, (int) ((GUImain.WIDTH * 145 / 1000) * ((double) player.getHealth() / player.getMaxHealth())), GUImain.HEIGHT * 30 / 1000,  GUImain.HEIGHT * 10 / 1000,  GUImain.HEIGHT * 20 / 1000);
-		System.out.println((double)player.getHealth() / player.getMaxHealth());
 	}
 	
 	// Plays one monster turn and one player turn
@@ -134,14 +129,14 @@ public class Combat {
 
 		// A, move the selector down
 		if (keyDown[3]) {
-			if (selected > 1)
+			if (selected > 0)
 				selected--;
 			keyDown[3] = false; // Prevents spam of the key
 		}
 
 		// D, move the selector to the left
 		if (keyDown[2]) {
-			if (selected < 3)
+			if (selected < 2)
 				selected++;
 			keyDown[2] = false; // Prevents spam of the key
 		}
@@ -151,7 +146,7 @@ public class Combat {
 			keyDown[8] = false; // Prevents spam of the key
 			System.out.println();
 			// Attack
-			if (selected == 1) {
+			if (selected == 0) {
 				// Player rolling on whether its attack hit or not
 				if (monster.attackCheck(player.attackRoll())) {
 					messenger.showMessage("You hit Goby the Goblin!");
@@ -163,11 +158,12 @@ public class Combat {
 				System.out.println("Player attacked");
 			}
 			// Use item
-			else if (selected == 2) {
+			else if (selected == 1) {
+				messenger.showMessage("You used an item!");
 				System.out.println("Player Used Item");
 			}
 			// Flee
-			else if (selected == 3) {
+			else if (selected == 2) {
 				System.out.println("Player Fled");
 				messenger.showMessage("You pussed out!");
 				currentStage = CombatStage.over;

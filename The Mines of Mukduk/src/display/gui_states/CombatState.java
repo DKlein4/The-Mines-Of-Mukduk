@@ -8,7 +8,6 @@ import display.MessageNotifier;
 import game_stages.Combat;
 import gfx.Assets;
 import main.Handler;
-import world_gen.World;
 
 public class CombatState extends GUIstate {
 
