@@ -59,28 +59,6 @@ public class Combat {
 		start();
 	}
 
-	// Initialization crap
-	public void start() {
-		messenger.showMessage("Combat has started!");
-
-		GUIstate.setState(combatState);
-		((CombatState) combatState).setCombat(this);
-
-		monsterInit = monster.initiativeRoll();
-		playerInit = player.initiativeRoll();
-
-		monster.updateArmorClass();
-		player.updateArmorClass();
-
-		if (monsterInit > playerInit) {
-			messenger.showMessage("The monster was quicker!");
-			currentStage = CombatStage.monsterTurn;
-		} else if (monsterInit <= playerInit) {
-			messenger.showMessage("You were quicker!");
-			currentStage = CombatStage.playerTurn;
-		}
-	}
-
 	public void tick() {
 		if (!messenger.isActive())
 			playRound();
@@ -114,6 +92,28 @@ public class Combat {
 		// Player health bar
 		g.setColor(Color.RED);
 		g.fillRoundRect(GUImain.WIDTH * 109 / 1000, GUImain.HEIGHT * 107 / 1000, (int) ((GUImain.WIDTH * 145 / 1000) * ((double) player.getHealth() / player.getMaxHealth())), GUImain.HEIGHT * 30 / 1000,  GUImain.HEIGHT * 10 / 1000,  GUImain.HEIGHT * 20 / 1000);
+	}
+	
+	// Initialization crap
+	public void start() {
+		messenger.showMessage("Combat has started!");
+
+		GUIstate.setState(combatState);
+		((CombatState) combatState).setCombat(this);
+
+		monsterInit = monster.initiativeRoll();
+		playerInit = player.initiativeRoll();
+
+		monster.updateArmorClass();
+		player.updateArmorClass();
+
+		if (monsterInit > playerInit) {
+			messenger.showMessage("The monster was quicker!");
+			currentStage = CombatStage.monsterTurn;
+		} else if (monsterInit <= playerInit) {
+			messenger.showMessage("You were quicker!");
+			currentStage = CombatStage.playerTurn;
+		}
 	}
 	
 	// Plays one monster turn and one player turn
@@ -154,7 +154,7 @@ public class Combat {
 		// Enter, do selected action
 		if (keyDown[8]) {
 			keyDown[8] = false; // Prevents spam of the key
-			System.out.println();
+			System.out.println("F pressed");
 			// Attack
 			if (selected == 0) {
 				// Player rolling on whether its attack hit or not
@@ -207,7 +207,10 @@ public class Combat {
 		System.out.println("Player Health: " + player.getHealth());
 		System.out.println("Monster Health: " + monster.getHealth());
 
-		if (monster.getHealth() <= 0 || player.getHealth() <= 0) {
+		if (player.getHealth() <= 0) {
+			messenger.showMessage("You have been defeated by Goby the Goblin!");
+			currentStage = CombatStage.over;
+		} else if (monster.getHealth() <= 0) {
 			messenger.showMessage("You defeated Goby the Goblin!");
 			currentStage = CombatStage.over;
 		}
