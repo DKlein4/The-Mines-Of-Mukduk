@@ -78,9 +78,9 @@ public class Combat {
 		
 		// Monster health bar
 		g.setColor(Color.WHITE);
-		g.fillRoundRect(GUImain.WIDTH * 680 / 1000, GUImain.HEIGHT * 290 / 1000, (GUImain.WIDTH * 145 / 1000), GUImain.HEIGHT * 30 / 1000,  GUImain.HEIGHT * 10 / 1000,  GUImain.HEIGHT * 20 / 1000);
+		g.fillRoundRect(GUImain.WIDTH * 630 / 1000, GUImain.HEIGHT * 400 / 1000, (GUImain.WIDTH * 145 / 1000), GUImain.HEIGHT * 30 / 1000,  GUImain.HEIGHT * 10 / 1000,  GUImain.HEIGHT * 20 / 1000);
 		g.setColor(Color.RED);
-		g.fillRoundRect(GUImain.WIDTH * 680 / 1000, GUImain.HEIGHT * 290 / 1000, (int) ((GUImain.WIDTH * 145 / 1000) * ((double) monster.getHealth() / monster.getMaxHealth())), GUImain.HEIGHT * 30 / 1000,  GUImain.HEIGHT * 10 / 1000,  GUImain.HEIGHT * 20 / 1000);
+		g.fillRoundRect(GUImain.WIDTH * 630 / 1000, GUImain.HEIGHT * 400 / 1000, (int) ((GUImain.WIDTH * 145 / 1000) * ((double) monster.getHealth() / monster.getMaxHealth())), GUImain.HEIGHT * 30 / 1000,  GUImain.HEIGHT * 10 / 1000,  GUImain.HEIGHT * 20 / 1000);
 
 		// HUD
 		g.setColor(Color.BLACK);
