@@ -33,8 +33,7 @@ public class Combat {
 	private boolean[] keyDown;
 	private MessageNotifier messenger;
 	private Handler handler;
-	
-	
+
 	private boolean isBloodied = false;
 
 	private enum CombatStage {
@@ -71,29 +70,48 @@ public class Combat {
 		if (currentStage == CombatStage.playerTurn && !messenger.isActive()) {
 			// Action choices
 			g.drawImage(Assets.combatButtons, 0, 0, GUImain.WIDTH, GUImain.HEIGHT, null);
-	
+
 			// Selector
-			g.drawImage(Assets.pointer, (GUImain.WIDTH * 420 / 1000) + (selected * GUImain.WIDTH * 168 / 1000), GUImain.HEIGHT * 110 / 1000, GUImain.WIDTH * 90 /1000, GUImain.HEIGHT * 26 / 1000, null);
+			g.drawImage(Assets.pointer, (GUImain.WIDTH * 420 / 1000) + (selected * GUImain.WIDTH * 168 / 1000),
+					GUImain.HEIGHT * 110 / 1000, GUImain.WIDTH * 90 / 1000, GUImain.HEIGHT * 26 / 1000, null);
 		}
-		
+
 		// Monster health bar
 		g.setColor(Color.WHITE);
-		g.fillRoundRect(GUImain.WIDTH * 630 / 1000, GUImain.HEIGHT * 400 / 1000, (GUImain.WIDTH * 145 / 1000), GUImain.HEIGHT * 30 / 1000,  GUImain.HEIGHT * 10 / 1000,  GUImain.HEIGHT * 20 / 1000);
-		g.setColor(Color.RED);
-		g.fillRoundRect(GUImain.WIDTH * 630 / 1000, GUImain.HEIGHT * 400 / 1000, (int) ((GUImain.WIDTH * 145 / 1000) * ((double) monster.getHealth() / monster.getMaxHealth())), GUImain.HEIGHT * 30 / 1000,  GUImain.HEIGHT * 10 / 1000,  GUImain.HEIGHT * 20 / 1000);
-
+		g.fillRoundRect(GUImain.WIDTH * 630 / 1000, GUImain.HEIGHT * 400 / 1000, (GUImain.WIDTH * 145 / 1000),
+				GUImain.HEIGHT * 30 / 1000, GUImain.HEIGHT * 10 / 1000, GUImain.HEIGHT * 20 / 1000);
+		if (monster.getHealth() <= monster.getMaxHealth() / 3) {
+			g.setColor(Color.RED);
+		} else if (monster.getHealth() <= monster.getMaxHealth() / 2) {
+			g.setColor(Color.YELLOW);
+		} else {
+			g.setColor(Color.GREEN);
+		}
+		g.fillRoundRect(GUImain.WIDTH * 630 / 1000, GUImain.HEIGHT * 400 / 1000,
+				(int) ((GUImain.WIDTH * 145 / 1000) * ((double) monster.getHealth() / monster.getMaxHealth())),
+				GUImain.HEIGHT * 30 / 1000, GUImain.HEIGHT * 10 / 1000, GUImain.HEIGHT * 20 / 1000);
 		// HUD
 		g.setColor(Color.BLACK);
 		g.drawImage(Assets.combatHUD, 0, 0, GUImain.WIDTH, GUImain.HEIGHT, null);
 		// Health Number
-		Text.drawStringFrom(g, player.getHealth() + "", GUImain.WIDTH * 217 / 1000, GUImain.HEIGHT * 52 / 1000, true, Color.DARK_GRAY, new Font("MonoSpaced", Font.BOLD, GUImain.HEIGHT / 24));
+		Text.drawStringFrom(g, player.getHealth() + "", GUImain.WIDTH * 217 / 1000, GUImain.HEIGHT * 52 / 1000, true,
+				Color.DARK_GRAY, new Font("MonoSpaced", Font.BOLD, GUImain.HEIGHT / 24));
 		// Armor class
-		Text.drawStringFrom(g, player.getArmorClass() + "", GUImain.WIDTH * 81 / 1000, GUImain.HEIGHT / 15, true, Color.DARK_GRAY, new Font("MonoSpaced", Font.BOLD, GUImain.HEIGHT / 30));
+		Text.drawStringFrom(g, player.getArmorClass() + "", GUImain.WIDTH * 81 / 1000, GUImain.HEIGHT / 15, true,
+				Color.DARK_GRAY, new Font("MonoSpaced", Font.BOLD, GUImain.HEIGHT / 30));
 		// Player health bar
-		g.setColor(Color.RED);
-		g.fillRoundRect(GUImain.WIDTH * 109 / 1000, GUImain.HEIGHT * 107 / 1000, (int) ((GUImain.WIDTH * 145 / 1000) * ((double) player.getHealth() / player.getMaxHealth())), GUImain.HEIGHT * 30 / 1000,  GUImain.HEIGHT * 10 / 1000,  GUImain.HEIGHT * 20 / 1000);
+		if (player.getHealth() <= player.getMaxHealth() / 3) {
+			g.setColor(Color.RED);
+		} else if (player.getHealth() <= player.getMaxHealth() / 2) {
+			g.setColor(Color.YELLOW);
+		} else {
+			g.setColor(Color.GREEN);
+		}
+		g.fillRoundRect(GUImain.WIDTH * 109 / 1000, GUImain.HEIGHT * 107 / 1000,
+				(int) ((GUImain.WIDTH * 145 / 1000) * ((double) player.getHealth() / player.getMaxHealth())),
+				GUImain.HEIGHT * 30 / 1000, GUImain.HEIGHT * 10 / 1000, GUImain.HEIGHT * 20 / 1000);
 	}
-	
+
 	// Initialization crap
 	public void start() {
 		messenger.showMessage("Combat has started!");
@@ -115,7 +133,7 @@ public class Combat {
 			currentStage = CombatStage.playerTurn;
 		}
 	}
-	
+
 	// Plays one monster turn and one player turn
 	public void playRound() {
 		if (currentStage != CombatStage.over) {
@@ -214,9 +232,9 @@ public class Combat {
 			messenger.showMessage("You defeated Goby the Goblin!");
 			currentStage = CombatStage.over;
 		}
-		
+
 		if (!isBloodied) {
-			if(monster.isBloodied()){
+			if (monster.isBloodied()) {
 				messenger.showMessage("Goby's attacks grow frantic!");
 				isBloodied = true;
 			}
