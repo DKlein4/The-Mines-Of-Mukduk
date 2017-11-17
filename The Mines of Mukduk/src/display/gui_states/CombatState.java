@@ -27,10 +27,7 @@ public class CombatState extends GUIstate {
 
 	public void render(Graphics g) {
 		// Background
-		g.setColor(Color.GRAY);
-		g.fillRect(0, 0, GUImain.WIDTH, GUImain.HEIGHT / 2);
-		g.setColor(Color.DARK_GRAY);
-		g.fillRect(0, GUImain.HEIGHT / 2, GUImain.WIDTH, GUImain.HEIGHT);
+		g.drawImage(Assets.combatBackground, 0, 0, GUImain.WIDTH, GUImain.HEIGHT, null);
 		// Player figure
 		g.drawImage(Assets.player, GUImain.WIDTH / 4 - ((GUImain.WIDTH / 3) / 2), GUImain.HEIGHT / 6, GUImain.WIDTH / 3, GUImain.HEIGHT * 5 / 8, null);
 		// Monster figure

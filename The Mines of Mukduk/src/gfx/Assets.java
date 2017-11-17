@@ -16,6 +16,7 @@ public class Assets {
 	public static BufferedImage dirt, wall;
 	public static BufferedImage player, monster;
 	public static BufferedImage menuBackground;
+	public static BufferedImage combatBackground;
 	public static BufferedImage[] button = new BufferedImage[2];
 	public static BufferedImage alert;
 	public static BufferedImage combatHUD, combatButtons, pointer;
@@ -29,6 +30,7 @@ public class Assets {
 		monster = ImageLoader.loadImage("res/Goblin.png");
 		
 		menuBackground = ImageLoader.loadImage("res/Main Menu Background.png");
+		combatBackground = ImageLoader.loadImage("res/Cave_Background.png");
 		
 		button[0] = ImageLoader.loadImage("res/Button.png");
 		button[1] = ImageLoader.loadImage("res/Button-Hovered.png");
