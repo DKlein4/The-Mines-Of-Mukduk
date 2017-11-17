@@ -80,6 +80,12 @@ public abstract class Entity {
 		return (rand.nextInt(20) + 1 + strengthCheck());
 	}
 	
+	public void updateArmorClass() {
+		this.setArmorClass(10 + dexterityCheck());
+	}
+	
+	// BOOLEAN CHECKS
+	
 	public boolean attackCheck(int attackRoll) {
 		if (attackRoll > this.armorClass) {
 			return true;
@@ -87,10 +93,13 @@ public abstract class Entity {
 		else return false;
 	}
 	
-	public void updateArmorClass() {
-		this.setArmorClass(10 + dexterityCheck());
+	public boolean isBloodied() {
+		if (this.health <= (this.maxHealth / 2)) {
+			return true;
+		}
+		else return false;
 	}
-
+	
 	// ABILITY SCORE CHECKS
 	
 	public int dexterityCheck() {

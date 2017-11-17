@@ -33,6 +33,9 @@ public class Combat {
 	private boolean[] keyDown;
 	private MessageNotifier messenger;
 	private Handler handler;
+	
+	
+	private boolean isBloodied = false;
 
 	private enum CombatStage {
 		playerTurn, monsterTurn, over;
@@ -207,6 +210,13 @@ public class Combat {
 		if (monster.getHealth() <= 0 || player.getHealth() <= 0) {
 			messenger.showMessage("You defeated Goby the Goblin!");
 			currentStage = CombatStage.over;
+		}
+		
+		if (!isBloodied) {
+			if(monster.isBloodied()){
+				messenger.showMessage("Goby's attacks grow frantic!");
+				isBloodied = true;
+			}
 		}
 	}
 
