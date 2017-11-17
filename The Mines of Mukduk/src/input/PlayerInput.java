@@ -1,6 +1,7 @@
 package input;
 
 import display.MessageNotifier;
+import display.PauseMenu;
 import entities.Player;
 import items.Inventory;
 import main.Handler;
@@ -18,6 +19,7 @@ public class PlayerInput {
 	private Player player;
 	private Inventory inventory;
 	private MessageNotifier messenger;
+	private PauseMenu pauseMenu;
 	private Tables table;
 
 	private boolean[] keyDown;
@@ -36,6 +38,7 @@ public class PlayerInput {
 			keyDown = keyInput.getKeyDown();
 			inventory = handler.getWorld().getInventory();
 			messenger = new MessageNotifier(handler, keyInput);
+			pauseMenu = new PauseMenu(handler);
 			table = new Tables(handler);
 
 			init = true;
@@ -43,14 +46,14 @@ public class PlayerInput {
 
 		// E pressed
 		if (keyDown[4]) {
-			if (messenger.isActive())
+			if (messenger.isActive() || pauseMenu.isActive())
 				return;
 			inventory.toggleActive();
 			keyDown[4] = false;
 		}
 
-		// Break if the inventory is active
-		if (inventory.isActive() || messenger.isActive())
+		// Break if another screen is active
+		if (!canMove())
 			return;
 
 		// W pressed
@@ -109,5 +112,10 @@ public class PlayerInput {
 			player.step();
 			//table.encounterRoll();
 		}
+	}
+	
+	// Returns true if there are no other hindering screens active
+	public boolean canMove() {
+		return !(messenger.isActive() || inventory.isActive() || pauseMenu.isActive());
 	}
 }

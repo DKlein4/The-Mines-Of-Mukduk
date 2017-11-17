@@ -30,12 +30,6 @@ public class MenuState extends GUIstate {
 		super(handler);
 
 		uiManager = new UIManager(handler);
-		handler.getMouseInput().setUIManager(uiManager);
-
-		xEdgeSpacing = GUImain.WIDTH / 15;
-		yEdgeSpacing = GUImain.HEIGHT / 12;
-		yButtonSpacing = GUImain.HEIGHT / 8;
-		buttonHeight = GUImain.HEIGHT / 12;
 
 		// Play button
 		playButton = new UIImageButton("PLAY", xEdgeSpacing, yEdgeSpacing, 100, buttonHeight, Assets.button, new ClickListener() {
@@ -68,6 +62,7 @@ public class MenuState extends GUIstate {
 	}
 
 	public void tick() {
+		handler.getMouseInput().setUIManager(uiManager);
 		uiManager.tick();
 		
 		// Update the spacing variables if the screen has changed size
@@ -83,8 +78,6 @@ public class MenuState extends GUIstate {
 	}
 
 	public void render(Graphics g) {
-		handler.getMouseInput().setUIManager(uiManager);
-		
 		// Background
 		g.drawImage(Assets.menuBackground, 0, 0, GUImain.WIDTH, GUImain.HEIGHT, null);
 
