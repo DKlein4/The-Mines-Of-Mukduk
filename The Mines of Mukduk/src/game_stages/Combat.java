@@ -33,9 +33,8 @@ public class Combat {
 	private boolean[] keyDown;
 	private MessageNotifier messenger;
 	private Handler handler;
-	
-	
-	private boolean isBloodied = false;
+
+	private boolean isMonsterBloodied;
 
 	private enum CombatStage {
 		playerTurn, monsterTurn, over;
@@ -55,11 +54,13 @@ public class Combat {
 		keyInput = handler.getKeyInput();
 		keyDown = keyInput.getKeyDown();
 		messenger = handler.getGuiMain().getMessageNotifier();
-
+		
 		start();
 	}
 
 	public void tick() {
+		isMonsterBloodied = monster.isBloodied();
+		
 		if (!messenger.isActive())
 			playRound();
 
@@ -215,12 +216,8 @@ public class Combat {
 			currentStage = CombatStage.over;
 		}
 		
-		if (!isBloodied) {
-			if(monster.isBloodied()){
-				messenger.showMessage("Goby's attacks grow frantic!");
-				isBloodied = true;
-			}
-		}
+		if (isMonsterBloodied)
+			messenger.showMessage("Goby's attacks grow frantic!");
 	}
 
 	// Ran when combat is over
