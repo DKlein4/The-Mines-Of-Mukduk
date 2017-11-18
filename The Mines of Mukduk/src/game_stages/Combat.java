@@ -60,7 +60,11 @@ public class Combat {
 		start();
 	}
 
-	public void tick() {		
+	public void tick() {				
+		// prevents storing the value when pressed while menu is active
+		if (messenger.isActive())
+			keyDown[8] = false;
+		
 		if (!messenger.isActive())
 			playRound();
 
@@ -79,7 +83,7 @@ public class Combat {
 
 		// Monster health bar
 		g.setColor(Color.WHITE);
-		g.fillRoundRect(GUImain.WIDTH * 630 / 1000, GUImain.HEIGHT * 400 / 1000, (GUImain.WIDTH * 145 / 1000), GUImain.HEIGHT * 30 / 1000, GUImain.HEIGHT * 10 / 1000, GUImain.HEIGHT * 20 / 1000);
+		g.fillRoundRect(GUImain.WIDTH * 630 / 1000, GUImain.HEIGHT * 450 / 1000, (GUImain.WIDTH * 145 / 1000), GUImain.HEIGHT * 30 / 1000, GUImain.HEIGHT * 10 / 1000, GUImain.HEIGHT * 20 / 1000);
 		if (monster.getHealth() <= monster.getMaxHealth() / 3) {
 			g.setColor(Color.RED);
 		} else if (monster.getHealth() <= monster.getMaxHealth() / 2) {
@@ -87,7 +91,8 @@ public class Combat {
 		} else {
 			g.setColor(Color.GREEN);
 		}
-		g.fillRoundRect(GUImain.WIDTH * 630 / 1000, GUImain.HEIGHT * 400 / 1000, (int) ((GUImain.WIDTH * 145 / 1000) * ((double) monster.getHealth() / monster.getMaxHealth())), GUImain.HEIGHT * 30 / 1000, GUImain.HEIGHT * 10 / 1000, GUImain.HEIGHT * 20 / 1000);
+		g.fillRoundRect(GUImain.WIDTH * 630 / 1000, GUImain.HEIGHT * 450 / 1000, (int) ((GUImain.WIDTH * 145 / 1000) * ((double) monster.getHealth() / monster.getMaxHealth())), GUImain.HEIGHT * 30 / 1000, GUImain.HEIGHT * 10 / 1000, GUImain.HEIGHT * 20 / 1000);
+		
 		// HUD
 		g.setColor(Color.BLACK);
 		g.drawImage(Assets.combatHUD, 0, 0, GUImain.WIDTH, GUImain.HEIGHT, null);
@@ -129,7 +134,7 @@ public class Combat {
 	}
 
 	// Plays one monster turn and one player turn
-	public void playRound() {
+	public void playRound() {		
 		if (currentStage != CombatStage.over) {
 			if (monsterInit > playerInit) {
 				if (currentStage == CombatStage.monsterTurn)
@@ -148,7 +153,7 @@ public class Combat {
 	public void playerTurn() {
 		if (messenger.isActive())
 			return;
-
+		
 		// A, move the selector down
 		if (keyDown[3]) {
 			if (selected > 0)
@@ -206,7 +211,6 @@ public class Combat {
 		} else {
 			messenger.showMessage("The monster misses!");
 		}
-
 		resolve();
 		// Monster turn has ended so switch to player turn
 		if (currentStage != CombatStage.over)
@@ -214,7 +218,7 @@ public class Combat {
 	}
 
 	// Checks to see if combat should finish
-	public void resolve() {
+	public void resolve() {		
 		System.out.println(currentStage);
 		System.out.println("Player Health: " + player.getHealth());
 		System.out.println("Monster Health: " + monster.getHealth());
@@ -232,7 +236,6 @@ public class Combat {
 				messenger.showMessage("Goby's attacks grow frantic!");
 				isMonsterBloodied = true;
 			}
-
 	}
 
 	// Ran when combat is over
