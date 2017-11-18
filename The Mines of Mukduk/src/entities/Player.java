@@ -2,7 +2,6 @@ package entities;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.Scanner;
 
 import gfx.Assets;
 import input.PlayerInput;

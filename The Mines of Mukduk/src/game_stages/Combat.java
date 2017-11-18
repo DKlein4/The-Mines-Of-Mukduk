@@ -57,7 +57,8 @@ public class Combat {
 		
 		isMonsterBloodied = false;
 		
-		start();
+		if (player.getHealth() > 0)
+			start();
 	}
 
 	public void tick() {				

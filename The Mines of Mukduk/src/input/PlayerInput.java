@@ -20,10 +20,11 @@ public class PlayerInput {
 	private Inventory inventory;
 	private MessageNotifier messenger;
 	private PauseMenu pauseMenu;
+	@SuppressWarnings("unused")
 	private Tables table;
 
 	private boolean[] keyDown;
-	private boolean init;
+	private boolean init; // flag
 
 	public PlayerInput(Handler handler, Player player) {
 		this.handler = handler;

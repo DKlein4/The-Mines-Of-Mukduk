@@ -3,8 +3,7 @@ package world_gen;
 import java.util.Random;
 
 import display.MessageNotifier;
-import items.Inventory;
-import items.Item;
+import items.*;
 import main.Handler;
 
 /**
@@ -13,12 +12,16 @@ import main.Handler;
  * @author Brett
  */
 public class Tables {
+	
+	private Handler handler;
 
 	private MessageNotifier messenger;
 	private Random rand;
 	private Inventory inventory;
 
 	public Tables(Handler handler) {
+		this.handler = handler;
+		
 		messenger = handler.getGuiMain().getMessageNotifier();
 		inventory = new Inventory();
 		rand = new Random();
@@ -29,27 +32,27 @@ public class Tables {
 		int randRoll = rand.nextInt(100) + 1;
 		if (randRoll <= 30) {
 			armorRoll();
-			inventory.addItem(new Item("Armor", 0));
+			inventory.addItem(new Armor(handler));
 			messenger.showMessage("You picked up ARMOR");
 		} else if (randRoll > 30 && randRoll <= 45) {
 			weaponRoll();
-			inventory.addItem(new Item("Weapon", 1));
+			inventory.addItem(new Weapon(handler));
 			messenger.showMessage("You picked up a WEAPON");
 		} else if (randRoll > 45 && randRoll <= 55) {
 			potionRoll();
-			inventory.addItem(new Item("Potion", 2));
+			inventory.addItem(new Potion(handler));
 			messenger.showMessage("You picked up a POTION");
 		} else if (randRoll > 55 && randRoll <= 60) {
 			scrollRoll();
-			inventory.addItem(new Item("Scroll", 3));
+			inventory.addItem(new Scroll(handler));
 			messenger.showMessage("You picked up a SCROLL");
 		} else if (randRoll > 60 && randRoll <= 80) {
 			foodRoll();
-			inventory.addItem(new Item("Food", 4));
+			inventory.addItem(new Food(handler));
 			messenger.showMessage("You picked up FOOD");
 		} else if (randRoll > 80 && randRoll < 100) {
 			goldRoll();
-			inventory.addItem(new Item("Gold", 5));
+			inventory.addItem(new Gold(handler));
 			messenger.showMessage("You picked up GOLD");
 		} else if (randRoll == 100) {
 			messenger.showMessage("Wow! These treasures are glued together!");

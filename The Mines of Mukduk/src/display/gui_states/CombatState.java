@@ -1,6 +1,5 @@
 package display.gui_states;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import display.GUImain;

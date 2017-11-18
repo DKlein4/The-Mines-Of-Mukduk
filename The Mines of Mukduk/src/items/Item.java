@@ -1,22 +1,41 @@
 package items;
 
+import java.awt.Graphics;
+
+import entities.EntityHandler;
+import main.Handler;
+
 /**
  * An item is something that a player can obtain with different attributes. Is
  * stored in the inventory.
  * 
  * @author Dustin
  */
-public class Item {
+public abstract class Item {
+	
+	private Handler handler;
 
 	protected int ID;
 	protected String name;
 	protected int count;
+	
+	protected EntityHandler entityHandler;
 
-	public Item(String name, int ID) {
+	public Item(Handler handler, String name, int ID) {
+		this.handler = handler;
 		this.name = name;
 		this.ID = ID;
+		
 		count = 1;
+		
+		entityHandler = handler.getWorld().getEntityHandler();
 	}
+	
+	public abstract void tick();
+	
+	public abstract void render(Graphics g);
+	
+	public abstract void use();
 
 	// GETTERS AND SETTERS
 
