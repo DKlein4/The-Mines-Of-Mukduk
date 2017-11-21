@@ -93,10 +93,10 @@ public class Map {
 	// Checks if tile is spooky monster, starts combat if it is
 	public void isMonster(int r, int c) {
 		if (grid[r][c].isMonster()) {
-			
+
 			int mRow, mCol;
 			mRow = mCol = 0;
-			
+
 			Player player = null;
 			Monster monster = null;
 			for (int i = 0; i < entityHandler.getEntities().size(); i++) {
@@ -104,15 +104,15 @@ public class Map {
 				if (tempPlayer.getId() == ID.Player) {
 					mRow = tempPlayer.getRow();
 					mCol = tempPlayer.getCol();
-					
-					player = (Player)tempPlayer;
+
+					player = (Player) tempPlayer;
 				}
 			}
-			
+
 			for (int i = 0; i < entityHandler.getEntities().size(); i++) {
 				Entity tempMonster = entityHandler.getEntities().get(i);
 				if (tempMonster.getId() == ID.Monster && mRow == tempMonster.getRow() && mCol == tempMonster.getCol()) {
-					monster = (Monster)tempMonster;
+					monster = (Monster) tempMonster;
 					entityHandler.removeEntity(tempMonster);
 				}
 			}
@@ -130,19 +130,42 @@ public class Map {
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
 				grid[r][c] = new Tile();
-				grid[r][c].setWall(true);
+				grid[r][c].setFloor(true);
 			}
 		}
 
-		genInteriorRooms();
+		//genInteriorRooms();
 		boundGen();
 		parcelMap();
-		placeSpawnPoint();
+		//placeSpawnPoint();
 		placeLadder();
 		placePlayer();
 		placeMonsters();
 
 		levelNum++;
+	}
+
+	public void parcelReader(int width, int height, int r, int c, String file) {
+		String[] tokens = file.split("\\s+");
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				if (tokens[(x + y * height)].equals("X")) {
+					grid[y + c][x + r].setWall(true);
+				}
+				if (tokens[(x + y * height)].equals(".")) {
+					grid[y + c][x + r].setFloor(true);
+				}
+				if (tokens[(x + y * height)].equals("T")) {
+					grid[y + c][x + r].setTreasure(true);
+				}
+				if (tokens[(x + y * height)].equals("M")) {
+					grid[y + c][x + r].setMonster(true);
+				}
+				if (tokens[(x + y * height)].equals("S")) {
+					grid[y + c][x + r].setSpawn(true);
+				}
+			}
+		}
 	}
 
 	// MAP GENERATION
@@ -152,38 +175,82 @@ public class Map {
 		String[] tokens = file.split("\\s+");
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
-				if (tokens[(r + c * gridSize)].equals("O")) {
-					parcelGen(r, c);
+				if (tokens[(r + c * gridSize)].equals("S")) {
+					parcelGenSpawn(r, c);
+				}
+				if (tokens[(r + c * gridSize)].equals("3")) {
+					parcelGenThree(r, c);
+				}
+				if (tokens[(r + c * gridSize)].equals("9")) {
+					parcelGenNine(r, c);
+				}
+				if (tokens[(r + c * gridSize)].equals("5")) {
+					parcelGenFive(r, c);
 				}
 			}
 		}
 	}
 
-	private void parcelGen(int r, int c) {
+	private void parcelGenSpawn(int r, int c) {
 		String file = null;
-		int parcelRoll = rand.nextInt((2 - 1) + 1) + 1;
+		file = Utils.loadFileAsString("res/Parcels/Special/SpawnRoom.txt");
+		parcelReader(5, 5, r, c, file);
+	}
+
+	private void parcelGenThree(int r, int c) {
+		String file = null;
+		int parcelRoll = rand.nextInt(1) + 1;
 		if (parcelRoll == 1) {
-			file = Utils.loadFileAsString("res/Parcel1.txt");
+			file = Utils.loadFileAsString("res/Parcels/3x3/Parcel1.txt");
+		}
+		
+		else if (parcelRoll == 2) {
+			file = Utils.loadFileAsString("res/Parcels/3x3/Parcel2.txt");
+		}
+
+		else if (parcelRoll == 3) {
+			file = Utils.loadFileAsString("res/Parcels/3x3/Parcel3.txt");
+		}
+		parcelReader(3, 3, r, c, file);
+	}
+	
+	private void parcelGenFive(int r, int c) {
+		String file = null;
+		int parcelRoll = rand.nextInt(3) + 1;
+		if (parcelRoll == 1) {
+			file = Utils.loadFileAsString("res/Parcels/5x5/Parcel1.txt");
+		}
+		
+		else if (parcelRoll == 2) {
+			file = Utils.loadFileAsString("res/Parcels/5x5/Parcel2.txt");
+		}
+
+		else if (parcelRoll == 3) {
+			file = Utils.loadFileAsString("res/Parcels/5x5/Parcel3.txt");
+		}
+		parcelReader(5, 5, r, c, file);
+	}
+
+	private void parcelGenNine(int r, int c) {
+		String file = null;
+		int parcelRoll = rand.nextInt(4) + 1;
+		if (parcelRoll == 1) {
+			file = Utils.loadFileAsString("res/Parcels/9x9/Parcel1.txt");
 		}
 
 		else if (parcelRoll == 2) {
-			file = Utils.loadFileAsString("res/Parcel2.txt");
+			file = Utils.loadFileAsString("res/Parcels/9x9/Parcel2.txt");
 		}
 
-		String[] tokens = file.split("\\s+");
-		for (int x = 0; x < 9; x++) {
-			for (int y = 0; y < 9; y++) {
-				if (tokens[(x + y * 9)].equals("X")) {
-					grid[y + c][x + r].setWall(true);
-				}
-				if (tokens[(x + y * 9)].equals(".")) {
-					grid[y + c][x + r].setFloor(true);
-				}
-				if (tokens[(x + y * 9)].equals("T")) {
-					grid[y + c][x + r].setTreasure(true);
-				}
-			}
+		else if (parcelRoll == 3) {
+			file = Utils.loadFileAsString("res/Parcels/9x9/Parcel3.txt");
 		}
+
+		else if (parcelRoll == 4) {
+			file = Utils.loadFileAsString("res/Parcels/9x9/Parcel4.txt");
+		}
+
+		parcelReader(9, 9, r, c, file);
 	}
 
 	// Checks for one Wall Tile blockages and clears them
@@ -212,7 +279,7 @@ public class Map {
 					for (int xs = r; xs < r + 4; xs++) {
 						for (int ys = c; ys < c + 4; ys++) {
 							if (xs < (gridSize - 1)) {
-								grid[xs][ys].setFloor(true);
+								//grid[xs][ys].setFloor(true);
 							}
 						}
 					}
