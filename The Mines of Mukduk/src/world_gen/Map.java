@@ -134,10 +134,10 @@ public class Map {
 			}
 		}
 
-		//genInteriorRooms();
+		// genInteriorRooms();
 		boundGen();
 		parcelMap();
-		//placeSpawnPoint();
+		// placeSpawnPoint();
 		placeLadder();
 		placePlayer();
 		placeMonsters();
@@ -203,7 +203,7 @@ public class Map {
 		if (parcelRoll == 1) {
 			file = Utils.loadFileAsString("res/Parcels/3x3/Parcel1.txt");
 		}
-		
+
 		else if (parcelRoll == 2) {
 			file = Utils.loadFileAsString("res/Parcels/3x3/Parcel2.txt");
 		}
@@ -213,14 +213,14 @@ public class Map {
 		}
 		parcelReader(3, 3, r, c, file);
 	}
-	
+
 	private void parcelGenFive(int r, int c) {
 		String file = null;
 		int parcelRoll = rand.nextInt(3) + 1;
 		if (parcelRoll == 1) {
 			file = Utils.loadFileAsString("res/Parcels/5x5/Parcel1.txt");
 		}
-		
+
 		else if (parcelRoll == 2) {
 			file = Utils.loadFileAsString("res/Parcels/5x5/Parcel2.txt");
 		}
@@ -279,7 +279,7 @@ public class Map {
 					for (int xs = r; xs < r + 4; xs++) {
 						for (int ys = c; ys < c + 4; ys++) {
 							if (xs < (gridSize - 1)) {
-								//grid[xs][ys].setFloor(true);
+								// grid[xs][ys].setFloor(true);
 							}
 						}
 					}

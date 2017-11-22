@@ -1,5 +1,5 @@
 X X X X X
-X S . . X
+X S . M X
 X . . . .
 X . . . X
 X X . X X

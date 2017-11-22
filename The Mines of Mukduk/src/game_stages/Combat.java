@@ -98,9 +98,9 @@ public class Combat {
 		g.setColor(Color.BLACK);
 		g.drawImage(Assets.combatHUD, 0, 0, GUImain.WIDTH, GUImain.HEIGHT, null);
 		// Health Number
-		Text.drawStringFrom(g, player.getHealth() + "", GUImain.WIDTH * 217 / 1000, GUImain.HEIGHT * 52 / 1000, true, Color.DARK_GRAY, new Font("MonoSpaced", Font.BOLD, GUImain.HEIGHT / 24));
+		Text.drawStringFrom(g, player.getHealth() + "", GUImain.WIDTH * 152 / 1000, GUImain.HEIGHT * 679 / 10000, true, Color.DARK_GRAY, new Font("MonoSpaced", Font.BOLD, GUImain.HEIGHT * 27 / 1000));
 		// Armor class
-		Text.drawStringFrom(g, player.getArmorClass() + "", GUImain.WIDTH * 81 / 1000, GUImain.HEIGHT / 15, true, Color.DARK_GRAY, new Font("MonoSpaced", Font.BOLD, GUImain.HEIGHT / 30));
+		Text.drawStringFrom(g, player.getArmorClass() + "", GUImain.WIDTH * 107 / 1000, GUImain.HEIGHT * 52 / 1000, true, Color.DARK_GRAY, new Font("MonoSpaced", Font.BOLD, GUImain.HEIGHT * 40 / 1000));
 		// Player health bar
 		if (player.getHealth() <= player.getMaxHealth() / 3) {
 			g.setColor(Color.RED);
@@ -109,7 +109,7 @@ public class Combat {
 		} else {
 			g.setColor(Color.GREEN);
 		}
-		g.fillRoundRect(GUImain.WIDTH * 109 / 1000, GUImain.HEIGHT * 107 / 1000, (int) ((GUImain.WIDTH * 145 / 1000) * ((double) player.getHealth() / player.getMaxHealth())), GUImain.HEIGHT * 30 / 1000, GUImain.HEIGHT * 10 / 1000, GUImain.HEIGHT * 20 / 1000);
+		g.fillRoundRect(GUImain.WIDTH * 96 / 1000, GUImain.HEIGHT * 82 / 1000, (int) ((GUImain.WIDTH * 162 / 1000) * ((double) player.getHealth() / player.getMaxHealth())), GUImain.HEIGHT * 25 / 1000, GUImain.HEIGHT * 16 / 1000, GUImain.HEIGHT * 20 / 1000);
 	}
 
 	// Initialization crap

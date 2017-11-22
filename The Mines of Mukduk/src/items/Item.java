@@ -13,6 +13,7 @@ import main.Handler;
  */
 public abstract class Item {
 	
+	@SuppressWarnings("unused")
 	private Handler handler;
 
 	protected int ID;
