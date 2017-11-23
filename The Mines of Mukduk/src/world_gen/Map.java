@@ -153,7 +153,7 @@ public class Map {
 					grid[y + c][x + r].setWall(true);
 				}
 				if (tokens[(x + y * height)].equals(".")) {
-					grid[y + c][x + r].setFloor(true);
+					grid[y + c][x + r].setMonster(true);
 				}
 				if (tokens[(x + y * height)].equals("T")) {
 					grid[y + c][x + r].setTreasure(true);
