@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
  */
 public class KeyInput extends KeyAdapter {
 
-	private boolean[] keyDown = new boolean[9];
+	private boolean[] keyDown = new boolean[10];
 
 	public KeyInput() {
 		keyDown[0] = false; // W
@@ -22,6 +22,7 @@ public class KeyInput extends KeyAdapter {
 		keyDown[6] = false; // Spacebar
 		keyDown[7] = false; // Escape
 		keyDown[8] = false; // F
+		keyDown[9] = false; // ctrl + f10
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -45,10 +46,8 @@ public class KeyInput extends KeyAdapter {
 			keyDown[7] = true;
 		if (key == KeyEvent.VK_F)
 			keyDown[8] = true;
-
-		// Exit if escape is pressed
-//		if (key == KeyEvent.VK_ESCAPE)
-//			System.exit(1);
+		if (key == KeyEvent.VK_F10)
+			keyDown[9] = true;
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -70,6 +69,11 @@ public class KeyInput extends KeyAdapter {
 			keyDown[6] = false;
 		if (key == KeyEvent.VK_ESCAPE)
 			keyDown[7] = false;
+		if (key == KeyEvent.VK_F)
+			keyDown[8] = false;
+		if (key == KeyEvent.VK_F10)
+			keyDown[9] = false;
+		
 	}
 
 	public boolean[] getKeyDown() {

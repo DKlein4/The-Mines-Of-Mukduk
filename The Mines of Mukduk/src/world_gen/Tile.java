@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import gfx.Assets;
+import gfx.Text;
 
 /**
  * One space on the map that has different attributes.
@@ -24,26 +25,24 @@ public class Tile {
 	}
 
 	public void render(Graphics g, int x, int y) {
-		g.setFont(new Font("TimesRoman", Font.PLAIN, 35));
-
+		//TILEWIDTH = GUImain.
+		
 		if (isWall()) {
-			g.drawImage(Assets.wall, x, y, Assets.width, Assets.height, null);
+			g.drawImage(Assets.wall, x, y, TILEWIDTH, TILEHEIGHT, null);
 		} else if (isFloor()) {
-			g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
+			g.drawImage(Assets.dirt, x, y, TILEWIDTH, TILEHEIGHT, null);
 		} else if (isSpawn()) {
-			g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
+			g.drawImage(Assets.dirt, x, y, TILEWIDTH, TILEHEIGHT, null);
 		} else if (isLadder()) {
-			g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
-			g.setColor(Color.green);
-			g.drawString("▼", x + Assets.width / 4, y + Assets.height * 5 / 8);
+			g.drawImage(Assets.dirt, x, y, TILEWIDTH, TILEHEIGHT, null);
+			Text.drawStringFrom(g, "▼", x + (TILEWIDTH / 2), y + (TILEHEIGHT / 2), true, Color.green, new Font("TimesRoman", Font.PLAIN, TILEWIDTH / 2));
 		} else if (isTreasure()) {
-			g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
-			g.setColor(Color.yellow);
-			g.drawString("₧", x + Assets.width / 4, y + Assets.height * 5 / 8);
+			g.drawImage(Assets.dirt, x, y, TILEWIDTH, TILEHEIGHT, null);
+			Text.drawStringFrom(g, "₧", x + (TILEWIDTH / 2), y + (TILEHEIGHT / 2), true, Color.green, new Font("TimesRoman", Font.PLAIN, TILEWIDTH / 2));
 		} else if (isMonster()) {
-			g.drawImage(Assets.dirt, x, y, Assets.width, Assets.height, null);
+			g.drawImage(Assets.dirt, x, y, TILEWIDTH, TILEHEIGHT, null);
 		} else
-			g.drawImage(Assets.wall, x, y, Assets.width, Assets.height, null);
+			g.drawImage(Assets.wall, x, y, TILEWIDTH, TILEHEIGHT, null);
 	}
 
 	private void clearTile() {

@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import javax.swing.JFrame;
+
 import display.gui_states.GUIstate;
 import display.gui_states.GameState;
 import display.gui_states.MenuState;
@@ -74,6 +76,14 @@ public class GUImain extends Canvas implements Runnable {
 		// Tick the right screen depending on the state
 		if (GUIstate.getState() != null)
 			GUIstate.getState().tick();
+		
+		if (keyInput.getKeyDown()[9]) {
+			keyInput.getKeyDown()[9] = false;
+			if (window.getDefaultWidth() == WIDTH)
+				window.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+			else 
+				window.getFrame().setExtendedState(JFrame.NORMAL);
+		}
 	}
 
 	private void render() {
