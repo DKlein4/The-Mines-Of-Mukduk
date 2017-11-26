@@ -11,6 +11,7 @@ import game_stages.Combat;
 import main.Handler;
 import utils.Utils;
 
+import java.io.File;
 import java.lang.Math;
 
 import world_gen.Tile;
@@ -135,9 +136,10 @@ public class Map {
 		}
 
 		// genInteriorRooms();
-		boundGen();
-		parcelMap();
+		readMap();
 		// placeSpawnPoint();
+
+		boundGen();
 		placeLadder();
 		placePlayer();
 		placeMonsters();
@@ -149,20 +151,20 @@ public class Map {
 		String[] tokens = file.split("\\s+");
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				if (tokens[(x + y * height)].equals("X")) {
-					grid[y + c][x + r].setWall(true);
+				if (tokens[(y + (x * width))].equals("X")) {
+					grid[x + r][y + c].setWall(true);
 				}
-				if (tokens[(x + y * height)].equals(".")) {
-					grid[y + c][x + r].setFloor(true);
+				if (tokens[(y + (x * width))].equals(".")) {
+					grid[x + r][y + c].setFloor(true);
 				}
-				if (tokens[(x + y * height)].equals("T")) {
-					grid[y + c][x + r].setTreasure(true);
+				if (tokens[(y + (x * width))].equals("T")) {
+					grid[x + r][y + c].setTreasure(true);
 				}
-				if (tokens[(x + y * height)].equals("M")) {
-					grid[y + c][x + r].setMonster(true);
+				if (tokens[(y + (x * width))].equals("M")) {
+					grid[x + r][y + c].setMonster(true);
 				}
-				if (tokens[(x + y * height)].equals("S")) {
-					grid[y + c][x + r].setSpawn(true);
+				if (tokens[(y + (x * width))].equals("S")) {
+					grid[x + r][y + c].setSpawn(true);
 				}
 			}
 		}
@@ -170,22 +172,36 @@ public class Map {
 
 	// MAP GENERATION
 
-	private void parcelMap() {
-		String file = Utils.loadFileAsString("res/Test Map.txt");
-		String[] tokens = file.split("\\s+");
+	private void readMap() {
+		String map = Utils.loadFileAsString("res/Parcels/TestierMap");
+		map = map.replaceAll("[\t\n ]", ""); // delete whitespace
+
+		char[] tokens = map.toCharArray();
+		System.out.println(tokens);
+		
+		String parcel;
+		char token = 0, nextToken = 0;
+		int numFiles, parcelRoll;
+		
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
-				if (tokens[(r + c * gridSize)].equals("S")) {
-					parcelGenSpawn(r, c);
+				if ((c + (r * gridSize) + 1) < tokens.length) { 
+					token = tokens[c + (r * gridSize)];
+					nextToken = tokens[(c + (r * gridSize)) + 1];
 				}
-				if (tokens[(r + c * gridSize)].equals("3")) {
-					parcelGenThree(r, c);
+				
+				if (token == 'S') {
+					parcel = Utils.loadFileAsString("res/Parcels/Special/SpawnRoom.txt");
+					parcelReader(5, 5, r, c, parcel);
 				}
-				if (tokens[(r + c * gridSize)].equals("9")) {
-					parcelGenNine(r, c);
-				}
-				if (tokens[(r + c * gridSize)].equals("5")) {
-					parcelGenFive(r, c);
+				else if (Character.isDigit(token) && Character.isDigit(nextToken)) {
+					numFiles = new File("res/Parcels/" + token + "x" + nextToken).list().length;
+					parcelRoll = rand.nextInt(numFiles) + 1;
+
+					parcel = Utils.loadFileAsString("res/Parcels/" + token + "x" + nextToken + "/Parcel" + parcelRoll + ".txt");
+					parcelReader(Character.getNumericValue(token), Character.getNumericValue(nextToken), r, c, parcel);
+					
+					System.out.println(token + "\t" + nextToken + "\t" + numFiles + "\t" + parcelRoll);
 				}
 			}
 		}
