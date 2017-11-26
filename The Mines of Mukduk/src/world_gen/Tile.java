@@ -38,7 +38,7 @@ public class Tile {
 			Text.drawStringFrom(g, "▼", x + (TILEWIDTH / 2), y + (TILEHEIGHT / 2), true, Color.green, new Font("TimesRoman", Font.PLAIN, TILEWIDTH / 2));
 		} else if (isTreasure()) {
 			g.drawImage(Assets.dirt, x, y, TILEWIDTH, TILEHEIGHT, null);
-			Text.drawStringFrom(g, "₧", x + (TILEWIDTH / 2), y + (TILEHEIGHT / 2), true, Color.green, new Font("TimesRoman", Font.PLAIN, TILEWIDTH / 2));
+			Text.drawStringFrom(g, "₧", x + (TILEWIDTH / 2), y + (TILEHEIGHT / 2), true, Color.yellow, new Font("TimesRoman", Font.PLAIN, TILEWIDTH / 2));
 		} else if (isMonster()) {
 			g.drawImage(Assets.dirt, x, y, TILEWIDTH, TILEHEIGHT, null);
 		} else

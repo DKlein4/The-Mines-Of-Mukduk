@@ -15,7 +15,6 @@ public class EntityHandler {
 	// This list holds every entity
 	private static CopyOnWriteArrayList<Entity> entities;
 
-	@SuppressWarnings("unused")
 	private Player player;
 
 	public EntityHandler() {
@@ -59,18 +58,12 @@ public class EntityHandler {
 	// GETTERS AND SETTERS
 
 	public Player getPlayer() {
-		Iterator<Entity> it = entities.iterator();
-		while (it.hasNext()) {
-			Entity e = it.next();
-			if (e.getId() == ID.Player) {
-				return (Player) e;
-			}
-		}
-		return null;
+		return player;
 	}
 
 	public void setPlayer(Player player) {
 		this.player = player;
+		entities.add(player);
 	}
 
 	public CopyOnWriteArrayList<Entity> getEntities() {

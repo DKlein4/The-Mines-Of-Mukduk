@@ -55,8 +55,8 @@ public class World {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
 				if (map.getTile(r, c).isSpawn()) {
-					entityHandler.addEntity(new Player(r, c, ID.Player, handler, map));
-					r = c = gridSize; // Break out of the loop
+					entityHandler.setPlayer(new Player(r, c, ID.Player, handler, map));
+					return;
 				}
 			}
 		}
@@ -80,8 +80,8 @@ public class World {
 				int cameraOffsetX = (int) handler.getGuiMain().getGameCamera().getxOffset();
 				int cameraOffsetY = (int) handler.getGuiMain().getGameCamera().getyOffset();
 
-				int x = c * Assets.width - cameraOffsetX;
-				int y = r * Assets.height - cameraOffsetY;
+				int x = c * Tile.TILEWIDTH - cameraOffsetX;
+				int y = r * Tile.TILEHEIGHT - cameraOffsetY;
 				map.getTile(r, c).render(g, x, y);
 			}
 		}

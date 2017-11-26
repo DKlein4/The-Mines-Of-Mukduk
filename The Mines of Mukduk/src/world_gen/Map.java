@@ -42,6 +42,7 @@ public class Map {
 		levelNum = 0;
 
 		this.entityHandler = entityHandler;
+		
 		rand = new Random();
 		table = new Tables(handler);
 
@@ -197,7 +198,7 @@ public class Map {
 				else if (Character.isDigit(token) && Character.isDigit(nextToken)) {
 					numFiles = new File("res/Parcels/" + token + "x" + nextToken).list().length;
 					parcelRoll = rand.nextInt(numFiles) + 1;
-
+					
 					parcel = Utils.loadFileAsString("res/Parcels/" + token + "x" + nextToken + "/Parcel" + parcelRoll + ".txt");
 					parcelReader(Character.getNumericValue(token), Character.getNumericValue(nextToken), r, c, parcel);
 					
