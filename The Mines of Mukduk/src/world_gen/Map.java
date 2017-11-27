@@ -198,16 +198,33 @@ public class Map {
 				if (height == '@') {
 					parcel = Utils.loadFileAsString("res/Parcels/Special/SpawnRoom.txt");
 					parcelReader(5, 5, r, c, parcel);
-				} else if (Character.isDigit(height) && Character.isDigit(width) && Character.isLetter(doorFirstPosition)
-						&& Character.isLetter(doorSecondPosition)) {
-					numFiles = new File("res/Parcels/" + height + width + "/" + doorFirstPosition + doorSecondPosition)
-							.list().length;
+				} 
+				// two doors
+				else if (Character.isDigit(height) && Character.isDigit(width) && Character.isLetter(doorFirstPosition) && Character.isLetter(doorSecondPosition)) {
+					numFiles = new File("res/Parcels/" + height + width + "/" + doorFirstPosition + doorSecondPosition).list().length;
 					parcelRoll = rand.nextInt(numFiles) + 1;
 
-					parcel = Utils.loadFileAsString("res/Parcels/" + height + width + "/" + doorFirstPosition
-							+ doorSecondPosition + "/Parcel" + parcelRoll + ".txt");
+					parcel = Utils.loadFileAsString("res/Parcels/" + height + width + "/" + doorFirstPosition + doorSecondPosition + "/Parcel" + parcelRoll + ".txt");
 					parcelReader(Character.getNumericValue(height), Character.getNumericValue(width), r, c, parcel);
 					System.out.println("Oh man, oh jeeze, this is a two door parcel!");
+				} 
+				// one door
+				else if (Character.isDigit(height) && Character.isDigit(width) && Character.isLetter(doorFirstPosition)) {
+					numFiles = new File("res/Parcels/" + height + width + "/" + doorFirstPosition).list().length;
+					parcelRoll = rand.nextInt(numFiles) + 1;
+					
+					parcel = Utils.loadFileAsString("res/Parcels/" + height + width + "/" + doorFirstPosition + "/Parcel" + parcelRoll + ".txt");
+					parcelReader(Character.getNumericValue(height), Character.getNumericValue(width), r, c, parcel);
+					System.out.println("Oh man, oh jeeze, this is a one door parcel!");
+				} 
+				// no doors
+				else if (Character.isDigit(height) && Character.isDigit(width)) {
+					numFiles = new File("res/Parcels/" + height + width + "/" + "noDoor").list().length;
+					parcelRoll = rand.nextInt(numFiles) + 1;
+
+					parcel = Utils.loadFileAsString("res/Parcels/" + height + width + "/noDoor/Parcel" + parcelRoll + ".txt");
+					parcelReader(Character.getNumericValue(height), Character.getNumericValue(width), r, c, parcel);
+					System.out.println("Oh man, oh jeeze, this is a no door parcel!");
 				}
 			}
 		}
