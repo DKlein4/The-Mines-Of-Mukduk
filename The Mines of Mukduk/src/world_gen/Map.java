@@ -42,7 +42,7 @@ public class Map {
 		levelNum = 0;
 
 		this.entityHandler = entityHandler;
-		
+
 		rand = new Random();
 		table = new Tables(handler);
 
@@ -179,115 +179,42 @@ public class Map {
 
 		char[] tokens = map.toCharArray();
 		System.out.println(tokens);
-		
+
 		String parcel;
-		char token = 0, nextToken = 0;
+		char height = 0, width = 0, doorFirstPosition = 0, doorSecondPosition = 0;
 		int numFiles, parcelRoll;
-		
+
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
-				if ((c + (r * gridSize) + 1) < tokens.length) { 
-					token = tokens[c + (r * gridSize)];
-					nextToken = tokens[(c + (r * gridSize)) + 1];
+				if ((c + (r * gridSize) + 3) < tokens.length) {
+					height = tokens[c + (r * gridSize)];
+					width = tokens[(c + (r * gridSize)) + 1];
+					doorFirstPosition = tokens[(c + (r * gridSize)) + 2];
+					doorSecondPosition = tokens[(c + (r * gridSize)) + 3];
 				}
-				
-				if (token == 'S') {
+
+				// The variable name height is out of place here, but for ease of access this
+				// name is better than token.
+				if (height == '@') {
 					parcel = Utils.loadFileAsString("res/Parcels/Special/SpawnRoom.txt");
 					parcelReader(5, 5, r, c, parcel);
-				}
-				else if (Character.isDigit(token) && Character.isDigit(nextToken)) {
-					numFiles = new File("res/Parcels/" + token + "x" + nextToken).list().length;
+				} else if (Character.isDigit(height) && Character.isDigit(width) && Character.isLetter(doorFirstPosition)
+						&& Character.isLetter(doorSecondPosition)) {
+					numFiles = new File("res/Parcels/" + height + width + "/" + doorFirstPosition + doorSecondPosition)
+							.list().length;
 					parcelRoll = rand.nextInt(numFiles) + 1;
-					
-					parcel = Utils.loadFileAsString("res/Parcels/" + token + "x" + nextToken + "/Parcel" + parcelRoll + ".txt");
-					parcelReader(Character.getNumericValue(token), Character.getNumericValue(nextToken), r, c, parcel);
-					
-					System.out.println(token + "\t" + nextToken + "\t" + numFiles + "\t" + parcelRoll);
-				}
-			}
-		}
-	}
 
-	private void parcelGenSpawn(int r, int c) {
-		String file = null;
-		file = Utils.loadFileAsString("res/Parcels/Special/SpawnRoom.txt");
-		parcelReader(5, 5, r, c, file);
-	}
-
-	private void parcelGenThree(int r, int c) {
-		String file = null;
-		int parcelRoll = rand.nextInt(1) + 1;
-		if (parcelRoll == 1) {
-			file = Utils.loadFileAsString("res/Parcels/3x3/Parcel1.txt");
-		}
-
-		else if (parcelRoll == 2) {
-			file = Utils.loadFileAsString("res/Parcels/3x3/Parcel2.txt");
-		}
-
-		else if (parcelRoll == 3) {
-			file = Utils.loadFileAsString("res/Parcels/3x3/Parcel3.txt");
-		}
-		parcelReader(3, 3, r, c, file);
-	}
-
-	private void parcelGenFive(int r, int c) {
-		String file = null;
-		int parcelRoll = rand.nextInt(3) + 1;
-		if (parcelRoll == 1) {
-			file = Utils.loadFileAsString("res/Parcels/5x5/Parcel1.txt");
-		}
-
-		else if (parcelRoll == 2) {
-			file = Utils.loadFileAsString("res/Parcels/5x5/Parcel2.txt");
-		}
-
-		else if (parcelRoll == 3) {
-			file = Utils.loadFileAsString("res/Parcels/5x5/Parcel3.txt");
-		}
-		parcelReader(5, 5, r, c, file);
-	}
-
-	private void parcelGenNine(int r, int c) {
-		String file = null;
-		int parcelRoll = rand.nextInt(4) + 1;
-		if (parcelRoll == 1) {
-			file = Utils.loadFileAsString("res/Parcels/9x9/Parcel1.txt");
-		}
-
-		else if (parcelRoll == 2) {
-			file = Utils.loadFileAsString("res/Parcels/9x9/Parcel2.txt");
-		}
-
-		else if (parcelRoll == 3) {
-			file = Utils.loadFileAsString("res/Parcels/9x9/Parcel3.txt");
-		}
-
-		else if (parcelRoll == 4) {
-			file = Utils.loadFileAsString("res/Parcels/9x9/Parcel4.txt");
-		}
-
-		parcelReader(9, 9, r, c, file);
-	}
-
-	// Checks for one Wall Tile blockages and clears them
-	@SuppressWarnings("unused")
-	private void clearBlockages() {
-		for (int c = 1; c < gridSize - 1; c++) {
-			for (int r = 1; r < gridSize - 1; r++) {
-				if (grid[r][c].isWall() && grid[r + 1][c].isWall() && grid[r - 1][c].isWall()
-						&& grid[r][c + 1].isFloor() && grid[r][c - 1].isFloor()) {
-					grid[r][c].setFloor(true);
-				}
-				if (grid[r][c].isWall() && grid[r][c + 1].isWall() && grid[r][c - 1].isWall()
-						&& grid[r + 1][c].isFloor() && grid[r - 1][c].isFloor()) {
-					grid[r][c].setFloor(true);
+					parcel = Utils.loadFileAsString("res/Parcels/" + height + width + "/" + doorFirstPosition
+							+ doorSecondPosition + "/Parcel" + parcelRoll + ".txt");
+					parcelReader(Character.getNumericValue(height), Character.getNumericValue(width), r, c, parcel);
+					System.out.println("Oh man, oh jeeze, this is a two door parcel!");
 				}
 			}
 		}
 	}
 
 	// Finds the appropriate place for the player to spawn
+	@SuppressWarnings("unused")
 	private void placeSpawnPoint() {
 		for (int c = 0; c < gridSize; c++) {
 			for (int r = 0; r < gridSize; r++) {
