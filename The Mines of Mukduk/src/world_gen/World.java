@@ -2,6 +2,7 @@ package world_gen;
 
 import java.awt.Graphics;
 
+import display.Noise;
 import entities.EntityHandler;
 import entities.ID;
 import entities.Monster;
@@ -24,6 +25,7 @@ public class World {
 	private Handler handler;
 	private EntityHandler entityHandler;
 	private Inventory inventory;
+	private Noise noise;
 
 	public World(Handler handler) {
 		this.handler = handler;
@@ -31,6 +33,7 @@ public class World {
 		entityHandler = new EntityHandler();
 		map = new Map(handler, entityHandler);
 		inventory = new Inventory();
+		noise = new Noise();
 
 		gridSize = map.getGridSize();
 
@@ -42,12 +45,14 @@ public class World {
 		entityHandler.tick();
 		inventory.tick();
 		handler.getGuiMain().getWindow().setTitle("The Mines of Mukduk - Level " + map.getLevelNum() + " - Steps: " + entityHandler.getPlayer().getSteps());
+		noise.tick();
 	}
 
 	public void render(Graphics g) {
 		renderMap(g);
 		entityHandler.render(g);
 		inventory.render(g);
+		noise.render(g);
 	}
 
 	// Creates a player entity and places it on the map
