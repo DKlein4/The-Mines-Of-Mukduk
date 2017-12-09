@@ -21,11 +21,7 @@ public class Assets {
 	public static BufferedImage alert;
 	public static BufferedImage combatHUD, combatButtons, pointer;
 	public static BufferedImage seamlessRock;
-	public static BufferedImage noiseOne;
-	public static BufferedImage noiseTwo;
-	public static BufferedImage noiseThree;
-	public static BufferedImage noiseFour;
-	public static BufferedImage noiseFive;
+	public static BufferedImage[] noise = new BufferedImage[5];
 
 	public static void init() {
 		dirt = ImageLoader.loadImage("res/Dirt.png");
@@ -48,10 +44,10 @@ public class Assets {
 		
 		seamlessRock = ImageLoader.loadImage("res/Seamless Rock Texture.png");
 		
-		noiseOne = ImageLoader.loadImage("res/Noise/Noise1.png");
-		noiseTwo = ImageLoader.loadImage("res/Noise/Noise2.png");
-		noiseThree = ImageLoader.loadImage("res/Noise/Noise3.png");
-		noiseFour = ImageLoader.loadImage("res/Noise/Noise4.png");
-		noiseFive = ImageLoader.loadImage("res/Noise/Noise5.png");
+		noise[0] = ImageLoader.loadImage("res/Noise/Noise1.png");
+		noise[1] = ImageLoader.loadImage("res/Noise/Noise2.png");
+		noise[2] = ImageLoader.loadImage("res/Noise/Noise3.png");
+		noise[3] = ImageLoader.loadImage("res/Noise/Noise4.png");
+		noise[4] = ImageLoader.loadImage("res/Noise/Noise5.png");
 	}
 }

@@ -17,22 +17,11 @@ public class Noise {
 	}
 
 	public void tick() {
-		int randRoll = rand.nextInt(5) + 1;
-		switch (randRoll) {
-		case 1:
-			noise = Assets.noiseOne;
-		case 2:
-			noise = Assets.noiseTwo;
-		case 3:
-			noise = Assets.noiseThree;
-		case 4:
-			noise = Assets.noiseFour;
-		case 5:
-			noise = Assets.noiseFive;
-	}
+		int randRoll = rand.nextInt(5);
+		noise = Assets.noise[randRoll];
 	}
 
 	public void render(Graphics g) {
 		g.drawImage(noise, 0, 0, GUImain.WIDTH, GUImain.HEIGHT, null);
 	}
-	}
+}

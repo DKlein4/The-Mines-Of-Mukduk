@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import display.GUImain;
 import display.MessageNotifier;
+import display.Noise;
 import game_stages.Combat;
 import gfx.Assets;
 import main.Handler;
@@ -12,16 +13,18 @@ public class CombatState extends GUIstate {
 
 	private MessageNotifier messenger;
 	private Combat combat;
+	private Noise noise;
 	
 	public CombatState(Handler handler) {
 		super(handler);
 		messenger = handler.getGuiMain().getMessageNotifier();
-		
+		noise = new Noise();
 	}
 	
 	public void tick() {
 		combat.tick();
 		messenger.tick();
+		noise.tick();
 	}
 
 	public void render(Graphics g) {
@@ -31,10 +34,11 @@ public class CombatState extends GUIstate {
 		g.drawImage(Assets.player, GUImain.WIDTH / 3 - ((GUImain.WIDTH / 3) / 2), GUImain.HEIGHT * 400 / 1000, GUImain.WIDTH / 4, GUImain.HEIGHT * 5 / 12, null);
 		// Monster figure
 		g.drawImage(Assets.monster, GUImain.WIDTH * 3 / 4 - ((GUImain.WIDTH / 3) / 2), GUImain.HEIGHT * 400 / 1000, GUImain.WIDTH / 4, GUImain.HEIGHT * 5 / 12, null);
-
+		
 		
 		combat.render(g);
 		messenger.render(g);
+		noise.render(g);
 	}
 	
 	public void setCombat(Combat combat) {
