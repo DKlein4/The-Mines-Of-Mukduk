@@ -45,14 +45,14 @@ public class World {
 		entityHandler.tick();
 		inventory.tick();
 		handler.getGuiMain().getWindow().setTitle("The Mines of Mukduk - Level " + map.getLevelNum() + " - Steps: " + entityHandler.getPlayer().getSteps());
-		//noise.tick();
+		noise.tick();
 	}
 
 	public void render(Graphics g) {
 		renderMap(g);
 		entityHandler.render(g);
 		inventory.render(g);
-		//noise.render(g);
+		noise.render(g);
 	}
 
 	// Creates a player entity and places it on the map

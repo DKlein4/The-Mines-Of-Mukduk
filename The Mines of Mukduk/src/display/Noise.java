@@ -13,12 +13,16 @@ public class Noise {
 
 	public Noise() {
 		rand = new Random();
-		counter = 0;
+		counter = 10;
 	}
 
 	public void tick() {
-		int randRoll = rand.nextInt(5);
-		noise = Assets.noise[randRoll];
+		if (counter == 10) {
+			int randRoll = rand.nextInt(3);
+			noise = Assets.noise[randRoll];
+			counter = 0;
+		}
+		counter++;
 	}
 
 	public void render(Graphics g) {

@@ -1,9 +1,0 @@
-. . . . . . . . .
-. X X X X X X X .
-. X T T X . . X .
-. X T . M . . X .
-. X X X X M X X .
-. X . . X . . X .
-. X . . M . . X .
-. . . . X . . . .
-. X X X X X X X .

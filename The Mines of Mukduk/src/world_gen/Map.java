@@ -132,16 +132,16 @@ public class Map {
 		for (int r = 0; r < gridSize; r++) {
 			for (int c = 0; c < gridSize; c++) {
 				grid[r][c] = new Tile();
-				grid[r][c].setFloor(true);
+				grid[r][c].setWall(true);
 			}
 		}
 
-		// genInteriorRooms();
+		//genInteriorRooms();
 		readMap();
 		// placeSpawnPoint();
 
 		boundGen();
-		placeLadder();
+		//placeLadder();
 		placePlayer();
 		placeMonsters();
 
@@ -198,6 +198,13 @@ public class Map {
 				if (height == '@') {
 					parcel = Utils.loadFileAsString("res/Parcels/Special/SpawnRoom.txt");
 					parcelReader(5, 5, r, c, parcel);
+				}
+				else if (height == '+') {
+					numFiles = new File("res/Parcels/+").list().length;
+					parcelRoll = rand.nextInt(numFiles) + 1;
+					
+					parcel = Utils.loadFileAsString("res/Parcels/+/Parcel" + parcelRoll + ".txt");
+					parcelReader(5, 10, r, c, parcel);
 				} 
 				// two doors
 				else if (Character.isDigit(height) && Character.isDigit(width) && Character.isLetter(doorFirstPosition) && Character.isLetter(doorSecondPosition)) {
