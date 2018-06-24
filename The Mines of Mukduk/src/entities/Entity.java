@@ -15,6 +15,7 @@ import world_gen.Tile;
  * 
  * @author Dustin
  */
+@SuppressWarnings("WeakerAccess")
 public abstract class Entity {
 
 	protected int width; // width of the entity itself
@@ -51,11 +52,11 @@ public abstract class Entity {
 
 		gameCamera = handler.getGuiMain().getGameCamera();
 
-		tileWidth = Tile.TILEWIDTH;
-		tileHeight = Tile.TILEHEIGHT;
+		tileWidth = Tile.TILE_WIDTH;
+		tileHeight = Tile.TILE_HEIGHT;
 
-		width = Tile.TILEWIDTH;
-		height = Tile.TILEHEIGHT;
+		width = tileWidth;
+		height = tileHeight;
 
 		gridOffsetX = 0;
 		gridOffsetY = -tileHeight / 8;
@@ -87,17 +88,11 @@ public abstract class Entity {
 	// BOOLEAN CHECKS
 	
 	public boolean attackCheck(int attackRoll) {
-		if (attackRoll > this.armorClass) {
-			return true;
-		}
-		else return false;
+        return attackRoll > this.armorClass;
 	}
 	
 	public boolean isBloodied() {
-		if (this.health <= (this.maxHealth / 2)) {
-			return true;
-		}
-		else return false;
+        return this.health <= (this.maxHealth / 2);
 	}
 	
 	// ABILITY SCORE CHECKS

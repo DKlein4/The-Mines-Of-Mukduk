@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import gfx.Assets;
 import main.Handler;
 import world_gen.Map;
+import world_gen.Tile;
 
 /**
  * This entity is the main enemy on the map.
@@ -19,6 +20,12 @@ public class Monster extends Entity {
 	}
 
 	public void tick() {
+		tileWidth = Tile.TILE_WIDTH;
+		tileHeight = Tile.TILE_HEIGHT;
+
+		width = tileWidth;
+		height = tileHeight;
+
 		// Update the position of the monster
 		xPos = (col * tileWidth) + gridOffsetX;
 		yPos = (row * tileHeight) + gridOffsetY;

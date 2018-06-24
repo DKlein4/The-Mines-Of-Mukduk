@@ -8,6 +8,7 @@ import input.PlayerInput;
 import items.Inventory;
 import main.Handler;
 import world_gen.Map;
+import world_gen.Tile;
 
 /**
  * The entity that the user plays as.
@@ -33,9 +34,15 @@ public class Player extends Entity {
 	}
 
 	public void tick() {
+		tileWidth = Tile.TILE_WIDTH;
+		tileHeight = Tile.TILE_HEIGHT;
+
+		width = tileWidth;
+		height = tileHeight;
+
 		// Update the position of the player
-		xPos = (col * tileWidth) + gridOffsetX;
-		yPos = (row * tileHeight) + gridOffsetY;
+		xPos = (col * tileWidth);
+		yPos = (row * tileHeight);
 		
 		gameCamera.centerOnEntity(this);
 		

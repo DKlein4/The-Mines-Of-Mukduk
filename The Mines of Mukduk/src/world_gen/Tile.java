@@ -4,117 +4,124 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import display.GUImain;
 import gfx.Assets;
 import gfx.Text;
 
 /**
  * One space on the map that has different attributes.
- * 
+ *
  * @author Dustin
  */
 public class Tile {
 
-	public static final int TILEWIDTH = Assets.height;
-	public static final int TILEHEIGHT = Assets.width;
+    public static int TILE_WIDTH;
+    public static int TILE_HEIGHT;
 
-	// Different states a tile can be
-	private boolean isWall, isFloor, isLadder, isUnexplored, isTreasure, isMonster, isSpawn;
+    // Different states a tile can be
+    private boolean isWall, isFloor, isLadder, isUnexplored, isTreasure, isMonster, isSpawn;
 
-	public Tile() {
-		clearTile();
-	}
+    public Tile() {
+        clearTile();
 
-	public void render(Graphics g, int x, int y) {
-		//TILEWIDTH = GUImain.
-		
-		if (isWall()) {
-			g.drawImage(Assets.wall, x, y, TILEWIDTH, TILEHEIGHT, null);
-		} else if (isFloor()) {
-			g.drawImage(Assets.dirt, x, y, TILEWIDTH, TILEHEIGHT, null);
-		} else if (isSpawn()) {
-			g.drawImage(Assets.dirt, x, y, TILEWIDTH, TILEHEIGHT, null);
-		} else if (isLadder()) {
-			g.drawImage(Assets.dirt, x, y, TILEWIDTH, TILEHEIGHT, null);
-			Text.drawStringFrom(g, "▼", x + (TILEWIDTH / 2), y + (TILEHEIGHT / 2), true, Color.green, new Font("TimesRoman", Font.PLAIN, TILEWIDTH / 2));
-		} else if (isTreasure()) {
-			g.drawImage(Assets.dirt, x, y, TILEWIDTH, TILEHEIGHT, null);
-			Text.drawStringFrom(g, "₧", x + (TILEWIDTH / 2), y + (TILEHEIGHT / 2), true, Color.yellow, new Font("TimesRoman", Font.PLAIN, TILEWIDTH / 2));
-		} else if (isMonster()) {
-			g.drawImage(Assets.dirt, x, y, TILEWIDTH, TILEHEIGHT, null);
-		} else
-			g.drawImage(Assets.wall, x, y, TILEWIDTH, TILEHEIGHT, null);
-	}
+        TILE_WIDTH = GUImain.WIDTH / 11;
+        TILE_HEIGHT = TILE_WIDTH;
+    }
 
-	private void clearTile() {
-		isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = isSpawn = false;
-	}
+    public void tick() {
+        TILE_WIDTH = GUImain.WIDTH / 11;
+        TILE_HEIGHT = TILE_WIDTH;
+    }
 
-	// GETTERS AND SETTERS
+    public void render(Graphics g, int x, int y) {
+        if (isWall()) {
+            g.drawImage(Assets.wall, x, y, TILE_WIDTH, TILE_HEIGHT, null);
+        } else if (isFloor()) {
+            g.drawImage(Assets.dirt, x, y, TILE_WIDTH, TILE_HEIGHT, null);
+        } else if (isSpawn()) {
+            g.drawImage(Assets.dirt, x, y, TILE_WIDTH, TILE_HEIGHT, null);
+        } else if (isLadder()) {
+            g.drawImage(Assets.dirt, x, y, TILE_WIDTH, TILE_HEIGHT, null);
+            Text.drawStringFrom(g, "▼", x + (TILE_WIDTH / 2), y + (TILE_HEIGHT / 2), true, Color.green, new Font("TimesRoman", Font.PLAIN, TILE_WIDTH / 2));
+        } else if (isTreasure()) {
+            g.drawImage(Assets.dirt, x, y, TILE_WIDTH, TILE_HEIGHT, null);
+            Text.drawStringFrom(g, "₧", x + (TILE_WIDTH / 2), y + (TILE_HEIGHT / 2), true, Color.yellow, new Font("TimesRoman", Font.PLAIN, TILE_WIDTH / 2));
+        } else if (isMonster()) {
+            g.drawImage(Assets.dirt, x, y, TILE_WIDTH, TILE_HEIGHT, null);
+        } else
+            g.drawImage(Assets.wall, x, y, TILE_WIDTH, TILE_HEIGHT, null);
+    }
 
-	public boolean isWall() {
-		return isWall;
-	}
+    private void clearTile() {
+        isWall = isFloor = isLadder = isUnexplored = isTreasure = isMonster = isSpawn = false;
+    }
 
-	public boolean isSpawn() {
-		return isSpawn;
-	}
+    // GETTERS AND SETTERS
 
-	public void setSpawn(boolean isSpawn) {
-		clearTile();
-		this.isSpawn = isSpawn;
-	}
+    public boolean isWall() {
+        return isWall;
+    }
 
-	public void setWall(boolean isWall) {
-		clearTile();
-		this.isWall = isWall;
-	}
+    public boolean isSpawn() {
+        return isSpawn;
+    }
 
-	public boolean isFloor() {
-		return isFloor;
-	}
+    public void setSpawn(boolean isSpawn) {
+        clearTile();
+        this.isSpawn = isSpawn;
+    }
 
-	public void setFloor(boolean isFloor) {
-		clearTile();
-		this.isFloor = isFloor;
-	}
+    public void setWall(boolean isWall) {
+        clearTile();
+        this.isWall = isWall;
+    }
 
-	public boolean isLadder() {
-		return isLadder;
-	}
+    public boolean isFloor() {
+        return isFloor;
+    }
 
-	public void setLadder(boolean isLadder) {
-		clearTile();
-		this.isLadder = isLadder;
-	}
+    public void setFloor(boolean isFloor) {
+        clearTile();
+        this.isFloor = isFloor;
+    }
 
-	public boolean isUnexplored() {
-		return isUnexplored;
-	}
+    public boolean isLadder() {
+        return isLadder;
+    }
 
-	public void setUnexplored(boolean isUnexplored) {
-		clearTile();
-		this.isUnexplored = isUnexplored;
-	}
+    public void setLadder(boolean isLadder) {
+        clearTile();
+        this.isLadder = isLadder;
+    }
 
-	public boolean isTreasure() {
-		return isTreasure;
-	}
+    public boolean isUnexplored() {
+        return isUnexplored;
+    }
 
-	public void setTreasure(boolean isTreasure) {
-		clearTile();
-		this.isTreasure = isTreasure;
-	}
+    public void setUnexplored(boolean isUnexplored) {
+        clearTile();
+        this.isUnexplored = isUnexplored;
+    }
 
-	public boolean isMonster() {
-		return isMonster;
-	}
+    public boolean isTreasure() {
+        return isTreasure;
+    }
 
-	public void setMonster(boolean isMonster) {
-		clearTile();
-		this.isMonster = isMonster;
-	}
+    public void setTreasure(boolean isTreasure) {
+        clearTile();
+        this.isTreasure = isTreasure;
+    }
 
-	public boolean isSolid() {
-		return isWall();
-	}
+    public boolean isMonster() {
+        return isMonster;
+    }
+
+    public void setMonster(boolean isMonster) {
+        clearTile();
+        this.isMonster = isMonster;
+    }
+
+    public boolean isSolid() {
+        return isWall();
+    }
 }

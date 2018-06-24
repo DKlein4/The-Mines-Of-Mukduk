@@ -7,7 +7,6 @@ import entities.EntityHandler;
 import entities.ID;
 import entities.Monster;
 import entities.Player;
-import gfx.Assets;
 import items.Inventory;
 import main.Handler;
 
@@ -42,17 +41,18 @@ public class World {
 	}
 
 	public void tick() {
+		tickMap();
 		entityHandler.tick();
 		inventory.tick();
 		handler.getGuiMain().getWindow().setTitle("The Mines of Mukduk - Level " + map.getLevelNum() + " - Steps: " + entityHandler.getPlayer().getSteps());
-		noise.tick();
+		//noise.tick();
 	}
 
 	public void render(Graphics g) {
 		renderMap(g);
 		entityHandler.render(g);
 		inventory.render(g);
-		noise.render(g);
+		//noise.render(g);
 	}
 
 	// Creates a player entity and places it on the map
@@ -78,6 +78,14 @@ public class World {
 		}
 	}
 
+	private void tickMap() {
+		for (int r = 0; r < gridSize; r++) {
+			for (int c = 0; c < gridSize; c++) {
+				map.getTile(r, c).tick();
+			}
+		}
+	}
+
 	// Renders the elements of the map onto the screen
 	private void renderMap(Graphics g) {
 		for (int r = 0; r < gridSize; r++) {
@@ -85,8 +93,8 @@ public class World {
 				int cameraOffsetX = (int) handler.getGuiMain().getGameCamera().getxOffset();
 				int cameraOffsetY = (int) handler.getGuiMain().getGameCamera().getyOffset();
 
-				int x = c * Tile.TILEWIDTH - cameraOffsetX;
-				int y = r * Tile.TILEHEIGHT - cameraOffsetY;
+				int x = c * Tile.TILE_WIDTH - cameraOffsetX;
+				int y = r * Tile.TILE_HEIGHT - cameraOffsetY;
 				map.getTile(r, c).render(g, x, y);
 			}
 		}

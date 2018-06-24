@@ -24,14 +24,19 @@ public class GameCamera {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 
-		tileWidth = Tile.TILEWIDTH;
-		tileHeight = Tile.TILEHEIGHT;
+		tileWidth = Tile.TILE_WIDTH;
+		tileHeight = Tile.TILE_HEIGHT;
 		screenWidth = GUImain.WIDTH;
 		screenHeight = GUImain.HEIGHT;
 
 	}
 
 	public void checkBlankSpace() {
+		tileWidth = Tile.TILE_WIDTH;
+		tileHeight = Tile.TILE_HEIGHT;
+		screenWidth = GUImain.WIDTH;
+		screenHeight = GUImain.HEIGHT;
+
 		gridSize = handler.getWorld().getMap().getGridSize();
 
 		// Doesn't allow the camera to go off the screen to the left
@@ -54,6 +59,11 @@ public class GameCamera {
 	}
 
 	public void centerOnEntity(Entity e) {
+		tileWidth = Tile.TILE_WIDTH;
+		tileHeight = Tile.TILE_HEIGHT;
+		screenWidth = GUImain.WIDTH;
+		screenHeight = GUImain.HEIGHT;
+
 		xOffset = e.getXPos() - GUImain.WIDTH / 2 + e.getWidth() / 2;
 		yOffset = e.getYPos() - GUImain.HEIGHT / 2 + e.getHeight() / 2;
 		checkBlankSpace();
