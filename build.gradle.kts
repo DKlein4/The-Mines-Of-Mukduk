@@ -1,9 +1,10 @@
-plugins {
-    java
-}
-
 group = "com.igc"
 version = "0.0"
+
+plugins {
+    java
+    checkstyle
+}
 
 val lwjglVersion = "3.2.3"
 val lwjglNatives = "natives-windows"
@@ -41,4 +42,9 @@ dependencies {
 
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
+}
+
+checkstyle {
+    toolVersion = "8.26"
+    configFile = file("${project.rootDir}/config/checkstyle/google_checks.xml")
 }
